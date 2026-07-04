@@ -1,0 +1,39 @@
+# Large data files - do not commit raw battery datasets (too large for GitHub)
+*.mat
+*.xlsx
+*.xls
+*.csv
+*.zip
+*.tar.gz
+
+# Specific dataset folders
+CALCE Battery Dataset/
+NASA Prognostics*/
+Extracted_CSV_Data/
+_calce_extract_tmp/
+_calce_peek/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+*.egg-info/
+dist/
+build/
+
+# Node (used for note conversion scripts)
+node_modules/
+package-lock.json
+
+# Temp and output files
+*.tmp
+_papers_raw.json
+_papers_preview.txt
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Claude internal
+.claude/
