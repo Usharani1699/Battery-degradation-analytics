@@ -6,12 +6,22 @@
 *.zip
 *.tar.gz
 
-# Specific dataset folders
+# Allow the linked master dataset used by ML scripts
+!data/Linked_Lab_Fleet_Degradation.csv
+
+# Specific dataset folders (raw data — too large)
 CALCE Battery Dataset/
 NASA Prognostics*/
 Extracted_CSV_Data/
 _calce_extract_tmp/
 _calce_peek/
+_calce_unzip_tmp/
+
+# Allow ML source code, dashboards, and results
+!src/
+!dashboards/
+!results/
+!results/README.md
 
 # Python cache
 __pycache__/

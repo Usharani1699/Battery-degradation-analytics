@@ -1,75 +1,147 @@
-# Battery Degradation Analytics for EV Fleet Applications
+# Battery Degradation Analytics
+**Dissertation project — MSc Data Science, University of Salford**
+*Usha Rani Vamanagiri · 2026*
 
-**MSc Electric Vehicle Engineering Dissertation**  
-University of East London | Distinction track | 2025-2026  
-**Author:** Usha Rani Vamanagiri
-
----
-
-## Project Overview
-
-This repository contains the data processing, feature engineering, and machine learning pipeline for my MSc dissertation:
-
-**"Duty Cycle-Aware Battery Degradation Analytics for EV Fleet Applications"**
-
-The core idea: battery degradation is not just about age or total charge cycles. The *type* of driving (urban stop-start vs motorway) has a large impact on how fast a battery degrades. This project builds a Fleet Severity Index (FSI) that quantifies how hard a fleet is working its batteries, then predicts remaining useful life (RUL) using ML models.
+Predicting **State of Health (SoH)** and classifying battery health status using a novel **Fleet Severity Index (FSI)** — validated with SHAP TreeExplainer across lab and real-world fleet data.
 
 ---
 
-## Research Questions
+## Overview
 
-1. How much does drive cycle profile (WLTP, UDDS, FTP-75, HWFET) affect NMC battery degradation rate?
-2. Can a Fleet Severity Index (FSI) reliably rank fleet duty cycle harshness?
-3. Which ML approach (XGBoost, LSTM, Random Forest) gives the best SOH prediction with SHAP explainability?
-
----
-
-## Datasets Used
-
-- **CALCE Battery Dataset** — University of Maryland. NMC cells under various charge/discharge conditions.
-- **NASA PCoE Battery Dataset** — Li-ion cells aged under different operating conditions.
-- **Oxford Battery Degradation Dataset** — Cells cycled to 80% capacity retention.
-
-> Raw dataset files are not included in this repository (too large). Download links are in `data/README_data_sources.md`.
+| Stage | Description | Status |
+|-------|-------------|--------|
+| 1 | Data extraction (CALCE, NASA, Oxford) | ✅ |
+| 2 | Feature engineering & FSI computation | ✅ |
+| 3 | Lab vs Fleet linkage (9 584 rows × 36 features) | ✅ |
+| 4 | ML model — classification + regression | ✅ |
+| 5 | SHAP validation | ✅ |
+| 6 | PyBaMM electrochemical modelling | 🔄 |
 
 ---
 
-## ML Pipeline
+## Fleet Severity Index (FSI)
 
-| Stage | Method | Script |
-|-------|--------|--------|
-| Data extraction | Pandas, MATLAB | `extract_all_datasets.py` |
-| Feature engineering | Capacity fade, IR growth, dQ/dV | `features/` |
-| Drive cycle severity | FSI calculation across WLTP/UDDS/FTP-75/HWFET | `fsi/` |
-| SOH prediction | XGBoost, Random Forest | `models/xgb_model.py` |
-| Sequence modelling | LSTM (PyTorch) | `models/lstm_model.py` |
-| Explainability | SHAP waterfall + summary plots | `explainability/shap_analysis.py` |
+> **FSI = 0.30 × KI + 0.25 × DoD + 0.25 × T_norm + 0.20 × C_peak_norm**
 
----
+A composite duty-cycle index designed to be computable from fleet telematics without lab equipment. Unlike DoD alone (which collapses to SoH in constant-current tests and causes data leakage), FSI integrates four independent stress dimensions:
 
-## Tools and Libraries
-
-- **Python:** Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn, XGBoost, PyTorch, SHAP
-- **MATLAB:** Data extraction from Oxford and NASA `.mat` files
-- **Simscape Battery:** Battery equivalent circuit modelling (coursework)
-- **MathWorks Certifications (all 100%):** MATLAB, Simulink, Power Electronics, Control Design, Simscape Battery
+| Component | Weight | Meaning |
+|-----------|--------|---------|
+| KI — Kinetic Intensity | 30% | Charge-rate variability (σ C-rate / mean C-rate) |
+| DoD — Depth of Discharge | 25% | Fraction of capacity used per cycle |
+| T_norm — Temperature stress | 25% | Normalised deviation from 25 °C reference |
+| C_peak_norm — Peak current | 20% | Normalised maximum charge current |
 
 ---
 
-## Key Results (Preliminary)
+## ML Results
 
-> Results will be updated as the dissertation progresses (submission: September 2026)
+### Classification — Health Label (5-fold CV)
 
-- FSI successfully differentiates between aggressive (UDDS urban) and mild (HWFET highway) duty cycles
-- XGBoost achieves [X]% RMSE on SOH prediction
-- SHAP identifies internal resistance growth as the strongest predictor of capacity fade
+| Model | Accuracy | F1-Macro |
+|-------|----------|----------|
+| Random Forest | **98.48%** | 0.9612 |
+| XGBoost | 98.46% | 0.9609 |
+| Gradient Boosting | 98.18% | 0.9553 |
+
+*Classes: Healthy (SoH ≥ 90%), Degraded (80–90%), End_of_Life (< 80%)*
+
+### Regression — SoH % (5-fold CV)
+
+| Model | RMSE | MAE | R² |
+|-------|------|-----|----|
+| Random Forest | 3.73% | 2.14% | **0.9839** |
+| XGBoost | 3.78% | 2.18% | 0.9835 |
+| Gradient Boosting | 3.69% | 2.10% | **0.9842** |
+
+### Fleet predictions (36 vehicles)
+
+| Label | Count |
+|-------|-------|
+| Healthy | 30 |
+| Degraded | 5 |
+| End_of_Life | 1 |
+*Predicted SoH range: 87.7% – 100%*
 
 ---
 
-## Author
+## SHAP Validation
 
-**Usha Rani Vamanagiri**  
-MSc Electric Vehicle Engineering, University of East London  
-4+ years battery engineering experience (Amara Raja Advanced Cell Technologies, PUR Energy)  
-LinkedIn: [linkedin.com/in/usharaniv3](https://linkedin.com/in/usharaniv3)  
-Email: vamanagiriusharani16.99@gmail.com
+SHAP TreeExplainer confirms FSI is the dominant predictor — **without** DoD or EFC in the feature set:
+
+| Feature | Mean \|SHAP\| | Share |
+|---------|-------------|-------|
+| **FSI** | 28.39 | **82.1%** |
+| T_avg_C | 4.54 | 13.2% |
+| DCSS | 1.64 | 4.7% |
+| KI, RBF, CVI | 0.00 | 0% (CC lab — no kinetic variation) |
+
+**→ Open [`dashboards/SHAP_Dashboard.html`](dashboards/SHAP_Dashboard.html) for the full interactive dashboard** (no server needed — open directly in your browser).
+
+---
+
+## Repository Structure
+
+```
+battery-degradation-analytics/
+├── src/
+│   ├── ml_fsi_model.py        # FSI-only ML pipeline (RF, XGBoost, GB)
+│   └── shap_analysis.py       # SHAP TreeExplainer validation
+├── dashboards/
+│   └── SHAP_Dashboard.html    # Standalone interactive SHAP dashboard
+├── data/
+│   └── Linked_Lab_Fleet_Degradation.csv   # 9 584 rows × 36 features
+├── results/                   # JSON / CSV outputs (generated by scripts)
+├── extract_all_datasets.py    # CALCE raw data extraction
+├── extract_NASA.m             # NASA PCoE dataset extraction (MATLAB)
+├── extract_Oxford.m           # Oxford dataset extraction (MATLAB)
+├── extract_CALCE.ps1          # PowerShell helper
+└── requirements.txt
+```
+
+---
+
+## Quick Start
+
+```bash
+git clone https://github.com/Usharani1699/battery-degradation-analytics.git
+cd battery-degradation-analytics
+pip install -r requirements.txt
+
+# Run ML model (writes results/ml_fsi_results.json)
+python src/ml_fsi_model.py
+
+# Run SHAP analysis (writes results/shap_results.json + updates dashboard)
+python src/shap_analysis.py
+
+# Open the interactive dashboard
+start dashboards/SHAP_Dashboard.html   # Windows
+open  dashboards/SHAP_Dashboard.html   # macOS
+```
+
+---
+
+## Why FSI avoids data leakage
+
+In constant-current (CC) lab cycling, Depth of Discharge (DoD) falls proportionally as the battery degrades — so a model trained with DoD as a feature learns the trivial mapping `DoD → SoH` rather than battery physics. This gives 99.98% lab accuracy but collapses to a single prediction value when applied to fleet data where DoD is fixed by trip design.
+
+FSI replaces DoD-alone with a weighted composite that remains informative under variable-current fleet conditions. The SHAP analysis validates that this composite — not any single leaked feature — drives the model's predictions.
+
+---
+
+## Dataset
+
+- **Lab data**: [CALCE Battery Research Group](https://calce.umd.edu/battery-data), University of Maryland
+  - CS2 series (18650 LiCoO₂), CX2 series (26650 LiCoO₂), INR18650, A123, Pouch cells
+- **Fleet data**: Synthetic fleet telematics (36 vehicles) linked to CALCE battery families
+
+---
+
+## Citation
+
+If you use this code or methodology in your research:
+
+```
+Vamanagiri, U. R. (2026). Battery Degradation Prediction using FSI and SHAP-validated
+Machine Learning. MSc Dissertation, University of Salford.
+```
