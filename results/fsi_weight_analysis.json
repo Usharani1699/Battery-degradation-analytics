@@ -1,0 +1,211 @@
+{
+  "manual_weights": {
+    "KI (kinetic intensity)": 0.3,
+    "DoD (depth of discharge)": 0.25,
+    "T_norm (temperature stress)": 0.25,
+    "C_peak (peak current)": 0.2
+  },
+  "derived_weights": {
+    "KI (kinetic intensity)": 0.0,
+    "DoD (depth of discharge)": 0.9999,
+    "T_norm (temperature stress)": 0.0,
+    "C_peak (peak current)": 0.0001
+  },
+  "optimal_weights": {
+    "KI (kinetic intensity)": 0.4285,
+    "DoD (depth of discharge)": 0.5669,
+    "T_norm (temperature stress)": 0.0043,
+    "C_peak (peak current)": 0.0003
+  },
+  "linear_r2": 1.0,
+  "baseline_rmse": 4.1007,
+  "optimised_rmse": 0.1841,
+  "rmse_improvement": 3.9166,
+  "cosine_similarity_manual_vs_derived": 0.4951,
+  "max_diff_manual_vs_optimal": 0.3169,
+  "sensitivity": {
+    "KI (kinetic intensity)": [
+      {
+        "delta_pct": -30,
+        "weight": 0.21,
+        "rmse": 4.1007,
+        "rmse_change": 0.0
+      },
+      {
+        "delta_pct": -20,
+        "weight": 0.24,
+        "rmse": 4.1007,
+        "rmse_change": 0.0
+      },
+      {
+        "delta_pct": -10,
+        "weight": 0.27,
+        "rmse": 4.1007,
+        "rmse_change": 0.0
+      },
+      {
+        "delta_pct": 0,
+        "weight": 0.3,
+        "rmse": 4.1007,
+        "rmse_change": 0.0
+      },
+      {
+        "delta_pct": 10,
+        "weight": 0.33,
+        "rmse": 4.1007,
+        "rmse_change": 0.0
+      },
+      {
+        "delta_pct": 20,
+        "weight": 0.36,
+        "rmse": 4.1007,
+        "rmse_change": 0.0
+      },
+      {
+        "delta_pct": 30,
+        "weight": 0.39,
+        "rmse": 4.1007,
+        "rmse_change": 0.0
+      }
+    ],
+    "DoD (depth of discharge)": [
+      {
+        "delta_pct": -30,
+        "weight": 0.175,
+        "rmse": 4.891,
+        "rmse_change": 0.7903
+      },
+      {
+        "delta_pct": -20,
+        "weight": 0.2,
+        "rmse": 4.5753,
+        "rmse_change": 0.4746
+      },
+      {
+        "delta_pct": -10,
+        "weight": 0.225,
+        "rmse": 4.7154,
+        "rmse_change": 0.6147
+      },
+      {
+        "delta_pct": 0,
+        "weight": 0.25,
+        "rmse": 4.1007,
+        "rmse_change": 0.0
+      },
+      {
+        "delta_pct": 10,
+        "weight": 0.275,
+        "rmse": 3.172,
+        "rmse_change": -0.9287
+      },
+      {
+        "delta_pct": 20,
+        "weight": 0.3,
+        "rmse": 2.7457,
+        "rmse_change": -1.355
+      },
+      {
+        "delta_pct": 30,
+        "weight": 0.325,
+        "rmse": 2.5079,
+        "rmse_change": -1.5928
+      }
+    ],
+    "T_norm (temperature stress)": [
+      {
+        "delta_pct": -30,
+        "weight": 0.175,
+        "rmse": 3.9001,
+        "rmse_change": -0.2006
+      },
+      {
+        "delta_pct": -20,
+        "weight": 0.2,
+        "rmse": 3.9499,
+        "rmse_change": -0.1508
+      },
+      {
+        "delta_pct": -10,
+        "weight": 0.225,
+        "rmse": 3.9425,
+        "rmse_change": -0.1582
+      },
+      {
+        "delta_pct": 0,
+        "weight": 0.25,
+        "rmse": 4.1007,
+        "rmse_change": 0.0
+      },
+      {
+        "delta_pct": 10,
+        "weight": 0.275,
+        "rmse": 4.1534,
+        "rmse_change": 0.0527
+      },
+      {
+        "delta_pct": 20,
+        "weight": 0.3,
+        "rmse": 4.1508,
+        "rmse_change": 0.0501
+      },
+      {
+        "delta_pct": 30,
+        "weight": 0.325,
+        "rmse": 4.2967,
+        "rmse_change": 0.196
+      }
+    ],
+    "C_peak (peak current)": [
+      {
+        "delta_pct": -30,
+        "weight": 0.14,
+        "rmse": 2.4575,
+        "rmse_change": -1.6432
+      },
+      {
+        "delta_pct": -20,
+        "weight": 0.16,
+        "rmse": 2.804,
+        "rmse_change": -1.2967
+      },
+      {
+        "delta_pct": -10,
+        "weight": 0.18,
+        "rmse": 3.1724,
+        "rmse_change": -0.9283
+      },
+      {
+        "delta_pct": 0,
+        "weight": 0.2,
+        "rmse": 4.1007,
+        "rmse_change": 0.0
+      },
+      {
+        "delta_pct": 10,
+        "weight": 0.22,
+        "rmse": 4.6216,
+        "rmse_change": 0.5209
+      },
+      {
+        "delta_pct": 20,
+        "weight": 0.24,
+        "rmse": 4.3309,
+        "rmse_change": 0.2302
+      },
+      {
+        "delta_pct": 30,
+        "weight": 0.26,
+        "rmse": 4.442,
+        "rmse_change": 0.3413
+      }
+    ]
+  },
+  "robustness_max_rmse_change_at_30pct": {
+    "KI (kinetic intensity)": 0.0,
+    "DoD (depth of discharge)": 1.5928,
+    "T_norm (temperature stress)": 0.2006,
+    "C_peak (peak current)": 1.6432
+  },
+  "overall_max_rmse_change": 1.6432
+}
