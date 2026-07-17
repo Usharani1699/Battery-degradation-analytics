@@ -6,8 +6,15 @@
 *.zip
 *.tar.gz
 
-# Allow the linked master dataset used by ML scripts
+# Allow key processed files and documentation
 !data/Linked_Lab_Fleet_Degradation.csv
+!03_Processed_Data/DATA_DICTIONARY.csv
+!03_Processed_Data/README.md
+
+# Ignore raw/large CSVs inside new dataset folders
+02_Downloaded_Datasets/CALCE_LiCoO2/
+02_Downloaded_Datasets/NASA_PCoE/
+02_Downloaded_Datasets/Extracted_CSV_Data/
 
 # Specific dataset folders (raw data — too large)
 CALCE Battery Dataset/

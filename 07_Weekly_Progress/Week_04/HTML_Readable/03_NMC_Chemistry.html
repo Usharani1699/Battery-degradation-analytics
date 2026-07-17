@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>03 NMC Chemistry</title>
+  
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #1E293B;
+    background: #F8FBFF;
+    padding: 0;
+  }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 40px 32px 60px; background: #fff; }
+  h1 { font-size: 2em; color: #1B4F72; border-bottom: 3px solid #0096B7; padding-bottom: 10px; margin: 32px 0 16px; }
+  h2 { font-size: 1.45em; color: #025E8C; margin: 28px 0 10px; padding-left: 10px; border-left: 4px solid #0096B7; }
+  h3 { font-size: 1.15em; color: #0096B7; margin: 20px 0 8px; }
+  p  { margin: 8px 0; }
+  ul, ol { margin: 8px 0 8px 28px; }
+  li { margin: 4px 0; }
+  code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    background: #EBF5FB;
+    color: #025E8C;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 0.92em;
+  }
+  pre {
+    background: #1E293B;
+    color: #A8D8EA;
+    padding: 16px 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 14px 0;
+    font-size: 0.9em;
+    line-height: 1.55;
+  }
+  pre code { background: none; color: inherit; padding: 0; }
+  hr { border: none; border-top: 1px solid #E2E8F0; margin: 24px 0; }
+  blockquote {
+    border-left: 4px solid #0096B7;
+    background: #EBF5FB;
+    padding: 10px 16px;
+    margin: 14px 0;
+    color: #025E8C;
+    border-radius: 0 6px 6px 0;
+    font-style: italic;
+  }
+  a { color: #0096B7; }
+  a:hover { color: #E85D5D; }
+  .table-wrap { overflow-x: auto; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.93em; }
+  th { background: #1B4F72; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { border: 1px solid #D1E8F5; padding: 7px 12px; }
+  tr:nth-child(even) td { background: #F0F7FF; }
+  strong { color: #1B4F72; }
+  .nav { background: #1B4F72; padding: 16px 32px; position: sticky; top: 0; z-index: 100; }
+  .nav a { color: #A8D8EA; text-decoration: none; margin-right: 20px; font-size: 13px; font-weight: 500; }
+  .nav a:hover { color: #fff; }
+</style>
+</head>
+<body>
+  <div class="nav"><a href="00_README.html">README</a><a href="01_Literature_Review.html">Literature Review</a><a href="02_Dataset_Analysis.html">Datasets</a><a href="03_NMC_Chemistry.html">NMC Chemistry</a><a href="04_EV_Fleet_Data.html">Fleet Data</a><a href="05_Research_Methodology.html">Methodology</a></div>
+  <div class="page-wrap">
+    <h1>Why NMC Chemistry Was Selected</h1>
+<h2>EG7030 Dissertation — Week 4 Detailed Notes</h2>
+<br>
+<hr>
+<br>
+<h2>What Is NMC?</h2>
+<br>
+<p>NMC stands for <strong>Nickel Manganese Cobalt Oxide</strong> — the positive electrode (cathode) material in lithium-ion batteries. Full chemical formula: <strong>LiNixMnyCozO2</strong>, where x + y + z = 1.</p>
+<br>
+<h3>Common NMC Variants</h3>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Variant</th><th>Ni : Mn : Co</th><th>Energy Density</th><th>Stability</th><th>EV Use</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th>NMC-111</th><th>1:1:1</th><th>Moderate</th><th>Good</th><th>Older EVs</th></tr>
+<tr><td>NMC-523</td><td>5:2:3</td><td>Good</td><td>Good</td><td>BMW i3 (early)</td></tr>
+<tr><td>NMC-622</td><td>6:2:2</td><td>Good</td><td>Moderate</td><td>Nissan Leaf Gen 2</td></tr>
+<tr><td>NMC-811</td><td>8:1:1</td><td>Highest</td><td>Lower</td><td>Tesla Model 3 LR, BMW i4</td></tr>
+<p></table></div></p>
+<br>
+<p><strong>NMC-811 is the current industry standard for high-energy EV batteries</strong> and is the variant used in both Paper D1 (Mulpuri et al.) and Paper D2 (Si et al.).</p>
+<br>
+<p>The CALCE INR 18650-20R (Samsung NMC cell) is likely NMC-622 or NMC-532 formulation — still NMC family, enabling direct chemistry comparison.</p>
+<br>
+<hr>
+<br>
+<h2>Four Reasons NMC Was Selected</h2>
+<br>
+<h3>Reason 1: Dataset Availability (Cross-Study Consistency)</h3>
+<br>
+<p>Your three datasets provide NMC data as follows:</p>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Dataset</th><th>NMC Cell</th><th>Details</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th>CALCE</th><th>INR 18650-20R</th><th>Samsung 18650 cylindrical, 2.0 Ah, NMC cathode</th></tr>
+<tr><td>Oxford</td><td>BMP/BMR/SPM pouch cells</td><td>NMC-type pouch cells, tested by Oxford Engineering</td></tr>
+<tr><td>NASA</td><td>NOT available</td><td>NASA cells are LCO (Lithium Cobalt Oxide)</td></tr>
+<p></table></div></p>
+<br>
+<p><strong>Two out of three datasets have NMC cells</strong> → sufficient training data for cross-validated ML models.</p>
+<br>
+<p>If you had chosen LFP (Lithium Iron Phosphate): only the CALCE A123 cell is available — one dataset = insufficient for robust ML training.</p>
+<p>If you had chosen LCO: NASA + CALCE CS2/CX2 cells available, but LCO is declining in EV use (mainly in older phones and early EVs).</p>
+<br>
+<p><strong>NMC gives the best balance of dataset coverage and industry relevance.</strong></p>
+<br>
+<h3>Reason 2: Literature Alignment (Benchmarking Possible)</h3>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Paper</th><th>Cell</th><th>Chemistry</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th>Mulpuri et al. 2025 (D1)</th><th>LGM50 21700</th><th>NMC-811</th></tr>
+<tr><td>Si et al. 2025 (D2)</td><td>Research cell</td><td>NMC-811 (LiNi₀.₈Mn₀.₁Co₀.₁O₂)</td></tr>
+<p></table></div></p>
+<br>
+<p>Because both your most directly relevant papers use <strong>NMC-811</strong>, you can:</p>
+<ul><li>Compare your capacity fade rates against their published results</li>
+<li>Validate your ML model accuracy against their reported metrics</li>
+<li>Use the same PyBaMM parameter set (Chen2020 = LGM50 NMC-811 parameters)</li></ul>
+<p>If you had used LFP, you could only benchmark against Severson 2019 — a less relevant comparison for EV applications.</p>
+<br>
+<h3>Reason 3: EV Market Dominance</h3>
+<br>
+<p>NMC chemistry powers the majority of electric vehicles sold globally:</p>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Vehicle</th><th>Battery Chemistry</th><th>Battery Supplier</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th>Tesla Model 3 Long Range</th><th>NMC-811</th><th>Panasonic (2170 cell)</th></tr>
+<tr><td>Tesla Model Y</td><td>NMC-811</td><td>LG Energy (2170 cell)</td></tr>
+<tr><td>BMW i4</td><td>NMC</td><td>Samsung SDI</td></tr>
+<tr><td>Volkswagen ID.4</td><td>NMC</td><td>LG Energy / Samsung SDI</td></tr>
+<tr><td>Hyundai Ioniq 5</td><td>NMC</td><td>SK Innovation</td></tr>
+<tr><td>Nissan Leaf e+</td><td>NMC-622</td><td>AESC</td></tr>
+<tr><td>Audi Q4 e-tron</td><td>NMC</td><td>Samsung SDI</td></tr>
+<tr><td>Rivian R1T</td><td>NMC-811</td><td>Samsung SDI</td></tr>
+<p></table></div></p>
+<br>
+<p><strong>UK market context</strong>: Under the Zero Emission Vehicle (ZEV) Mandate (2024), 22% of new cars sold in the UK in 2024 must be zero emission, rising to 80% by 2030. The majority of these will be NMC-battery EVs — making NMC degradation research directly policy-relevant.</p>
+<br>
+<p><strong>Market share</strong>: NMC accounts for approximately 45–60% of global EV battery production by capacity (GWh). LFP is second (~30%) but growing mainly in lower-cost segments (base Tesla Model 3/Y in China, BYD vehicles).</p>
+<br>
+<p><strong>Energy density comparison:</strong></p>
+<ul><li>NMC-811: ~200–250 Wh/kg (cell level)</li>
+<li>LFP: ~120–160 Wh/kg (cell level)</li>
+<li>LCO: ~180–200 Wh/kg (cell level)</li></ul>
+<p>Higher energy density of NMC means longer range EVs — precisely the segment where battery degradation management matters most for fleet operators.</p>
+<br>
+<h3>Reason 4: Rich Degradation Signature for SHAP Analysis</h3>
+<br>
+<p>NMC batteries degrade through <strong>multiple concurrent mechanisms</strong>, making them ideal for explainability analysis (SHAP):</p>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Degradation Mode</th><th>Mechanism</th><th>What It Affects</th><th>SHAP Feature</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th><strong>SEI growth</strong></th><th>Electrolyte reduction at graphite anode forms a growing passivation layer</th><th>Capacity loss, resistance increase</th><th>Charge capacity ratio, internal resistance</th></tr>
+<tr><td><strong>Particle cracking</strong></td><td>Volume change (~5–8%) during lithiation/delithiation causes mechanical fracture</td><td>New SEI on exposed surfaces → accelerated loss</td><td>Voltage variance, coulombic efficiency</td></tr>
+<tr><td><strong>Lithium plating</strong></td><td>Li deposits as metal instead of intercalating at high rates or low temperatures</td><td>Irreversible capacity loss, safety risk</td><td>Charging voltage spike, differential capacity</td></tr>
+<tr><td><strong>LLI (Loss of Lithium Inventory)</strong></td><td>Lithium trapped in SEI, dead lithium, or plated Li no longer participates in reactions</td><td>Direct capacity reduction</td><td>Discharge capacity fade</td></tr>
+<tr><td><strong>LAM (Loss of Active Material)</strong></td><td>Cracked or isolated electrode particles no longer participate</td><td>Capacity and power fade</td><td>High-frequency impedance</td></tr>
+<tr><td><strong>Electrolyte decomposition</strong></td><td>Oxidation of electrolyte at high voltage NMC cathode</td><td>Gas generation, resistance increase</td><td>Temperature rise, voltage plateau shift</td></tr>
+<p></table></div></p>
+<br>
+<p><strong>Why this matters for SHAP</strong>: Because NMC has multiple active degradation modes that respond differently to different stress factors (temperature, C-rate, SoC window), SHAP analysis will reveal <strong>which features correspond to which degradation mode</strong> at different stages of battery life. This gives mechanistic insight that purely data-driven approaches cannot provide.</p>
+<br>
+<p><strong>LFP comparison</strong>: LFP has mainly SEI growth and lithium plating — fewer modes, less rich for SHAP analysis. Its flat discharge voltage curve also makes feature extraction harder.</p>
+<br>
+<hr>
+<br>
+<h2>NMC Chemistry Parameters for PyBaMM</h2>
+<br>
+<p>When you reach Stage 6 (PyBaMM simulation), you will use these parameters:</p>
+<br>
+<pre><code>import pybamm
+<br>
+<p>&lt;h1&gt;Chen2020 parameters are specifically for the LGM50 NMC-811 cell&lt;/h1&gt;</p>
+<p>&lt;h1&gt;(same cell as Paper D1 by Mulpuri et al.)&lt;/h1&gt;</p>
+<p>param = pybamm.ParameterValues("Chen2020")</p>
+<br>
+<p>&lt;h1&gt;Key parameters&lt;/h1&gt;</p>
+<p>param["Nominal cell capacity [A.h]"]  # = 5 Ah</p>
+<p>param["Upper voltage cut-off [V]"]    # = 4.2 V</p>
+<p>param["Lower voltage cut-off [V]"]    # = 2.5 V</p>
+<p>param["Positive electrode SOC_0"]     # NMC initial stoichiometry</p>
+<p></code></pre></p>
+<br>
+<p>The Chen2020 parameter set was published in:</p>
+<ul><li><strong>Chen, M. et al. (2020)</strong> — "Development of Experimental Techniques for Parameterization of Multi-scale Lithium-ion Battery Models" — <em>J. Electrochem. Soc.</em></li>
+<li>DOI: https://doi.org/10.1149/1945-7111/ab9050</li></ul>
+<hr>
+<br>
+<h2>Summary: NMC vs. Alternatives Comparison Table</h2>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Criterion</th><th>NMC</th><th>LFP</th><th>LCO</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th>Available in CALCE</th><th>Yes (INR 18650-20R)</th><th>Yes (A123)</th><th>Yes (CS2, CX2)</th></tr>
+<tr><td>Available in Oxford</td><td>Yes</td><td>No</td><td>No</td></tr>
+<tr><td>Available in NASA</td><td>No</td><td>No</td><td>Yes</td></tr>
+<tr><td>Used in D1 paper</td><td>Yes (NMC-811)</td><td>No</td><td>No</td></tr>
+<tr><td>Used in D2 paper</td><td>Yes (NMC-811)</td><td>No</td><td>No</td></tr>
+<tr><td>EV market share 2024</td><td>~50%</td><td>~30%</td><td><5%</td></tr>
+<tr><td>Energy density</td><td>Highest</td><td>Lowest</td><td>Medium</td></tr>
+<tr><td>Degradation modes</td><td>Many (SEI, crack, plating, LLI, LAM)</td><td>Few (SEI dominant)</td><td>Medium</td></tr>
+<tr><td>SHAP richness</td><td>Highest</td><td>Lower</td><td>Medium</td></tr>
+<tr><td>PyBaMM parameters</td><td>Chen2020 (validated)</td><td>Chen2020 (LFP variant)</td><td>Available</td></tr>
+<tr><td><strong>VERDICT</strong></td><td><strong>SELECTED</strong></td><td>Alternative</td><td>Not suitable</td></tr>
+<p></table></div></p>
+<br>
+  </div>
+</body>
+</html>

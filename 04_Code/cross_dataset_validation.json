@@ -1,0 +1,35 @@
+{
+  "training_dataset": "CALCE",
+  "calce_reference": {
+    "name": "CALCE (in-distribution, 5-fold CV)",
+    "n_cycles": 9031,
+    "chemistry": "LiCoO2",
+    "profile": "CC",
+    "rmse": 3.73,
+    "mae": 2.14,
+    "r2": 0.9839,
+    "clf_accuracy": 98.48
+  },
+  "oxford_validation": {
+    "name": "Oxford NMC (variable-current drive cycles)",
+    "n_cycles": 72,
+    "n_cells": 6,
+    "chemistry": "NMC",
+    "profile": "BMP",
+    "rmse": 4.748,
+    "mae": 2.859,
+    "r2": -0.5654,
+    "clf_accuracy": 90.28
+  },
+  "nasa_validation": {
+    "name": "NASA PCoE LiCoO2 (CC, multi-temperature)",
+    "n_cycles": 2010,
+    "n_cells": 26,
+    "chemistry": "LiCoO2",
+    "profile": "CC",
+    "rmse": 15.295,
+    "mae": 10.038,
+    "r2": -0.4418,
+    "clf_accuracy": 53.13
+  }
+}

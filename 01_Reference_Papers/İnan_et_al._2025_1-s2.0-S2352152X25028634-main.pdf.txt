@@ -1,0 +1,1560 @@
+
+--- PAGE 1 ---
+Journal of Energy Storage 136 (2025) 118150
+Contents lists available at ScienceDirect
+JournalofEnergyStorage
+journal homepage: www.elsevier.com/locate/est
+Research papers
+Descriptiveproximity-basedmodelingforaccurateandexplainablebattery
+state-of-chargeestimation
+Ebubekir İnana ,∗, Ahmet Aksözb , Saadin Oyucuc , Emre Biçerd
+aKayseri University, Faculty of Engineering, Architecture and Design, Department of Engineering Basic Sciences,Kayseri,38000,Türkiye
+bKayseri University, Faculty of Engineering, Architecture and Design, Electrical and Electronics Engineering,Kayseri,38000,Türkiye
+cGazi University, Department of Computer Engineering, Faculty of Technology,Ankara,06040,Türkiye
+dSivas University of Science and Technology, Sivas Energy Storage Research and Application Center,Sivas,58010,Türkiye
+A R T I C L E I N F O A B S T R A C T
+MSC: State-of-Charge (SoC) estimation of batteries is critical for electric vehicle health management. However,
+94A12 achieving high accuracy under heterogeneous operating conditions while preserving model transparency
+62H30 remains challenging. This paper proposes a novel descriptive proximity-based learning framework for accurate
+68U35 and explainable SoC estimation. Battery discharge data are mapped into a descriptive feature space, 𝛷(𝑥)={cur-
+Keywords: rent, voltage, capacity, energy, cycle count, temperature}, where local proximity reflects similar operational
+State of charge estimation states. An adaptive 𝜀-proximity threshold is derived using robust Median Absolute Deviation (MAD) statistics.
+Descriptive proximity This threshold guides a density-based clustering algorithm (DBSCAN) to identify intrinsic regimes without
+L
+F
+i
+u
+g
+z
+h
+z
+t
+y
+G
+c
+B
+l
+M
+ustering
+manual tuning.
+Explainable machine learning
+We then define fuzzy proximity relations between clusters and rigorously prove that they satisfy the
+reflexivity, symmetry, and transitivity-like axioms of proximity. A gradient-boosted tree model (LightGBM) is
+trained using the cluster-informed features, yielding near-perfect SoC predictions (e.g., cross-validation RMSE
+≈0.13 and 𝑅2≈1.00). Shapley Additive Explanations (SHAP) reveal that the model’s predictions align with
+physical expectations by distributing influence across meaningful features such as capacity and voltage, thus
+improving interpretability and trust.
+The proposed framework demonstrates a powerful integration of proximity-based modeling and explainable
+machine learning, advancing the state-of-the-art in reliable SoC estimation across varying conditions. Addi-
+tional subsampling and noise robustness analyses confirm that the framework remains stable under reduced
+data availability and sensor perturbations, ensuring practical reliability.
+1. Introduction investigations target the development of solid-state electrolytes, high-
+capacity cathodic materials, and accelerated charging mechanisms to
+Li-ion batteries (LIBs) have emerged as a preferred energy storage overcome these challenges and bridge the performance gap between
+solution due to their favorable characteristics such as elevated energy EVs and traditional vehicles [5]. Concurrently, improvements in Battery
+density, low mass, extended operational life, and superior efficiency [1, Management Systems (BMS) have reinforced the operational stability,
+2]. Over the last decade, active materials and structural configurations safety, and overall functionality of LIBs [6]. Contemporary BMS archi-
+in Li-ion batteries have been significantly improved. These enhance- tectures incorporate sophisticated control algorithms that govern the
+ments have increased the specific energy from nearly 150 Wh/kg to behavior of individual cells within the battery pack, effectively averting
+approximately 250 Wh/kg. This progress has been pivotal in facilitat- conditions such as thermal incidents and voltage imbalances [7]. As
+ing the shift from conventional ICE vehicles to electric alternatives. BMS technologies evolve, accurate quantification of critical indicators
+Nonetheless, the driving range of electric vehicles (EVs) continues like State of Health (SoH) and State of Charge (SoC) has become central
+to fall short of that offered by internal combustion engine (ICE) ve- to performance optimization and user reliability [8].
+hicles, owing to intrinsic limitations in energy density, insufficient Historically, the SoC has been estimated using coulomb counting
+charging infrastructure, and progressive battery covering [3,4]. Current and open-circuit voltage (OCV) analysis, often with Kalman Filter-based
+∗ Corresponding author.
+E-mail addresses: ebubekirinan@kayseri.edu.tr (E. İnan), ahmetaksoz@kayseri.edu.tr (A. Aksöz), saadinoyucu@gazi.edu.tr (S. Oyucu),
+emre.bicer@sivas.edu.tr (E. Biçer).
+https://doi.org/10.1016/j.est.2025.118150
+Received 23 April 2025; Received in revised form 6 August 2025; Accepted 19 August 2025
+Available online 10 September 2025
+2352-152X/© 2025 Elsevier Ltd. All rights are reserved, including those for text and data mining, AI training, and similar technologies.
+--- PAGE 2 ---
+E. İnan et al. Journal of Energy Storage 136 (2025) 118150
+Nomenclature
+AI Artificial Intelligence 𝑥 Battery data sample (observation)
+ANN Artificial Neural Network 𝛷(𝑥) Descriptive feature vector of 𝑥
+BMS Battery Management System 𝜙(𝑥) 𝑖th feature of 𝑥
+𝑖
+CC–CV Constant Current–Constant Voltage 𝐼(𝑡) Discharge current at time 𝑡 (mA)
+CNN Convolutional Neural Network 𝑉 Voltage (V)
+CV Cross-Validation 𝐶 Actual battery capacity (mAh)
+actual
+DBSCAN Density-Based Spatial Clustering of Applications with Noise 𝐸 Energy (mWh)
+DPLM Descriptive Proximity-based LightGBM Model 𝑇 Ambient temperature (◦C)
+DoD Depth of Discharge 𝑆𝑜𝐶(𝑡) State of charge at time 𝑡 (%)
+EV Electric Vehicle 𝜂 Coulombic efficiency
+𝑖
+LIB Li-ion Battery 𝑡 ,𝑡 Initial and current time (s)
+0
+LightGBM Light Gradient Boosting Machine 𝛿 Descriptive proximity relation
+𝛷
+LSTM Long Short-Term Memory 𝑄(𝐴) Set of descriptions for subset 𝐴
+MAD Median Absolute Deviation 𝜇 (𝐴,𝐵) Fuzzy proximity between sets 𝐴 and 𝐵
+𝑅
+MAE Mean Absolute Error ‖⋅‖2 Euclidean norm
+ML Machine Learning 𝜖 Distance threshold for DBSCAN
+OCV Open Circuit Voltage 𝑛 Number of samples
+PDP Partial Dependence Plot 𝑦 True SoC value of sample 𝑖 (%)
+𝑖
+R2 Coefficient of Determination 𝑦̂ Predicted SoC value of sample 𝑖 (%)
+𝑖
+RF Random Forest 𝑦̄ Mean of true SoC values (%)
+RMSE Root Mean Squared Error 𝑐 Cluster label of 𝑥
+𝑖 𝑖
+RNN Recurrent Neural Network
+SHAP SHapley Additive exPlanations
+SoC State of Charge
+SoH State of Health
+SVR Support Vector Regression
+XAI Explainable Artificial Intelligence
+XGBoost Extreme Gradient Boosting
+methods [9]. However, these traditional techniques lose accuracy as Various artificial intelligence (AI) strategies have been actively
+the battery ages and temperature conditions change, which undermines integrated by the research team to enable robust SoH prediction, in-
+predictive reliability [10]. To mitigate such issues, machine learning corporating deep learning architectures, explainable AI (XAI) method-
+(ML) algorithms such as support vector machines (SVM), artificial ologies, and hybrid neural network models. Convolutional Neural Net-
+works (CNNs) and Recurrent Neural Networks (RNNs) have been imple-
+neural networks (ANN), and deep learning models-are increasingly
+mented successfully, demonstrating notable predictive performance in
+being adopted. These approaches excel at capturing nonlinear patterns
+domains such as unmanned aerial systems and electric mobility [16,
+and adapting to dynamic operational contexts, thereby enhancing the
+17]. In particular, CNN-RNN hybrid models have yielded significant
+reliability of SoC and SoH estimations [11].
+accuracy when applied to time-series inputs such as voltage and tem-
+A substantial body of research has focused on enhancing the es- perature profiles, especially under dynamic load conditions. To further
+timation techniques for battery SoH and SoC, resulting in a range enhance estimation accuracy, ensemble-based learning frameworks,
+of innovative methodologies. Dineva et al. utilized machine learning namely gradient boosting, XGBoost, LightGBM, and model stacking-
+algorithms, trained with suitable datasets, to estimate the SoC of Li-ion have been utilized. These approaches outperform traditional statistical
+batteries across varying C-rate conditions. Beyond experimental valida-
+models in many settings. They capture nonlinear degradation dynamics
+and adapt effectively to a wide range of operational conditions [17].
+tion, they developed a battery model capable of simulating fluctuating
+Quantitative assessments have demonstrated improvements of approx-
+load profiles, demonstrating its effectiveness in predicting voltage and
+imately 30−45% in root mean square error (RMSE) and mean abso-
+SoC under dynamic operating conditions [12]. Another study employed
+lute error (MAE) compared to classical methods such as polynomial
+an aging-based experimental approach combined with a Kalman filter
+regression and ARIMA.
+algorithm to assess capacity degradation and integrate SoH with SoC Long Short-Term Memory (LSTM) and Bidirectional LSTM (Bi-
+estimations. The proposed method was validated through physical LSTM) networks have been employed to address the time-dependent
+testing, and the resulting estimation errors were quantified to confirm nature of degradation processes. These architectures have shown par-
+its practical viability [13]. In the related work, Liu et al. introduced ticular efficacy in modeling long-range temporal dependencies within
+a Kalman filter-based framework for precise SoC tracking, aimed at features such as charge/discharge current patterns and internal resis-
+preventing battery overcharge and deep discharge scenarios. The model tance trends. Bi-LSTM models, in particular, have exhibited enhanced
+incorporated real-time parameter identification through a least squares
+reliability in early-stage anomaly detection, especially in systems sub-
+jected to variable thermal conditions and inconsistent operational
+approach and achieved an SoC estimation accuracy within a 2% er-
+regimes [18]. To promote transparency and trust in model predictions,
+ror margin under diverse testing conditions [14]. Furthermore, Yang
+the study prioritizes explainability. This is achieved by integrating
+proposed a deep learning solution by designing a hybrid convolutional
+SHAP (Shapley Additive Explanations) and Partial Dependence Plots
+neural network to forecast the remaining useful life and total cycle (PDP). These XAI tools have facilitated the identification of critical
+lifespan of Li-ion batteries. The approach featured a cycle attention input features-such as mean discharge voltage, temperature variance,
+mechanism, leveraging input features such as voltage, current, and and depth of discharge (DoD) thereby enabling root-cause analysis
+temperature to enhance predictive accuracy [15]. and the derivation of actionable insights [16]. Models augmented with
+2
+--- PAGE 3 ---
+E. İnan et al. Journal of Energy Storage 136 (2025) 118150
+SHAP-based interpretability have shown improved explanatory power. described in [23],  includes various proximity relations such as Efre-
+𝛿
+In addition, they offer operational advantages when used in safety- movic˘ proximity 𝛿 𝐸 [21], Lodato proximity 𝛿 [35], Wallman proximity
+critical battery management applications. Additionally, investigations 𝛿 𝑊 and descriptive proximity 𝛿 𝛷 , which defines  𝛿𝛷 [27,30].
+have been conducted into the effects of thermal profiles, operational Let us define a relation 𝛿 on the power set of a nonempty set 𝑋. The
+stress rates, and degradation modes on SoH modeling, thereby en- notation 𝐴𝛿𝐵 means that set 𝐴 is proximal to set 𝐵, and 𝐴𝛿𝐵 means
+suring robust performance across diverse application scenarios [19]. that set 𝐴 is not proximal to set 𝐵. For all 𝐴,𝐵,𝐶∈(𝑋), we consider
+Real-time monitoring capabilities and adaptive control strategies are the following axioms:
+( )
+also being developed as part of an integrated approach to intelligent ( 𝐴 0) ∅𝛿𝐴.
+battery management. By leveraging a comprehensive suite of AI-driven ( 𝐴 1) 𝐴𝛿𝐵⟹𝐵𝛿𝐴.
+m t
+c
+h
+o
+e e
+n
+t
+t
+h f
+r
+u o
+ib
+n d
+u
+c o t
+t
+l i
+i
+o o
+o
+g n
+n
+i a
+s
+e l s
+s
+i , t
+u
+y s
+p
+i
+p
+a g n n
+o
+d
+r
+if
+t
+i r c
+e
+e a
+x
+l n
+t
+ia
+e
+t
+n
+b a i
+d
+d l
+e
+i v t
+d
+y a n
+b
+o c
+a
+f e
+t
+b m
+te
+a
+r
+e t
+y
+n te t
+l
+r s
+i
+y
+f
+h
+e
+m
+s
+a
+p
+v a
+a
+e n
+n
+b a
+s
+e g
+,
+e e
+im
+n m
+p
+m e
+r
+n a
+o
+t d
+v
+s e
+e
+y
+d
+i s n t
+o
+e e
+p
+m n
+e
+s h
+r
+.
+a
+a
+t
+T n
+i
+h
+o
+ci e
+n
+n s
+a
+g e
+l
+( ( 𝐴 𝐴 𝐴 2 3
+4
+) ) ( 𝐴 𝐴 𝐴 ∩ 𝛿 ∪ 𝐵 𝐵 𝐵 ≠ ) ⟹
+(
+𝛿 ∅ 𝐶 ⟹ 𝐴
+)
+⟺ ≠
+(
+𝐴 ∅, 𝐴 𝛿 𝐵
+)
+𝐵 𝛿 ≠ .
+(
+𝐶 ∅ . o
+)
+r 𝐵
+(
+𝛿𝐶
+)
+.
+( )
+efficiency, and alignment with broader objectives pertaining to sustain-
+If it satisfies 𝐴
+0
+, 𝐴
+1
+, 𝐴
+2
+, 𝐴
+3
+and 𝐴
+4
+, 𝛿 is called a basic
+able and resilient energy storage technologies [20]. In addition, we
+proximity on 𝑋.
+In this work, proximal relator spaces are consists of concrete points.
+conducted subsampling and noise robustness analyses to demonstrate
+A non-abstract point has a location and some features that can be
+that the proposed framework maintains stability under reduced data
+measured [36].
+availability and sensor perturbations, further supporting its practical
+Measurable features of an object can be represented using probe
+reliability.
+functions. A probe function 𝜙 ∶ 𝑋 → R maps each sample point
+Beyond its practical implications, the proposed approach is the-
+within a given space or digital image to a real number, effectively
+oretically grounded in the descriptive proximity framework, which
+quantifying specific characteristics of that sample. Consider 𝛷(𝑥) =
+draws from the foundations of Efremović proximity and its general-
+(𝜙 (𝑥),…,𝜙 (𝑥)), which denotes a comprehensive description of the
+izations [21]. The use of fuzzy proximity measures and feature-based 1 𝑛
+object 𝑥. Each 𝜙(𝑥) within this tuple represents a distinct measurable
+neighborhoods fits naturally within the framework of proximal relator
+feature of 𝑥, allo
+𝑖
+wing for a detailed representation of every element
+spaces. These are generalizations of proximity spaces that incorporate
+𝑥 ∈ 𝑋. This framework facilitates the analysis and comparison of
+descriptive and algebraic relations [22,23]. These spaces support the
+objects based on their quantified features.
+modeling of mathematical objects through descriptive intersections,
+spatial isometries, and approximate algebraic operations [24–27]. The Definition 2.1 ([37]). Let 𝑋 be a nonempty set composed of concrete
+relator-based perspective further enables a topological interpretation points, and let 𝛷 be an object description. For any subset 𝐴⊆𝑋, the
+of data structure, where the concept of descriptive nearness between set description of 𝐴 is defined as
+clusters can be formalized using fuzzy relational operators that define
+soft boundaries and semantic overlap [28–30]. The inclusion of fuzzy
+(𝐴)={𝛷(𝑎)∣𝑎∈𝐴}.
+proximity into the model thus bridges quantitative machine learning
+and qualitative relational reasoning, fostering a novel integration of Definition 2.2 ([29,37]). Let 𝑋 be a nonempty set of concrete points,
+data topology and predictive analytics. and let 𝐴 and 𝐵 be any subsets of 𝑋. The descriptive intersection of 𝐴
+Building upon this foundation, the framework of approximately al- and 𝐵 is given by
+gebraic structures within proximal relator spaces offers a mathemati-
+cally rigorous and topologically coherent setting for analyzing uncer-
+𝐴∩
+𝛷
+𝐵={𝑥∈𝐴∪𝐵∣𝛷(𝑥)∈(𝐴) 𝑎𝑛𝑑 𝛷(𝑥)∈(𝐵)}.
+tainty, vagueness, and partial memberships among data-driven clusters.
+These algebraic generalizations, which extend traditional group, ring, Definition 2.3 ([30]). Let 𝑋 be a nonempty set consisting of concrete
+and semigroup concepts into descriptive and proximity-enriched do- points, and let 𝐴 and 𝐵 be any subsets of 𝑋. If (𝐴)∩(𝐵)≠∅, then
+mains [24,25,31,32], enable the representation of complex structural 𝐴 is said to be descriptively near 𝐵, denoted as 𝐴𝛿 𝐵. Conversely, if
+𝛷
+behaviors observed in real-world battery systems. In our context, the (𝐴)∩(𝐵)=∅, then 𝐴 is described as being descriptively far from 𝐵,
+descriptive feature space endowed with fuzzy proximity metrics facili- denoted as 𝐴𝛿 𝐵.
+𝛷
+tates the construction of an approximately algebraic structure, wherein
+Throughout this article, we focus on the descriptive basic proximity
+each cluster reflects an algebraic object exhibiting approximate clo-
+𝛿 , which is sufficient for modeling and analysis in our application
+sure and associativity with respect to similarity-based neighborhood
+𝛷
+context.
+operations. This reinforces the mathematical interpretability of the
+DBSCAN-derived clusters and suggests a formal basis for potentially Definition 2.4 ([23,30]). A descriptive basic proximity 𝛿 on the power
+𝛷
+embedding soft relations, such as intra and inter-cluster proximities, set 𝑃(𝑋) satisfies the following conditions for all 𝐴,𝐵,𝐶∈𝑃(𝑋):
+into the learning model in future extensions. Thus, the integration of
+descriptive proximity with approximately algebraic structures serves as 0◦ ∅𝛿 𝛷 𝐴.
+a foundational bridge between symbolic algebra and data-driven learn- 1◦ 𝐴𝛿 𝐵⇒𝐵𝛿 𝐴.
+𝛷 𝛷
+ing, yielding both theoretical soundness and computational tractability 2◦ 𝐴𝛿 𝐵⇒𝐴≠∅ and 𝐵≠∅.
+𝛷
+in our proposed DPLM framework. 3◦ (𝐴)∩(𝐵)≠∅⇒𝐴𝛿 𝐵.
+𝛷
+4◦ 𝐴𝛿 (𝐵∪𝐶)⇔𝐴𝛿 𝐵 or 𝐴𝛿 𝐶.
+2. Theoretical background
+𝛷 𝛷 𝛷
+Definition 2.5 ([22]). Let (𝑋,) be a proximal relator space,
+This section introduces the foundational concepts and mathematical
+structures underpinning our proposed framework, including relator
+𝜇∶ 𝑃(𝑋)× 𝑃(𝑋) ⟶[0,1]
+spaces, proximity relations, and fuzzy proximity. These concepts pro-
+(𝐴,𝐵) ⟼𝜇(𝐴,𝐵)
+vide a theoretical basis for the descriptive and structural features be a fuzzy relation and 𝐴,𝐵⊂𝑋; then
+util L iz e e t d 𝑋 in b e o u a r n m on o e d m el p . ty set. A collection  of relations on 𝑋 is termed  𝜇 = {( (𝐴,𝐵),𝜇(𝐴,𝐵) ) |𝐴,𝐵∈𝑃(𝑋) }
+a relator [33]. The pair (𝑋,) forms a relator space, which naturally is called a fuzzy proximity relation, provided it satisfies the following
+generalizes uniform spaces [34]. When this collection comprises prox- axioms:
+imity relations, it defines a proximal relator space (𝑋, ) [23]. As For all 𝐴,𝐵,𝐶∈𝑃(𝑋),
+𝛿
+3
+--- PAGE 4 ---
+E. İnan et al. Journal of Energy Storage 136 (2025) 118150
+( 𝑁
+𝜇
+)
+1
+𝜇 ( 𝐴,∅ ) =0. t
+v
+h
+id
+e
+e
+N
+s
+e
+h
+w
+ig
+a
+h
+r
+l
+e
+y
+B
+r
+T
+el
+S
+i
+4
+ab
+0
+l
+0
+e
+0 -
+a
+5
+n
+V
+d
+1 2
+p r
+A
+ec i
+B
+se
+a tt
+c
+e
+u
+r
+r
+y
+r e
+T
+n
+e
+t
+st
+a n
+S
+d
+y s
+v
+te
+o
+m
+lta
+.
+g
+T
+e
+h
+c
+is
+o n
+s
+t
+y
+r
+s
+o
+t
+l
+e m
+w i
+p
+th
+r
+i
+o
+n
+-
+( )
+(
+𝑁
+𝜇
+) 2
+𝜇(𝐴,𝐵)=𝜇(𝐵,𝐴). a
+el e
+v
+c
+o
+t
+l
+r
+t
+o
+a
+c
+g
+h
+e
+e m
+wi
+i
+n
+ca
+d
+l
+o
+m
+w
+e
+o
+a
+f
+s u
+2
+r
+.
+e
+5
+m
+V
+e
+–
+n
+4
+t
+.
+s
+2
+.
+V, ensuring accurate and reproducible
+𝑁 𝜇
+3
+𝜇(𝐴,𝐵)≠0 implies 𝐴𝛿𝐵 for 𝛿∈. Based on the collected charge–discharge profiles, the State of Charge
+( ) (SoC) was computed according to
+𝑁
+𝜇 4
+𝜇(𝐴,𝐵∪𝐶)≠0 implies 𝜇(𝐴,𝐵)≠0 or 𝜇(𝐴,𝐶)≠0.
+1 𝑡
+SoC(𝑡)=SoC(𝑡 )− 𝜂𝐼(𝑡)𝑑𝑡, (2)
+The set of all fuzzy proximity relations on 𝑃(𝑋) is denoted by 0 𝐶 ∫ 𝑖
+
+𝜇
+(𝑋). Therefore, 𝜇(𝐴,𝐵) is called fuzzy proximity measure.
+and the resulting va
+a
+l
+c
+u
+tu
+e
+a
+s
+l
+w
+𝑡
+e
+0
+re used as high-fidelity inputs to the pro-
+posed descriptive proximity-based learning framework.
+Definition 2.6 (Fuzzy Proximity Between Clusters). Let 𝑋 be a set of
+battery discharge instances, and let 𝐴,𝐵 ⊆ 𝑋 be non-empty clusters
+3.2. Exploratory data analysis
+formed in a normalized descriptive feature space via 𝛷∶𝑋→R𝑛. The
+fuzzy proximity 𝜇(𝐴,𝐵) is defined as:
+To gain an initial understanding of the dataset, we conducted a
+𝜇(𝐴,𝐵) comprehensive statistical analysis on seven key features: current (𝐼),
+voltage (𝑉), capacity (𝐶), energy (𝐸), SoC, cycle number, and temper-
+( )
+= ⎧ ⎪ ⎨ exp − |𝐴 1 ∥𝐵| ∑ 𝑥∈𝐴 ∑ 𝑦∈𝐵‖𝛷(𝑥)−𝛷(𝑦)‖2 , 𝐴≠∅ and 𝐵≠∅ a T t a u b r l e e ( 1 𝑇 . ). The descriptive statistics for each feature are summarized in
+⎪0, otherwise The current was kept constant near −2500 mA across all samples,
+⎩
+ensuring consistency during the discharge process. Notably, the voltage
+(1)
+This definition transforms the average pairwise Euclidean distance ranged from 2.50 to 4.09 V, reflecting typical lithium-ion discharge
+into a fuzzy similarity value in the interval [0,1]. behavior. The SoC values covered the full scale from 0% to 100%,
+which is critical for developing a robust and generalizable prediction
+Theorem 1. The function 𝜇 given in Definition 2.6, is a valid fuzzy model.
+proximity relation over 𝑃(𝑋). To evaluate the linear dependencies among the variables, we com-
+puted the Pearson correlation matrix shown in Table 2.
+Proof. Let 𝐴,𝐵,𝐶⊆𝑋. We verify each axiom: A strong positive correlation is observed between voltage and SoC
+(𝑟 = 0.948), indicating that voltage is a reliable indicator of battery
+( )
+𝑁 By definition, charge level. Similarly, capacity and energy are almost perfectly corre-
+𝜇
+1 lated with each other (𝑟=0.999), while both are inversely correlated
+𝜇(𝐴,∅)=0=𝜇(∅,𝐵) for any 𝐴,𝐵⊆𝑋. with SoC. Notably, current is highly correlated with temperature (𝑟=
+(
+𝑁
+)
+0.910), since different temperature conditions were tested using distinct
+𝜇
+2 current levels.
+( )
+These insights guide the feature selection for the descriptive prox-
+1 ∑∑
+𝜇(𝐴,𝐵)=exp −
+|𝐴∥𝐵|𝑥∈𝐴𝑦∈𝐵
+‖𝛷(𝑥)−𝛷(𝑦)‖2 i
+f
+m
+uz
+i
+z
+ty
+y s
+v
+i
+e
+m
+ct
+il
+o
+a
+r
+r i
+𝛷
+ty
+( 𝑥
+a
+)
+n
+,
+a
+w
+ly
+h
+s
+i
+i
+c
+s
+h
+i n
+w
+s
+i
+u
+ll
+b s
+fo
+eq
+rm
+ue n
+th
+t
+e
+s e
+f
+c
+o
+t
+u
+io
+n
+n
+d
+s
+a
+.
+tion for clustering and
+Since ‖𝛷(𝑥)−𝛷(𝑦)‖2 = ‖𝛷(𝑦)−𝛷(𝑥)‖2 , the expression is
+symmetric in 𝐴 and 𝐵. Hence: 3.3. Parameter sensitivity analysis for DBSCAN clustering
+𝜇(𝐴,𝐵)=𝜇(𝐵,𝐴)
+To assess the stability and robustness of the clustering process, we
+( )
+𝑁 𝜇
+3
+S
+th
+u
+e
+p
+r
+p
+e
+o
+e
+s
+x
+e
+i s
+𝜇
+ts
+
+b
+(𝐴
+o
+,
+u
+𝐵
+n
+)
+de
+≠
+d p
+0
+r
+.
+o
+T
+xi
+h
+m
+en
+it y
+𝐴
+b e
+a
+t
+n
+w
+d
+e e
+𝐵
+n
+a
+th
+re
+e ir
+n o
+m
+n
+e
+-
+m
+em
+b
+p
+er
+ty
+s.
+,
+T
+a
+h
+n
+i
+d
+s
+c
+b
+o
+y
+n
+v
+d
+a
+u
+r
+c
+y
+t
+i
+e
+n
+d
+g
+a
+b
+p
+o
+a
+th
+ra m
+th
+e
+e
+t e
+n
+r
+e i
+s
+g
+e
+h
+n
+b
+si
+o
+t
+r
+iv
+h
+i
+o
+ty
+o d
+a n
+ra
+a
+d
+ly
+i
+s
+u
+i
+s
+s
+𝜀
+o n
+a n
+th
+d
+e
+t
+D
+he
+B S
+m
+C
+i
+A
+n
+N
+_ s
+al
+a
+g
+m
+o
+p
+ri
+l
+th
+e
+m
+s
+implies that some relation 𝐴𝐵 exists in the descriptive parameter. The goal was to determine whether our adaptively com-
+proximity space. puted 𝜀 value aligns with regions of consistent cluster formation, and
+( 𝑁
+𝜇
+)
+4
+Suppose 𝜇(𝐴,𝐵∪𝐶)≠0, i.e., 𝐴 is proximal to 𝐵∪𝐶. Then: t
+o
+o
+u t
+e
+co
+v
+m
+alu
+es
+a
+.
+te the impact of manual parameter choices on clustering
+∃𝑥∈𝐴,𝑧∈𝐵∪𝐶 such that ‖𝛷(𝑥)−𝛷(𝑧)‖2 is small. We randomly sampled 5000 feature vectors from the combined
+battery discharge dataset (0◦C and 25◦C), and applied DBSCAN across
+This implies either 𝜇(𝐴,𝐵) ≠ 0 or 𝜇(𝐴,𝐶) ≠ 0, and thus a grid of 𝜀 ∈ {0.9,1.0,1.1,1.2,1.3,1.4} and min_samples ∈
+𝐴𝐵 or 𝐴𝐶. □
+{10,15,20,25,30}. For each configuration, we recorded the number
+of clusters and the number of data points labeled as noise. The results
+3. Data exploration and preprocessing are summarized in Table 3 and visualized in Fig. 1.
+The heatmap in Fig. 1 reveals that the number of clusters remains
+3.1. Experimental setup and data collection highly stable (typically 3 clusters) for 𝜀 values in the range [0.9,1.1]
+across all tested min_samples values. However, for 𝜀 ≥ 1.2, the
+In this study, high-power cylindrical 18650-type lithium-ion cells algorithm consistently identifies only two clusters, regardless of the
+with a nominal capacity of 2.8 Ah were tested under controlled lab- min_samples setting. This transition indicates a sensitivity boundary
+oratory conditions to ensure reliable data quality. The experimental beyond which cluster granularity deteriorates due to over-smoothing in
+setup involved discharge tests performed at two ambient temperatures the feature space.
+(0◦C and 25◦C) and four current rates (1𝐶, 2𝐶, 3𝐶, and 4𝐶), enabling The results validate our choice of 𝜀 =1.21, computed via the
+adaptive
+simultaneous evaluation of rate capability and temperature sensitivity. MAD-based proximity calibration. This value lies at the transition re-
+Charging was carried out using the constant current–constant volt- gion between over-clustering and under-clustering, enabling a balanced
+age (CC–CV) protocol at 1𝐶, with the voltage limited to 4.2V and and data-driven detection of meaningful proximity structures. The near-
+terminated when the current decreased to 0.05𝐶, thus guaranteeing perfect agreement between manually-tuned stable regions (around 𝜀=
+complete yet safe charging. All experiments were conducted using 1.1) and the adaptive result strengthens the theoretical and empirical
+4
+--- PAGE 5 ---
+E. İnan et al. Journal of Energy Storage 136 (2025) 118150
+Table 1
+Descriptive statistics of the main variables.
+Feature Count Mean Std Min 25% 50% 75% Max
+Current (mA) 67428 −2500.80 0.32 −2501.86 −2501.11 −2500.74 −2500.37 −2499.25
+Voltage (V) 67428 3.51 0.29 2.50 3.34 3.53 3.75 4.09
+Capacity (mAh) 67428 1175.24 683.98 0.00 584.98 1170.66 1756.13 2512.28
+Energy (mWh) 67428 4320.42 2431.26 0.00 2247.57 4376.77 6381.78 8944.12
+SoC (%) 67428 49.99 28.88 0.00 24.99 50.00 75.01 100.00
+Cycle 67428 5.51 2.87 1.00 3.00 6.00 8.00 10.00
+Temperature (◦C) 67428 13.28 12.48 0.00 0.00 25.00 25.00 25.00
+Fig. 1. Heatmap showing the number of clusters formed under different combinations of 𝜀 and min_samples.
+Table 2 20), instead of the previously used adaptive threshold. Using the same
+Pearson correlation coefficients among the features. random 5000-sample subset for fairness, the performance metrics were:
+Current Voltage Capacity Energy SoC Cycle Temp.
+Current 1.000 0.127 0.119 0.147 −0.022 −0.031 0.910
+• RMSE: 0.189
+Voltage 1.000 −0.926 −0.911 0.948 0.015 0.164 • MAE : 0.146
+Capacity 1.000 0.999 −0.992 0.007 0.107 • 𝑅2: 1.000
+Energy 1.000 −0.987 0.009 0.137
+SoC 1.000 −0.000 0.000 These results are nearly identical to those achieved using the adap-
+Cycle 1.000 0.001 tive 𝜀 value (𝜀 =1.21), which produced RMSE = 0.188 and MAE
+Temperature 1.000 = 0.145. The
+a
+n
+da
+e
+p
+g
+ti
+l
+v
+i
+e
+gible difference in error metrics further confirms
+the empirical stability of the clustering mechanism in our dataset,
+Table 3 which consists of highly structured discharge curves under two distinct
+Sensitivity of DBSCAN clustering to 𝜀 and min_samples values. temperature conditions.
+𝜀 min_samples Number of clusters Number of noise points Although the battery discharge data comprises samples obtained
+0.9 10 3 6
+under two distinct thermal conditions (0◦C and 25◦C), we deliber-
+0.9 20 3 7 ately chose not to stratify the analysis by temperature. This decision
+1.0 15 3 6 is theoretically grounded and empirically validated by the inclusion
+1.1 25 3 6 of temperature as a feature in the descriptive vectors 𝛷(𝑥). Its in-
+1.2 10 2 4 fluence is inherently embedded within the feature space and thus
+1.3 20 2 4
+1.4 30 2 4
+reflected in the clustering and prediction processes. Moreover, SHAP-
+based interpretability analysis revealed that temperature, while phys-
+ically significant, had a limited direct impact on the model’s output
+due to its correlation with more dominant features such as capac-
+justification for our approach. Furthermore, the small number of noise ity and voltage. As such, the integrated modeling approach success-
+points across all configurations suggests that the DBSCAN procedure fully captures temperature effects without requiring separate stratified
+is robust against minor variations in parameterization, supporting the modeling, thereby maintaining model generalizability and avoiding
+reliability of our descriptive clustering pipeline. unnecessary fragmentation of the dataset.
+To assess how this adaptive clustering decision influences down- In closing, although the adaptively determined threshold is the-
+stream prediction tasks, we conducted an additional comparative ex- oretically more robust and better suited for generalization to other
+periment. To quantify the impact of 𝜀 selection on downstream SoC datasets, its practical performance on this specific dataset was closely
+prediction, we retrained the LightGBM regression model using cluster matched by a well-tuned fixed value. Nonetheless, we retain the adap-
+labels derived from the fixed 𝜀 = 1.1 setting (with min_samples = tive method in our proposed DPLM framework for its mathematical
+5
+--- PAGE 6 ---
+E. İnan et al. Journal of Energy Storage 136 (2025) 118150
+consistency, automation potential, and generalizability across more Table 4
+heterogeneous battery data. Cluster assignment using DBSCAN on a random sample (𝑛=5000).
+Additionally, to test stability under realistic constraints, we per- Cluster label Number of points
+formed robustness analyses involving subsampling and Gaussian noise Cluster 0 2689
+injection. Details and results are reported in Section 5.5. Cluster 1 2309
+Noise (−1) 2
+3.4. Adaptive 𝜀-proximity via robust statistics
+One of the critical parameters in proximity-based clustering algo- The resulting cluster distribution is presented in Table 4.
+rithms, such as DBSCAN, is the selection of the distance threshold
+The clusters 𝐶 and 𝐶 , identified through DBSCAN using adap-
+𝜀. A poorly chosen fixed 𝜀 may lead to over-clustering or under-
+tive 𝜀-proximity, r
+0
+epresent
+1
+distinct operational regimes in the battery
+segmentation, particularly in datasets characterized by heterogeneous
+discharge dataset. Rather than being arbitrary numerical labels, these
+density, such as battery discharge profiles under varying thermal and
+clusters encapsulate meaningful patterns emerging from variations in
+electrical conditions.
+thermal and electrical conditions. The clustering algorithm detected
+To address this issue, we adopted a robust statistical method for
+two high-density regions in the descriptive feature space-formed by
+determining an adaptive 𝜀, grounded in the Median Absolute Deviation
+combinations of current, voltage, capacity, energy, temperature, and
+(MAD). Let 𝐷 denote the set of pairwise Euclidean distances between
+a random sample of 𝑛 = 3000 normalized feature vectors 𝛷(𝑥) ∈ R6, cycle count-that correspond to empirically distinct behavioral modes.
+defined as:
+Cluster 𝐶
+0
+primarily comprises samples obtained under more de-
+{ } manding conditions, such as low ambient temperature (e.g., 0 ◦C)
+𝐷= ‖ ‖ ‖ 𝛷(𝑥 𝑖 )−𝛷(𝑥 𝑗 )‖ ‖ ‖2 ∶𝑥 𝑖 ,𝑥 𝑗 ∈𝑋 sample , 𝑖<𝑗 (3) and higher discharge currents. These instances typically exhibit steeper
+voltage drops and more aggressive SoC transitions due to increased
+Then, the MAD is computed as:
+internal resistance and electrochemical sluggishness. In contrast, clus-
+MAD=median(|𝑑−median(𝐷)|∶𝑑∈𝐷) (4) ter 𝐶
+1
+predominantly captures nominal or favorable operating states
+(e.g., 25 ◦C, moderate current), where the battery maintains a stable
+The adaptive proximity threshold is defined by the scaled MAD:
+discharge profile with smoother energy consumption.
+𝜀 adaptive =𝑘⋅MAD, where 𝑘=1.4826 (5) From a practical standpoint, 𝐶 0 can be associated with subopti-
+mal, stress-induced regimes, while 𝐶 reflects efficient, baseline per-
+This scaling factor ensures consistency with the standard deviation 1
+formance. The inclusion of cluster labels as a categorical feature in
+under the assumption of normally distributed distances. The computed
+the SoC prediction model allows the learning algorithm to distinguish
+value for the adaptive proximity threshold was:
+between these regimes, even when other numerical features overlap.
+𝜀 adaptive =1.21 (6) Although the SHAP analysis indicated that the explicit contribution of
+the Cluster variable was modest, its presence facilitated a better-
+This adaptively determined 𝜀 will be employed in the subsequent
+structured input space that enhanced the model’s overall performance
+DBSCAN clustering to identify descriptive proximity-based groups
+within the battery discharge data. The approach ensures that clus-
+and generalizability.
+ters are sensitive to local variations in feature space density, thereby
+This semantic interpretation of 𝐶
+0
+and 𝐶
+1
+provides operational
+improving the robustness and interpretability of the resulting model. insight beyond mere statistical grouping, thereby supporting the hy-
+brid framework’s emphasis on interpretable and context-aware battery
+4. Descriptive clustering and fuzzy modeling analytics.
+The outcome demonstrates a high degree of structure in the dataset,
+4.1. Descriptive clustering using adaptive 𝜀-proximity with over 99.9% of the sampled instances assigned to meaningful
+clusters. Only two points were considered outliers, indicating that the
+Given the complexity and heterogeneity of battery discharge behav- chosen adaptive 𝜀 value effectively captures the underlying distribution
+ior across varying temperatures and current rates, traditional clustering of the discharge patterns.
+methods that rely on a fixed distance threshold 𝜀 are often insuffi- This result validates the descriptive proximity assumptions and con-
+cient. To address this limitation, we applied an adaptive 𝜀-proximity firms the feasibility of building approximately vector subspaces within
+framework rooted in robust statistics, as described in the previous each cluster. These clusters now serve as the foundation for subsequent
+section. fuzzy proximity analysis and explainable SoC estimation.
+In this setting, each battery measurement 𝑥∈𝑋 is represented by
+a normalized feature vector 𝛷(𝑥)∈R6, encompassing current, voltage,
+4.2. Fuzzy proximity among descriptive clusters
+capacity, energy, cycle count, and temperature. These vectors form the
+basis of the descriptive proximity space.
+Following the identification of descriptive clusters using adaptive
+Computational Constraints and Sampling Strategy. The original
+𝜀-proximity, we now assess the degree of fuzzy similarity among them.
+dataset comprises over 67,000 observations, rendering full pairwise
+This analysis is essential to model gradual transitions and uncertainties
+distance computation infeasible due to excessive memory require-
+in the feature space, particularly relevant for SoC estimation under
+ments. To circumvent this challenge without compromising statistical
+varying operational conditions.
+integrity, we employed a sampling-based approach. Specifically, a
+random subset of 5000 normalized vectors was selected, preserving the
+Definition 4.1 (Fuzzy Proximity Between Clusters). Let 𝐴,𝐵⊆𝑋 be two
+overall distribution of the data.
+clusters in the normalized feature space, where each element 𝑥∈𝐴∪𝐵
+DBSCAN Clustering with Adaptive 𝜀. DBSCAN algorithm was ap- is represented by a descriptive feature vector 𝛷(𝑥) ∈ R𝑛. The fuzzy
+plied to the sampled dataset using the adaptively determined threshold proximity 𝜇(𝐴,𝐵) between these clusters is defined by the exponential
+𝜀 adaptive = 1.21 and min_samples = 20. This proximity-based clus- decay of their average pairwise Euclidean distance:
+tering technique is well-suited for descriptive spaces, as it identifies ( )
+dense regions in feature space without requiring prior knowledge of 1 ∑∑
+the number of clusters.
+𝜇(𝐴,𝐵)=exp −
+|𝐴∥𝐵|𝑥∈𝐴𝑦∈𝐵
+‖𝛷(𝑥)−𝛷(𝑦)‖2 (7)
+6
+--- PAGE 7 ---
+E. İnan et al. Journal of Energy Storage 136 (2025) 118150
+Table 5
+Fuzzy proximity values 𝜇(𝐴,𝐵) among descriptive clusters. Diagonal entries
+represent intra-cluster proximity, while off-diagonal entries represent inter-
+cluster proximity.
+C C
+0 1
+C (intra) 0.0657 0.0207
+0
+C (inter) 0.0207 0.0908
+1
+This formulation satisfies the key intuition of fuzzy proximity: the
+closer two clusters are in the feature space, the higher their similarity
+score. It differs from classical proximity metrics by incorporating a
+continuous similarity spectrum that smoothly decays with increasing
+descriptive distance.
+Definition 4.2 (Intra-cluster Fuzzy Proximity). Let 𝐶 ⊂𝑋 be a descrip-
+tive cluster, where each element 𝑥∈𝐶 is represented by a descriptive
+feature vector 𝛷(𝑥)∈R𝑛. The intra-cluster fuzzy proximity 𝜇intra(𝐶) is
+
+defined as:
+( )
+𝜇
+
+intra(𝐶)=exp −
+|𝐶
+1
+| 2 𝑥
+∑
+∈𝐶𝑦
+∑
+∈𝐶
+‖𝛷(𝑥)−𝛷(𝑦)‖2
+This quantity measures the internal cohesion of cluster 𝐶 in the descrip- Fig. 2. Heatmap of fuzzy proximity values between descriptive clusters. Strong
+tive feature space. intra-cluster cohesion (dark diagonal) and low inter-cluster similarity (low
+intensity off-diagonal) suggest that Cluster 𝐶 and Cluster 𝐶 represent well-
+0 1
+separated operating conditions.
+Definition 4.3 (Inter-cluster Fuzzy Proximity). Let 𝐶,𝐶 ⊂ 𝑋 be two
+𝑖 𝑗
+distinct descriptive clusters, where 𝐶 ∩𝐶 =∅. The inter-cluster fuzzy
+𝑖 𝑗
+proximity 𝜇inter(𝐶,𝐶 ) is defined as:
+ 𝑖 𝑗
+𝜀-proximity estimation via robust statistics, proximity-based clustering
+𝜇  inter(𝐶 𝑖 ,𝐶 𝑗 )=exp ⎛ ⎜ ⎜ ⎝ − |𝐶 𝑖 ∥ 1 𝐶 𝑗|𝑥 ∑ ∈𝐶𝑖𝑦 ∑ ∈𝐶𝑗 ‖𝛷(𝑥)−𝛷(𝑦)‖2 ⎞ ⎟ ⎟ ⎠ u t t r h s a e i i n n h g i y n D b g B r i S o d C f f A a ra N m L , i f e g u w h z t o z G y r B k s M i i m n r i a l e a g f r o r i e t r y s m s c o a o r l m a f l o p g r u o t r S a i o t t i h C o m n p i b c re e f d t o w i r c m e ti e o a n t n , c . w lu B e s y t e o s r f t s f r e , u r a c n a tu d c r o t in h n g e -
+This value quantifies the average descriptive similarity between sam- cise, modular, and reproducible reference for researchers interested in
+ples in clusters 𝐶 𝑖 and 𝐶 𝑗 . proximity-aware battery modeling and interpretable machine learning.
+Importantly, even the self-proximity 𝜇intra(𝐶,𝐶) is not necessarily
+
+equal to 1, since it depends on the internal dispersion of elements
+within cluster 𝐶. The closer and more homogeneous the elements are, Following the algorithmic pipeline, we proceeded to evaluate the
+the higher the value of 𝜇  intra(𝐶,𝐶); conversely, higher internal variance predictive performance of the trained model using standard regression
+results in lower self-similarity. This makes the fuzzy proximity measure metrics such as RMSE, MAE, and 𝑅2. To gain deeper insight into
+𝜇 particularly suitable for analyzing structural cohesion in descriptive the model’s internal reasoning, we applied SHAP-based interpretability
+clustering. techniques. These techniques allowed us to quantify the contribution
+Note that each entry 𝜇(𝐴,𝐵) in Table 5 quantifies the average of each input feature to the SoC prediction, thus bridging the gap
+proximity between all individual samples in cluster 𝐴 and cluster 𝐵, between predictive accuracy and model transparency. The results of
+based on their descriptive feature vectors. In particular: - 𝜇
+
+intra(𝐶
+0
+)
+this interpretability analysis are presented in the following sections.
+denotes the average self-similarity of samples within cluster 𝐶
+0
+, -
+The diagram in Fig. 3 illustrates the full computational pipeline
+𝜇
+
+inter(𝐶
+0
+,𝐶
+1
+) denotes the average proximity between samples in cluster
+of our proposed DPLM framework. The process begins with battery
+𝐶
+0
+and cluster 𝐶
+1
+.
+discharge data, followed by normalization and removal of incomplete
+In our case, Cluster 𝐶 exhibited stronger internal proximity
+1 samples. An adaptive proximity threshold 𝜀 is computed using the Me-
+(𝜇intra(𝐶 ) = 0.0908) compared to Cluster 𝐶 (𝜇intra(𝐶 ) = 0.0657),
+ 1 0  0 dian Absolute Deviation (MAD) of pairwise distances among randomly
+reflecting its tighter concentration in the proximity-enhanced feature
+sampled feature vectors. This threshold guides DBSCAN clustering to
+space. The inter-cluster proximity between 𝐶 and 𝐶 was notably
+0 1 uncover descriptive structure in the data. Cluster labels are then used to
+lower (𝜇inter(𝐶 ,𝐶 )=0.0207), indicating well-separated clusters (see
+ 0 1 construct approximately vector subspaces, and fuzzy proximity values
+Fig. 2) .
+are computed to capture inter-cluster similarity.
+The highest fuzzy proximity is observed within Cluster C , indi-
+1 These descriptive labels are incorporated as features into the Light-
+cating strong internal cohesion. In contrast, the inter-cluster similarity
+GBM regression model, which is trained to predict SoC. Finally, the
+between C and C is notably low, reflecting clear separability in the
+0 1 model is evaluated using standard regression metrics, and SHAP values
+descriptive feature space. These findings validate the robustness of
+the proximity-driven clustering process and provide a fuzzy relational
+are computed to interpret the importance and influence of each feature.
+foundation for subsequent SoC prediction and explanation.
+This workflow ensures both high accuracy and explainability in SoC
+estimation across varied operational conditions.
+5. SoC estimation framework
+5.2. SoC estimation via proximity-enhanced gradient boosting
+5.1. Algorithmic summary
+To estimate the SoC of lithium-ion batteries under varying thermal
+To enhance reproducibility and provide a transparent overview and electrical conditions, we employed a regression model based on
+of the computational pipeline, we present Algorithm 1, which out- the Light Gradient Boosting Machine (LightGBM) algorithm. This tree-
+lines the core stages of our DPLM (Descriptive Proximity-based Light- based ensemble method is well-suited for tabular data, combining high
+GBM Model). The algorithm includes data preprocessing, adaptive predictive performance with low computational complexity.
+7
+--- PAGE 8 ---
+E. İnan et al. Journal of Energy Storage 136 (2025) 118150
+Fig. 3. Workflow diagram of the proposed DPLM (Descriptive Proximity-based LightGBM Model) for SoC estimation.
+Each battery discharge instance was represented by a descriptive high-load or nominal discharge) uncovered through proximity-based
+feature vector 𝛷(𝑥) containing the following input variables: density clustering. These regimes help structure the feature space and
+• Current (mA) enhance predictive generalization.
+• Voltage (V) To train and evaluate the model, the dataset was first preprocessed
+• Capacity (mAh) by removing noise-labeled samples identified through DBSCAN. A stan-
+• Energy (mWh) dard 80%–20% train–test split was applied. The LightGBM model was
+• Cycle number
+trained with default hyperparameters, and its predictive performance
+• Ambient Temperature (◦C)
+was evaluated using three standard regression metrics:
+• Cluster label (obtained via adaptive DBSCAN over 𝛷(𝑥))
+√
+√ 𝑛
+The inclusion of the descriptive cluster label is particularly im- √1∑
+RMSE=√ (𝑦 −𝑦̂)2 (8)
+portant, as it encodes latent operating regimes (e.g., low-temperature 𝑛 𝑖 𝑖
+𝑖=1
+8
+--- PAGE 9 ---
+E. İnan et al. Journal of Energy Storage 136 (2025) 118150
+Algorithm 1: DPLM: Descriptive Proximity-based LightGBM Table 6
+Model for SoC Estimation 5-Fold cross-validation performance of the DPLM model.
+Input: Battery discharge dataset 𝑋={𝑥}𝑛 , with features Metric Mean Standard deviation Interpretation
+𝑖 𝑖=1
+𝛷(𝑥)=[𝐼,𝑉,𝐶,𝐸,𝑁,𝑇] RMSE 0.134 0.001 Extremely low average prediction error
+Output: Tr
+𝑖
+ained
+𝑖
+Lig
+𝑖
+htG
+𝑖
+BM
+𝑖
+m
+𝑖
+ode
+𝑖
+l  for predicting SoC MAE 0.108 0.001 High predictive consistency
+𝑅2 1.000 0.000 Near-perfect variance explanation
+1 Step 1: Preprocessing
+2 Normalize feature vectors 𝛷(𝑥 𝑖 ) for all 𝑥 𝑖 ∈𝑋.
+3 Remove rows with missing values.
+operational scenarios. Thus, we applied 5-fold CV to test the model’s
+4 Step 2: Adaptive Proximity Threshold consistency under varied data partitions. This technique helps quantify
+5 Randomly sample 𝑚 feature vectors from 𝑋. the stability of the learning process and mitigates the risks of overfitting
+6 Compute all pairwise Euclidean distances or data-specific bias.
+𝐷={‖𝛷(𝑥
+𝑖
+)−𝛷(𝑥
+𝑗
+)‖}.
+To implement this validation strategy, the dataset was partitioned
+7 Calculate the median absolute deviation: into five equal folds. In each iteration, four folds were used for training,
+8 and the remaining one for validation. The process was repeated five
+MAD=median(|𝑑−median(𝐷)|), 𝑑∈𝐷 times so that each fold served as a test set exactly once. We used the
+following evaluation metrics:
+Set the adaptive proximity threshold:
+9 • RMSE: Sensitive to large deviations; indicates overall prediction
+accuracy.
+𝜀=1.4826⋅MAD
+• MAE: Captures average absolute deviation; reflects typical error
+10 Step 3: Descriptive Clustering
+magnitude.
+11 Apply DBSCAN to 𝛷(𝑋) using 𝜀 as the neighborhood
+• 𝑅2: Measures explained variance; ideal value is 1.
+radius.
+The outcomes of this procedure are summarized in the results table.
+12 Assign cluster label 𝑐 𝑖 to each sample 𝑥 𝑖 ∈𝑋. Table 6 presents the average and standard deviation of each metric
+13 Step 4: Fuzzy Proximity Matrix across the five folds.
+14 For each pair of clusters (𝐴,𝐵), compute: The very low RMSE and MAE values indicate high precision in SoC
+( ) predictions across all folds. The absence of variability in the 𝑅2 scores
+𝜇(𝐴,𝐵)=exp −
+|𝐴|
+1
+|𝐵|𝑥
+∑
+∈𝐴𝑦
+∑
+∈𝐵
+‖𝛷(𝑥)−𝛷(𝑦)‖2 u
+of
+n d
+th
+er
+e
+s c
+t
+o
+es
+r
+t
+e s
+s e
+th
+t
+a
+u
+t
+s
+t
+e
+h
+d
+e
+.
+m
+Th
+o
+e
+d
+s
+e
+e
+l
+r
+e
+e
+x
+s
+p
+u
+l
+l
+a
+t
+i
+s
+n s
+c o
+n
+n
+e
+f
+a
+ir
+r
+m
+ly a
+th
+ll
+a t
+t h
+t
+e
+h e
+v a
+D
+ri
+P
+a
+L
+n
+M
+ce
+m
+re
+o
+g
+d
+a
+e
+r
+l
+d l
+n
+e
+o
+ss
+t
+15 Step 5: SoC Model Training only learns the complex nonlinear mappings between battery features
+16 Append cluster labels 𝑐 𝑖 as an additional feature. and SoC, but also maintains its accuracy across diverse operational
+17 Split the dataset into training and test sets. conditions.
+18 Train LightGBM model  on the training set to By demonstrating excellent performance in a fold-wise manner, the
+predict SoC. model proves to be robust and ready for deployment in real-world
+battery management systems, where generalization across multiple
+usage scenarios is critical.
+𝑛
+1∑
+MAE= 𝑛 |𝑦 𝑖 −𝑦̂ 𝑖| (9) 5.4. Visual validation of SoC predictions
+𝑖=1
+𝑅2=1− ∑𝑛 𝑖=1 (𝑦 𝑖 −𝑦̂ 𝑖 )2 (10) To complement the quantitative metrics of accuracy, we provide
+∑𝑛 (𝑦 −𝑦̄)2 graphical validation of the model’s predictive performance.
+𝑖=1 𝑖
+Evaluation on the test set demonstrated that the model achieved As demonstrated in Fig. 5, the proposed model exhibits near-ideal
+excellent predictive performance. The RMSE was 0.188, the MAE was prediction performance, as evidenced by the symmetric, unimodal
+0.145, and the coefficient of determination (𝑅2) reached 1.000. These distribution of prediction errors centered around zero. The narrow
+values indicate near-perfect SoC estimation accuracy and confirm the bandwidth of the error distribution provides empirical evidence of the
+model’s ability to capture complex nonlinear relationships in the de- model’s consistency and generalization capacity across the test set. This
+scriptive feature space. observation is further reinforced by the parity plot in Fig. 4, where
+The integration of structural information through proximity-based the predicted SoC values are tightly clustered along the diagonal line
+clustering proved particularly valuable, enabling the model to distin- representing perfect prediction.
+guish between subtle operational variations that might otherwise re- These results are of particular significance for EV applications,
+main hidden in raw sensor features. This modeling foundation sets the where accurate and robust SoC estimation is critical for range pre-
+stage for a more detailed interpretability analysis, which is presented diction, battery health monitoring, and energy management. A near-
+in the following section using SHAP.
+perfect alignment between predicted and actual SoC ensures optimal
+utilization of battery capacity without overestimation, which could
+5.3. Generalization assessment via cross-validation
+otherwise lead to range anxiety, or underestimation, which may cause
+To evaluate the robustness and generalizability of the proposed
+premature charging and reduce battery lifespan. Furthermore, the low
+DPLM framework, we employed a 5-fold cross-validation (CV) strategy.
+prediction error variance highlights the model’s reliability under vary-
+Unlike a simple 80%-20% train–test split, cross-validation provides a ing operational conditions-such as temperature fluctuations and dis-
+more statistically reliable assessment of model performance by ensuring charge rates—making it well-suited for real-time onboard battery man-
+that every data point is used for both training and validation. agement systems in EVs. By leveraging the descriptive structure and
+Battery discharge data often exhibit variability due to temperature, fuzzy relational patterns within the data, the proposed model provides a
+current load, and cycle count. A model that performs well on a spe- mathematically grounded and interpretable SoC prediction framework
+cific train–test split may not generalize equally well across unseen with direct applicability to modern electric mobility ecosystems.
+9
+--- PAGE 10 ---
+E. İnan et al. Journal of Energy Storage 136 (2025) 118150
+Fig. 4. Parity plot illustrating the alignment between actual and predicted SoC values. The near-perfect alignment along the identity line confirms the high
+precision of the proposed DPLM model.
+Fig. 5. Histogram of prediction errors for SoC estimation. The distribution is approximately centered around zero, indicating the absence of systematic bias. The
+narrow spread further reflects the model’s robustness and low variance.
+5.5. Robustness verification of DPLM compelling evidence that the proposed method is not only accurate but
+also generalizable and reliable in realistic operating scenarios.
+To further strengthen the experimental verification of the proposed
+DPLM framework, two robustness analyses were conducted: subsam-
+pling robustness and noise robustness. These tests address potential 5.5.1. Subsampling robustness
+concerns regarding model stability under reduced data availability In practical applications, the availability of large-scale, high-quality
+and resilience to sensor noise, respectively. Together, they provide datasets is not always guaranteed. A robust SoC estimation method
+10
+--- PAGE 11 ---
+E. İnan et al. Journal of Energy Storage 136 (2025) 118150
+Table 7 6.1. Interpretability analysis via SHAP
+Subsampling robustness results of DPLM. Performance remains stable across
+different training fractions, confirming generalization ability. To investigate the internal decision-making process of the trained
+Sample fraction RMSE MAE 𝑅2 SoC prediction model, we employed SHAP. SHAP provides local and
+0.5 0.1886 0.1455 0.999959 global interpretability by attributing each prediction to individual fea-
+0.7 0.2084 0.1596 0.999947 ture contributions, grounded in cooperative game theory.
+1.0 0.1927 0.1501 0.999954
+We used the TreeExplainer variant of SHAP, optimized for tree-
+based models like LightGBM. Fig. 6 shows both the mean absolute
+Table 8 SHAP values and the detailed distribution of SHAP values across fea-
+Noise robustness results of DPLM. Even under strong noise perturbations, the tures.
+model maintains high accuracy and near-perfect 𝑅2. The bar chart indicates that CapaCitymAh is the most influential
+Noise Std Dev RMSE MAE 𝑅2 feature, followed by VoltageV and EnergymWh. These features re-
+0.00 0.1830 0.1418 0.999961 flect the energy discharged during battery usage and are thus directly
+0.01 0.3435 0.2575 0.999863 tied to the residual SoC.
+0.05 0.3806 0.2292 0.999832
+0.10 0.4240 0.2298 0.999792
+Beyond feature ranking, visualizing individual impact provides
+deeper insights. The color-coded scatter plot reveals how each feature’s
+value affects the model output. For instance, high values of CapaC-
+itymAh (in red) typically lead to increased SoC predictions, while
+should maintain consistent accuracy even when trained on smaller sub- lower values (in blue) have the opposite effect. This aligns with the
+sets of the available data. To verify this, we conducted a subsampling
+physical intuition that higher discharge capacity correlates with greater
+analysis.
+remaining energy.
+Method: The dataset was randomly downsampled to 50%, 70%,
+The role of structural features is also noteworthy. Interestingly,
+and 100% of its original size, with distinct random seeds to ensure the Cluster feature contributed modestly to the model’s predictions,
+diversity across subsets. The complete DPLM pipeline, including adap-
+yet it played a crucial role in structuring the feature space. Its inclu-
+tive DBSCAN clustering, fuzzy proximity computation, and LightGBM
+sion indirectly enhanced predictive power by enabling the model to
+regression, was applied to each subsample. Model performance was
+differentiate among operational regimes.
+then evaluated using RMSE, MAE, and 𝑅2 metrics.
+Taken together, these results highlight that our proximity-based
+As shown in Table 7, the predictive accuracy of DPLM remained
+modeling approach is not only accurate but also interpretable. Such
+consistently high across all subsampling levels. Even when trained
+transparency is essential for applications involving safety-critical sys-
+on only 50% of the data, the model achieved nearly identical per-
+tems like electric vehicles or aerospace batteries.
+formance to the full dataset. This result demonstrates that the de-
+scriptive proximity-enhanced feature space provides strong structural
+7. Discussion of results and practical implications
+information, enabling DPLM to generalize effectively under reduced
+data availability.
+This study proposed a novel hybrid framework for battery SoC
+estimation that integrates descriptive proximity-based clustering with
+5.5.2. Noise robustness
+In real-world scenarios, battery measurements are often subject to
+gradient-boosted regression models, enhanced through explainable AI
+sensor noise and external disturbances. A reliable SoC estimator must
+techniques. Experiments using real-world battery discharge data across
+therefore remain stable even when feature values are corrupted by
+different temperature and current settings demonstrated the frame-
+random fluctuations. To assess this, we performed a noise robustness
+work’s predictive strength and interpretability.
+The LightGBM model, trained on proximity-augmented feature vec-
+analysis.
+Method: Gaussian noise with increasing standard deviations (𝜎 = tors, achieved outstanding performance on the test set, with an RMSE of
+0.01,0.05,0.10) was injected into the input features prior to normal- 0.188, MAE of 0.145, and an 𝑅2 score of 1.000. These results indicate
+ization. The complete DPLM pipeline was retrained under each noisy near-perfect alignment between the learned function and the true SoC
+condition, and performance was measured using the same regression behavior, affirming both the robustness of the model and the relevance
+metrics. of the engineered features.
+Table 8 shows that while error metrics increase under stronger SHAP-based feature attribution revealed that CapaCitymAh and
+noise perturbations, the 𝑅2 score consistently remains above 0.9997. VoltageV are the most influential features. These findings are con-
+This confirms that DPLM is not only highly accurate under clean sistent with the electrochemical characteristics of lithium-ion batteries,
+conditions but also resilient to noisy sensor inputs, ensuring robustness where capacity reflects cumulative discharge and voltage tracks inter-
+in real-world battery management systems. nal state. While CurmA, TemperatureC, and Cycle had minimal
+The combined results of subsampling and noise robustness tests pro- direct SHAP importance, their effects appear indirectly encoded within
+vide strong evidence that the proposed DPLM framework maintains ac- the dominant variables, especially through capacity and voltage.
+curacy, stability, and interpretability under challenging conditions. By The Cluster feature, though not high in SHAP importance rank-
+demonstrating resilience to both reduced data availability and sensor ings, played a crucial structural role. It encapsulated latent regimes,
+noise, DPLM establishes itself as a reliable and generalizable solution such as low-temperature/high-load conditions, facilitating a more in-
+for State-of-Charge estimation in practical battery applications. formative feature space. This latent encoding supports the notion that
+proximity-based partitioning can enhance model learning, even without
+6. Interpretability and explainability strong individual predictive power.
+The integration of SHAP explanations allowed for transparent eval-
+To deepen the interpretability assessment of the proposed Descrip- uation of the model’s behavior, a key requirement for critical applica-
+tive Proximity Learning Model (DPLM), we performed a comparative tions such as electric vehicles or aerospace systems, where prediction
+SHAP analysis against a conventional LightGBM model trained on the trustworthiness is paramount.
+same dataset without the proximity-based enhancements. This section In summary, the descriptive clustering combined with interpretable
+presents both visual and quantitative comparisons to elucidate the machine learning provides a reliable and transparent SoC estimation
+impact of descriptive clustering on model behavior. approach. Future practical enhancements may involve:
+11
+--- PAGE 12 ---
+E. İnan et al. Journal of Energy Storage 136 (2025) 118150
+Fig. 6. SHAP summary plot for the SoC prediction model. Top: global feature importance. Bottom: feature value impact distribution.
+(𝑖) Integrating sequence models (e.g., LSTM) to capture temporal Table 9
+SoC trends. Mean absolute SHAP values for DPLM vs. vanilla LightGBM.
+(𝑖𝑖) Adapting the proximity framework to fuzzy or probabilistic Feature DPLM (Proximity-Enhanced) Vanilla LightGBM
+clustering for smoother regime modeling. Capacity (mAh) 23.82 21.74
+(𝑖𝑖𝑖) Extending the validation to broader datasets and different Voltage (V) 3.56 2.88
+battery chemistries.
+Energy (mWh) 0.46 0.31
+Cycle 0.12 0.09
+In addition to the high baseline accuracy, the robustness analyses
+Current (mA) 0.07 0.06
+provide critical evidence of DPLM’s reliability under realistic con- Temperature (◦C) 0.03 0.02
+straints. The subsampling experiments demonstrated that the model Cluster (categorical) 0.21 –
+preserves stability even when trained with significantly fewer data,
+reflecting resilience to limited dataset availability in practical appli-
+cations. Similarly, the noise injection tests showed that predictive
+8. Benchmarking and comparative analysis
+performance remains nearly unaffected by sensor perturbations, which
+are inevitable in embedded battery management systems. These find-
+To assess the efficacy of the proposed descriptive proximity-
+ings confirm that DPLM is theoretically sound and empirically reliable.
+enhanced SoC estimation model, referred to hereafter as the Descrip-
+Moreover, it remains robust from controlled laboratory tests to real-
+tive Proximity-based LightGBM Model (DPLM), we compared its
+world applications with noisy data. In this way, robustness verifica-
+performance against several well-established regression algorithms,
+tion elevates the framework from a high-performing predictive model
+to a practically deployable solution for safety-critical energy storage
+including Support Vector Regression (SVR), Random Forest (RF), and a
+baseline LightGBM model without proximity-based feature augmenta-
+systems.
+tion. All models were trained and tested using identical data splits and
+input features, except for DPLM, which includes an additional cluster
+7.1. SHAP summary visualization
+label derived from descriptive proximity analysis. The performance
+metrics used were RMSE, MAE, and 𝑅2. The results are summarized
+Fig. 7 illustrates the SHAP summary plot generated from the vanilla
+in Table 11.
+LightGBM model. Each dot corresponds to a prediction instance, color-
+coded by the feature value (blue = low, red = high). The horizontal po-
+To better understand the model’s impact, a comparison with base-
+sition reflects the SHAP value, representing the impact on the model’s line and classical methods was conducted. The proposed DPLM model
+output. significantly outperformed all baseline models, including LightGBM
+Visual Insight. Similar to the DPLM model, CapaCity(mAh) and without proximity features. The performance gain over baseline
+Voltage(V) remain the most influential features. However, in the ab- LightGBM-evident from the reduction in RMSE (0.267 to 0.188) and
+sence of cluster-level structural information, the feature impact appears MAE (0.216 to 0.145)-demonstrates the effectiveness of descriptive
+more concentrated and less distributed across supporting variables such clustering in enhancing the feature space. Compared to SVR and
+as Energy(mWh), Cycle, or TemperatureC. RF, which are classical regression methods, DPLM delivers superior
+accuracy and consistency across all metrics.
+7.2. Quantitative SHAP comparison In particular, the improvement from baseline LightGBM to DPLM
+highlights the added value of incorporating descriptive cluster labels
+To numerically assess the importance of each feature, we computed as structural features. These clusters capture underlying variations in
+the mean absolute SHAP value (mean|SHAP|) for both models. The discharge behavior caused by thermal and electrical conditions, which
+results are summarized in Table 9. are otherwise difficult to model using raw features alone.
+Table 10 compares the SHAP summary plots of the proposed DPLM Beyond predictive accuracy, computational efficiency is also an im-
+model and the baseline LightGBM model, highlighting the structural portant consideration. It is worth noting that LightGBM-based models
+enhancements brought by proximity-based features. (both the baseline and DPLM) surpass SVR and RF in terms of both
+12

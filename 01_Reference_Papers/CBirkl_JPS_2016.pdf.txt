@@ -1,0 +1,990 @@
+
+--- PAGE 1 ---
+JournalofPowerSources341(2017)373e386
+ContentslistsavailableatScienceDirect
+Journal of Power Sources
+journal homepage: www.elsevier.com/locate/jpowsour
+Degradation diagnostics for lithium ion cells
+Christoph R. Birkl a, Matthew R. Roberts b, Euan McTurkb,c, Peter G. Bruce b,
+David A.
+Howeya,*
+aDepartmentofEngineeringScience,UniversityofOxford,OX13PJ,Oxford,UK
+bDepartmentofMaterials,UniversityofOxford,OX13PH,Oxford,UK
+cWarwickManufacturingGroup,UniversityofWarwick,Warwick,CV47AL,UK
+h i g h l i g h t s g r a p h i c a l a b s t r a c t
+(cid:1)A diagnostic algorithm to identify
+and quantify degradation modes in
+Li-ioncells.
+(cid:1)Experimental proof for effects of
+degradation modes on the open cir-
+cuitvoltage.
+(cid:1)State of health estimations for com-
+mercial cells by fitting open circuit
+voltages.
+a r t i c l e i n f o a b s t r a c t
+Articlehistory: Degradationinlithiumion(Li-ion)batterycellsistheresultofacomplexinterplayofahostofdifferent
+Received12July2016 physicalandchemicalmechanisms.Themeasurable,physicaleffectsofthesedegradationmechanisms
+Receivedinrevisedform onthecellcanbesummarisedintermsofthreedegradationmodes,namelylossoflithiuminventory,
+15November2016
+loss of active positive electrode material and loss of active negative electrode material. The different
+Accepted4December2016
+degradationmodesareassumedtohaveuniqueandmeasurableeffectsontheopencircuitvoltage(OCV)
+ofLi-ioncellsandelectrodes.Thepresumptivenatureandextentoftheseeffectshassofarbeenbasedon
+logicalargumentsratherthanexperimentalproof.Thisworkpresents,forthefirsttime,experimental
+Keywords:
+evidencesupportingthewidelyreporteddegradationmodesbymeansoftestsconductedoncoincells,
+Lithiumion
+Degradation engineered to include different, known amounts of lithium inventory and active electrode material.
+Stateofhealth Moreover,thegeneraltheorybehindtheeffectsofdegradationmodesontheOCVofcellsandelectrodes
+Diagnostic isrefinedandadiagnosticalgorithmisdevised,whichallowstheidentificationandquantificationofthe
+Opencircuitvoltage natureandextentofeachdegradationmodeinLi-ioncellsatanypointintheirservicelives,byfittingthe
+Batterymanagementsystem cells'OCV.
+©2016TheAuthors.PublishedbyElsevierB.V.ThisisanopenaccessarticleundertheCCBYlicense
+(http://creativecommons.org/licenses/by/4.0/).
+1. Introduction affectsthecells'abilitytostoreenergy,meetpowerdemandsand,
+ultimately,leadstotheirendoflife.AnysystememployingLi-ion
+Lithiumion(Li-ion)cellsdegradeasaresultoftheirusageand cells as its power source must be informed of the amountof en-
+exposure to environmental conditions [1e4]. This degradation ergythatcanbestoredandthepowerthatcanbeprovidedbythe
+batteryatanypointintime.Sincetheratesofcapacityandpower
+fadecannotbeeasilyinferredfromoperationaldatainapractical
+* Correspondingauthor. system,methods and models are requiredwhich utilise available
+E-mail addresses: christoph.birkl@eng.ox.ac.uk (C.R. Birkl), matthew.roberts@ parameters and measurements to generate estimates and pre-
+materials.ox.ac.uk (M.R. Roberts), e.mcturk@warwick.ac.uk (E. McTurk), david. dictionsofcurrentandfutureenergystoragecapacityandpower
+howey@eng.ox.ac.uk(D.A.Howey).
+capability.
+URL:http://epg.eng.ox.ac.uk/
+http://dx.doi.org/10.1016/j.jpowsour.2016.12.011
+0378-7753/©2016TheAuthors.PublishedbyElsevierB.V.ThisisanopenaccessarticleundertheCCBYlicense(http://creativecommons.org/licenses/by/4.0/).
+--- PAGE 2 ---
+374 C.R.Birkletal./JournalofPowerSources341(2017)373e386
+Degradation in Li-ion cells is caused by a large number of
+physical and chemical mechanisms, which affect the different
+componentsofthecells:theelectrodes,theelectrolyte,thesepa-
+ratorandthecurrentcollectors[5e10].Fig.1illustratessomeofthe
+mostcommonlyreporteddegradationmechanismsinLi-ioncells.
+Thedifferentcauses,ratesandinter-dependenciesofthesedegra-
+dation mechanisms make them extremely challenging to model,
+whichiswhymostphysics-basedmodelsfocusonlyonthemost
+dominant mechanisms, such as the formation and growth of the
+solid electrolyteinterphase (SEI) [11,12] orelectronic contact loss
+throughparticlecracking[13,14].
+Physics-basedmodelsgenerallycapturedegradationatthemi-
+croscale,i.e.onaparticleorevenmolecularlevel[13e15].How-
+ever,evidencesuggeststhatmesoandmacroscalefeatures,suchas
+inhomogeneitiesinthestructureoftheelectrodes,haveasignifi-
+canteffectoncelldegradationasawhole[16,17].Structuralnon-
+uniformity can lead to inhomogeneous distributions of current
+densities and degrees of lithiation inside the electrode material,
+whichinturncausesinhomogeneousdegradationoftheelectrode.
+Evidence of such inhomogeneities has also been observed in the
+courseofapost-mortemanalysisofcommercialKokampouchcells
+(described in detail in Section 2.1), which are the subject of this
+work. After lowcurrent rate (C/25) capacity tests, five cells were
+opened in an argon filled glove box and their electrode sheets
+visually inspected. Each cell consists of 20sheets of positive(PE)
+andnegative(NE)electrodes.Someoftheinvestigatedcellswere
+fullycharged,i.e.theirnegativegraphiteelectrodesfullylithiated.
+Lithiatedgraphitehasagoldencolorasopposedtotheblackcolor
+ofdelithiatedgraphite.Fig.2illustratesthedifferenceinlithiation
+ofgraphiteelectrodesheetsextractedfromthesame,fullycharged
+cell. Whereas most NE sheets appeared to be uniformly lithiated
+(Fig. 2 a)), one NE sheet was clearly non-uniformly lithiated, as
+Fig.2. GraphitenegativeelectrodesextractedfromafullychargedKokampouchcell;
+showninFig.2b).Thecellwaschargedaccordingtothetestpro- a)uniformlylithiated,b)non-uniformlylithiated.
+cedurespecifiedinTable3,with100%SoCattheendoftest.The
+standarddeviationbetweenthecapacitiesofthefiveinvestigated
+pouchcellswaslessthan0.2%andthecellwithonenon-uniformly easily be identified in commercial Li-ion cells but they may have
+lithiatedgraphitesheetactuallyexhibitedthehighestcapacity.This longtermeffectsondegradation.Bottom-upphysics-basedmodels
+illustrates that meso- and macro-scale inhomogeneities can not maynotbeabletocapturesuchinhomogeneitiesonamicro-scale.
+Fig.1. DegradationmechanismsinLi-ioncells.
+--- PAGE 3 ---
+C.R.Birkletal./JournalofPowerSources341(2017)373e386 375
+As an alternative, we propose to rely more heavilyon a diag- A more comprehensive list of degradation mechanisms, their
+nostic approach, built on frequent cell characterisations using causes,effectsandlinkstodegradationmodesisprovidedinFig.3.
+availablemeasurementswhichincludeinformationonthestateof Note that Fig. 3 only lists the effects of degradation mechanisms
+health(SoH)ofthecell.Onesuchmeasurementisthecell'sopen andmodesonthecell'sthermodynamic(i.e.itsOCV),notitskinetic
+circuitvoltage(OCV).SincetheOCVisthedifferencebetweenthe behaviour.Theprimaryeffectofdegradationonthecell'skineticsis
+cathode and the anode voltage, it provides a thermodynamic anincreaseininternalresistanceorcellimpedance,whichiseasily
+fingerprintoftheelectrodesatanypointintime.Changesinthis measured bythevoltagedrop in response to aload. Itshouldbe
+fingerprint can offer valuable information on path-dependent notedthatanincreaseinresistancecanalsoleadtoadecreasein
+degradation of both the individual electrodes and the cell as a useful cell capacity underload, since the lower voltagecut-off of
+whole.Noteverydegradationmechanismleavesauniquefinger- thecellisreachedsoonerinacellwithahigherinternalresistance.
+printinthecell'sOCVbutsetsofmechanismscanbeclusteredinto Equivalently, the higher voltage cut-off is reached sooner during
+so-called degradation modes, which have a measurable effect on charging. Methods to estimate internal cell resistance are widely
+the OCV of the cell and the electrodes [18e21]. There are three reported[22e24]andnotthesubjectofthepresentedwork.
+commonlyreporteddegradationmodes: The assumed links between the OCV and degradation modes
+have been used for SoH estimation in the literature [19,25,26].
+1 Lossoflithiuminventory(LLI):lithiumionsareconsumedby However,tothebestofourknowledge, theexistence of thepro-
+parasitic reactions, such as surface film formation (e.g. SEI posed degradation modes has never been proven experimentally
+growth),decompositionreactions,lithiumplating,etc.andare andunambiguouslybutonlyinsimulation.Moreover,methodsfor
+nolongeravailableforcyclingbetweenthepositiveandnega- estimatingdegradationmodesandinferringtheSoHofLi-ioncells
+tiveelectrode,leadingtocapacityfade.Surfacefilmsmayalso aretypicallybasedonderivativesofOCVorcellcapacity,socalled
+cause power fade. Lithium ions can also be lost if they are incremental capacity analysis (ICA) [27] or differential voltage
+trapped inside electrically isolated particles of the active analysis (DVA) [28]. Differentiating measurements amplifies the
+materials. noiseinthesignalandmakesitmoredifficulttousetheresulting
+2 LossofactivematerialoftheNE(LAMNE):activemassofthe dataforprocessing.Thisisespeciallyproblematicinpracticalap-
+NE(oranode)isnolongeravailablefortheinsertionoflithium plications wherevoltage measurements maybe noisier than in a
+duetoparticlecrackingandlossofelectricalcontactorblocking laboratoryenvironment.Inresponsetotheseopenquestionsand
+of active sites by resistive surface layers. These processes can challenges,twoprimaryobjectivesweredefinedforthiswork:
+leadtobothcapacityandpowerfade.
+3 LossofactivematerialofthePE(LAMPE):activemassofthePE 1. The design and execution of experiments to verify the mani-
+(orcathode) is no longeravailable for the insertion of lithium festationsofLLI,LAMNEandLAMPEontheOCVofLi-ioncells.
+due tostructural disordering, particle crackingorloss of elec- 2. Thecreationofadiagnosticalgorithmcapableofidentifyingand
+trical contact. These processes can lead to both capacity and quantifyingthenatureandextentofdegradationmodespresent
+powerfade.
+Fig.3. Causeandeffectofdegradationmechanismsandassociateddegradationmodes.
+--- PAGE 4 ---
+376 C.R.Birkletal./JournalofPowerSources341(2017)373e386
+in a Li-ion cell based exclusively on the cell's OCV without
+performingderivativeoperationsonthemeasurements.
+2. Experimental
+2.1. Materialpreparation
+Coin cells were constructed with known amounts of lithium
+inventory and active electrode materials in order to emulate the
+different degradation modes. All coin cells were manufactured
+fromelectrodesharvestedfromcommercialKokam740mAhpouch
+cells.TheNEmaterialoftheKokampouchcellsisgraphiteandthe
+PE material is a blend of lithium cobalt oxide (LCO) and lithium
+nickelcobaltoxide(NCO).
+Thepouchcellswereopenedinanargonfilledgloveboxusinga
+ceramicscalpel.Theelectrodesheetswereextracted,rinsedwith
+dimethyl carbonate and dried under vacuum for 20 min. The NE
+sheetsconsistofcopperfoilcurrentcollectorscoatedonbothsides
+withgraphite,andthePEsheetsofaluminiumfoilcurrentcollec-
+tors coated on both sides with LCO/NCO. In order to improve
+electronicconductivitybetweenthecurrentcollectorsandthecoin
+cell contacts, active material was removed from one side of the
+electrodesheetsusingN-methyl-2-pyrrolidone.TheexposedCu/Al
+surfaceswerecleanedwithdimethylcarbonateandtheelectrode
+disks were cut to size using hole punches. The coin cells were
+assembledusingCelgardseparatorswhettedwithLP30electrolyte
+(1.0MLiPF6solutioninethylenecarbonate(EC)anddimethylcar-
+bonate(DMC);EC/DMC¼50/50).
+Five reference cells were assembled with electrodes extracted
+fromdischarged(0%SoC)andfullycharged(100%SoC)cells.Both
+positive and NE disks were cut to a diameter of 15 mm and the
+separatorto20mm,asillustratedinFig.4a).Thereferencecells Fig.4. Sizesofelectrodedisksandseparatorsusedincoincellsfora)referencecells
+served as a baseline against which the degradation modes were andcellswithLLI,b)cellswith36%LAMNEandc)cellswith36%LAMPE.
+compared, and provided a measure for the reproducibility of the
+coincellmanufacturingprocess.
+Twohalf-cells,onewithpositiveandonewithNEmaterial,with
+LAMPE,wherethePE(cathode)diskis12mmindiameterandtheNE
+(anode)diskis15mmindiameter.Theoretically,activeelectrode
+15mmelectrodedisksweremadeinthesamewayasthefullcells
+materialcanbelostinlithiated,delithiatedandpartiallylithiated
+except with lithium foil as counter electrodes (see Table 1). The
+half-cells served to parametrize the OCV model, as described in
+states. Loss of lithiated NE material (LAMNE,li) was emulated by
+combininga12mmNEdiskwitha15mmPEdisk,bothharvested
+Section 3.2. The reference cells and half-cells used in the experi-
+fromafullychargedpouchcell(SoC¼100%).Equivalently,lossof
+mentsarelistedinTable1alongwiththeSoCoftheelectrodesat
+thetimeofassemblyandtheelectrodediskdiameters.TheSoCof
+delithiated NE material LAMNE,de was emulated by combining a
+12mmNEdiskwitha15mmPEdisk,bothharvestedfromafully
+the electrodes refers to the degree of lithiation of the respective
+dischargedpouchcell(SoC¼0%).Thesameprinciplewasusedto
+electrodeatthetimeofassembly.Forexample,inafullycharged
+cell,theSoCofthePEis0%andtheSoCoftheNEis100%.
+create loss of lithiated PE material (LAMPE,li). A limitation of this
+experimentalapproachtosimulatethelossofactivematerialisthe
+Lossoflithiuminventory(LLI)wascreatedbycombiningthePE
+factthatlithiuminsertion/extractionintheoverhangregionofthe
+ofapouchcelldischargedtoahigherSoCwiththeNEofapouch
+largerelectrodeislimitedbythelateraldiffusionoflithiuminthe
+celldischargedtoalowerSoC.Forexample,combiningaPEfroma
+activematerial.ThesimulationofLAMusingthismethodisthere-
+celldischargedto25%SoCwithaNEfromacelldischargedto0%
+fore only valid for very slow C-rates. For this reason, a very low
+creates a cell with 25% LLI, since the NE is the limiting electrode
+pseudo-OCVC-rateofC/25isusedinthiswork.
+during discharge and once it has reached its upper voltage limit
+(the lower voltage limit of the cell), no more lithium can be
+AcombinationofLLIandLAMPE,liwascreatedbycombininga
+14mmPEdiskharvestedfromapouchcellpreviouslydischarged
+extracted.IncoincellswithemulatedLLI,bothelectrodediskswere
+15mmindiameter.
+Loss of active electrode material was created by reducing the
+Table1
+diameter of the respective electrode disk. The commercial elec- Baselinecellandhalf-cellelectrodes.
+trodesextractedfromtheKokamcellswereveryuniformlycoated
+Referencecells CoincellID SoCPE SoCNE DiameterPE DiameterNE
+with active material, so the useful capacityof the electrodes was
+assumedtobeproportionaltotheirsurfacearea.LossofNEmaterial Fullcells Ref1 100% 0% 15mm 15mm
+Ref2 100% 0% 15mm 15mm
+(LAMNE)wascreatedbycombiningalargerPEdiskwithasmallerNE
+Ref3 100% 0% 15mm 15mm
+disk.Fig.4b)illustratesacellwith36%LAMNE,wheretheNE(anode) Ref4 0% 100% 15mm 15mm
+diskis12mmindiameterandthePE(cathode)diskis15mmin Ref5 0% 100% 15mm 15mm
+l d a i r a g m er et N e E r. d L i o s s k s w o i f t P h E a m sm at a e l r le ia r l P ( E LA d M isk PE . ) Fi w g. a 4 s c c ) re s a h t o e w d s b a y c c e o l m lw b i i t n h in 3 g 6% a Half-cells H H C C P N E E 1 e 00% e 0% 1 e 5mm e 15mm
+--- PAGE 5 ---
+C.R.Birkletal./JournalofPowerSources341(2017)373e386 377
+Table2
+Testcellelectrodes.
+Deg.mode CoincellID SoCPE SoCNE DiameterPE DiameterNE
+25%LLI LLI25 75% 0% 20mm 20mm
+50%LLI LLI50 50% 0% 20mm 20mm
+36%LAMNE,li LAMNE,li 0% 100% 15mm 12mm
+36%LAMNE,de LAMNE,de 100% 0% 15mm 12mm
+36%LAMPE,li LAMPE,li 100% 0% 12mm 15mm
+25%LLIþ13%LAMPE,li LLIþLAMPE 75% 0% 14mm 15mm
+Table3 Table4
+Testprocedureforpouchcellpreparation. Testprocedureforcoincells.
+SoCatendoftest Teststep Current limits TestID Teststep Current Limits
+0% CCcharge 29.6mA VCell >4:2V Fullcells Part.charge CCcharge 1.118mA VCell >4:2V
+CCdischarge 29.6mA VCell <2:7V C/2cycle CCdischarge 1.118mA VCell <2:7V
+100% CCcharge 29.6mA VCell >4:2V CCcharge 1.118mA VCell >4:2V
+CCdischarge 29.6mA VCell <2:7V Part.discharge CCdischarge 1.118mA VCell <3:75V
+CCcharge 29.6mA VCell >4:2V Part.charge CCcharge 0.089mA VCell >4:2V
+50% CCcharge 29.6mA VCell >4:2V C/25cycle CCdischarge 0.089mA VCell <2:7V
+CCdischarge 29.6mA VCell <2:7V CCcharge 0.089mA VCell >4:2V
+CCcharge 29.6mA VCell >4:2V PEhalf-cell Part.charge CCcharge 1.118mA VCell >4:5V
+Rest 0mA time>10min C/2cycle CCdischarge 1.118mA VCell <3:5V
+CCdischarge 29.6mA Qdch >0:5(cid:4)Qmeas CCcharge 1.118mA VCell >4:5V
+25% CCcharge 29.6mA VCell >4:2V Part.discharge CCdischarge 1.118mA VCell <4:0V
+CCdischarge 29.6mA VCell <2:7V Part.charge CCcharge 0.089mA VCell >4:5V
+CCcharge 29.6mA VCell >4:2V C/25cycle CCdischarge 0.089mA VCell <3:5V
+Rest 0mA time>10min CCcharge 0.089mA VCell >4:5V
+CCdischarge 29.6mA Qdch >0:75(cid:4)Qmeas NEhalf-cell Part.discharge CCdischarge 1.118mA VCell <0:001V
+C/2cycle CCcharge 1.118mA VCell >1:3V
+CCdischarge 1.118mA VCell <0:001V
+Part.charge CCcharge 1.118mA VCell >0:1V
+to 25% SoC with a 15 mm NE disk harvested from a pouch cell Part.charge CCcharge 0.089mA VCell >1:3V
+previouslydischargedto0%SoC. C/25cycle CCdischarge 0.089mA VCell <0:001V
+Table 2 provides a list of all the coin cells manufactured to CCcharge 0.089mA VCell >1:3V
+emulatethedifferentdegradationmodes,includingtheSoCofthe
+electrodesandthediameteroftheelectrodedisks.
+their average capacity measured at C/25 was 759 mAh with a
+standarddeviationof <0:2%.Givenasurfaceareaof1.767cm2inall
+2.2. Celltesting
+coincellswithelectrodediametersof1.5cm,theexpectednominal
+Allcelltestswereconductedinthermalchambersat30(cid:3)Cusing coin cell capacity is 2.236 mAh, which gives a C/25 current of
+0.089mAandaC/2currentof1.118mA.Thestandarddeviationof
+BioLogic potentiostats of type MPG-205 and SP-150. Before the
+the capacities of all five reference coin cells measured at a C/2
+startoftests,pouchcellsandcoincellswerestoredinthethermal
+currentratewas5.4%,whichservedasthemeasureofuncertainty
+chambers for 3 h for thermal equilibration. The pouch cells from
+fortheestimationofdegradationmodes.
+which the electrodes were extracted for the coin cell
+manufacturingwerepreparedaccordingtothetestschedulelisted
+in Table 3. Firstly, the capacities of the pouch cells (Qmeas) were 3. Modeldevelopment
+measured during a C/25 (29.6 mA) discharge following a C/25
+charge. Secondly, following another C/25 charge, the SoC of the 3.1. Theory
+pouchcellswasadjustedbyaC/25dischargetothelevelsrequired
+for the respective coin cells, based on the initial capacity The theory underlying the proposed degradation modes and
+measurements. theireffectsontheOCVofcellsandelectrodesiswelldocumented
+Thereferencecoincells(fullcellsandPE/NEhalf-cells)andthe intheliterature[19,26,29].Thissectionexplainstheapproachand
+coincellswithinduceddegradationmodesweretestedaccording theextensionsofthepresentedwork.
+to the test schedule inTable 4, which consisted primarily of one InLi-ioncells,theendofcharge(EoC;100%SoC)andtheendof
+cycleatC/2andonecycleatC/25.Partialcharges/dischargesserved discharge(EoD;0%SoC)aredefinedbyacorrespondingmaximum
+toadjustthecells'SoCinpreparationforthefullcycles,aslistedin andminimumcellvoltage,inordertoensuresafeoperation.The
+Table4.TheC/2cycleservedtoassessthegeneralperformanceof lithiumcycledwithintheselimitsconstitutesthecell'susefulca-
+thecells,basedonwhichunder-performingcellswerediscarded, pacity. During charge, the PE is limiting, since its rising voltage,
+andtheC/25cycleservedaspseudo-OCVmeasurement. resultingfromdelithiation,triggersthecell'sEoCvoltagelimit(in
+AtacurrentrateofC/25,thevoltagedropinthecoincellswas thiscase4.2V).Analogously,theNEislimitingduringdischarge,
+measuredtobeontheorderof9(cid:4)10(cid:5)4mV,whichwasconsidered triggeringtheEoDvoltagelimit(inthiscase2.7V).
+negligibleandanyvoltagemeasurementsrecordedatacurrentrate Fig.5a)showsthebasecaseofapristinecell.Thebarsontheleft
+of C/25 were treated as pseudo-OCV. These pseudo-OCV mea- symbolise the anode (NE, in red) and the cathode (PE, blue). The
+surements were used in the degradation model to estimate the areasofthebarsrepresenttheelectrodecapacities,nottoscale.The
+degradationmodes.Theexpectedcapacitiesofthecoincellswere goldenarearepresentsthecyclablelithium,whichcorrespondsto
+calculatedbasedontheactivesurfaceareasoftheelectrodes.The thecellcapacity,inthiscaseintercalatedintheNEinafullycharged
+total electrode surface area of the pouch cells was 600 cm2 and cell.IncommercialLi-ioncells,thereisgenerallyanexcessofNE
+--- PAGE 6 ---
+378 C.R.Birkletal./JournalofPowerSources341(2017)373e386
+Fig.5. Examplesofthedifferentdegradationmodes.Thebarsintheleftcolumnillustratetheutilisationoftheelectrodesasaresultofthedegradationmodes,comparedtothe
+basecase(nottoscale).TheplotsontherightshowthecorrespondingOCVoftheelectrodesandthecell.
+--- PAGE 7 ---
+C.R.Birkletal./JournalofPowerSources341(2017)373e386 379
+material, which is illustrated by the larger NE bar. The misalign- aging of the NE and, in the worst case, to lithium plating on the
+mentofthetwobarsindicateswhichelectrodeislimitingat100% surface if the charging ratesexceed the ratesof lithium diffusion
+SoCand0%SoC,respectively.TheplotontherightofFig.5a)de- into graphite.In the eventthatonlyfullylithiated NE material is
+pictstheOCVcurvesofthePEinblue,theNEinredandthecellin lost,theEoCvoltageoftheNEremainsthesame(asindicatedby
+grey, as functions of the cell's normalised capacity, denoted as thepadlocksymbolintheplotofFig.5c).TheEoDvoltageofthe
+SoCCellin%.Thehorizontaldash/dotlineshighlighttheupperand positive and negative electrodes change in the same manner as
+lowervoltagelimitsofthecellat4.2Vand2.7V,respectively,and theywouldinthecaseofLLI(indicatedbythecircularmarkers).
+theverticaldash/dotlineshighlightthecorrespondingmaximum ThelossofdelithiatedNEmaterial(LAMNE,de)initiallyonlyhasa
+andminimumSoCofthewholecell.ThepointsontheOCVofthe smalleffectonthecapacityofthecell,sincethereisanexcessofNE
+PE and NE that correspond to the cell's upper and lower voltage materialandtheOCVoftheNEattheEoDremainsconstant(see
+limits are indicated by circular markers on the respective OCV Fig. 5 d)). However, the OCV of the NE at the EoC gradually de-
+curves. As LLI, LAMNE and LAMPE come into effect, the utilised creasesasaresultofthelossofactivematerial,whichlimitsthePE
+portionsoftheelectrodeschange,whichisreflectedintheirOCVs. to a lower OCV at the EoC thus extracting less lithium. Once the
+ThismeansthattheOCVoftheelectrodesatEoCandEoDmayalso remaining capacityof the NE is smaller than the original cell ca-
+change accordingly. The EoC and EoD OCVs of the electrodes are pacity,thecelllosescapacityatthesamerateasitlosesactiveNE
+further affected by maintaining constant upper and lower cell material.The capacityloss isequivalent tothe portionoflithium
+voltage limits of 4.2 V and 2.7 V, respectively. Imposing these inventorythatremainstrappedinthePEathighervoltages,which
+voltage limits can lead to a stoichiometric offset between the isindicatedbytheblue/goldstripedareainthePEbarofFig.5d).
+electrodes,whichhasnotbeenaddressedintheliteraturebutisan The example of 30% LAMNE,de illustrated in Fig. 5 d), effectively
+important addition of this work. The effects of these offsets are leadstoacapacitylossof12%.Moreover,sincethecellisstilldriven
+discussedindividuallyforeachdegradationmode. toitsuppervoltagelimitof4.2V,theNEcanbeforcedtonegative
+If cyclable lithium is lost a smaller fraction of the electrodes' voltages,whichinitiateslithiumplating.Thisisamechanismthat
+capacitiesisused,duetotheincreasedoffsetbetweenthepositive must be prevented in practical applications, since it can lead to
+andnegativeelectrode.Theexampleof30%LLIisillustratedbyboth dendriteformationandinternalshort-circuits,whichinturncause
+the shift of the bars on the left of Fig. 5 b) and the shift of the catastrophiccellfailure[31,32].
+negative electrode's OCV curve in the ploton the right. The OCV The loss of lithiated PE material (LAMPE,li) is analogous to
+curvesofthebasecasearedepictedforcomparisonasbrokenlines. LAMNE,li;itisaresultofelectroniccontactlosstolithiatedPEpar-
+TheyellowareasintheplotsontherightofFig.5indicatelostcell ticles.Anexampleof30%LAMPE,liisgiveninFig.5e).TheOCVcurve
+capacity. The OCVs of the electrodes at the EoC and EoD arealso of the PE shrinks compared to its original extent, since a smaller
+affectedbythestoichiometricoffsetduetotheimposedcellvoltage amountofactivematerialcontainslesslithiumandisdischarged
+limits.Whenacellwhichhaslost30%ofitslithiuminventoryap- faster.Atthecell'sEoC,thismeansthatlesslithiumisinsertedinto
+proachesitsEoD(0%SoC),thePEvoltageissignificantlyhigherthan the NE, leaving it at a higher OCV, which must be matched bya
+itwouldbeinapristinecellatEoD(comparethetwocircularblue higherOCVofthePEinordertoreachthecell'suppervoltagelimit
+markersonthePEOCVcurveattheEoDinFig.5b)).Ifthecut-off of4.2V.AsimilarscenarioarisesasdiscussedforthecaseofLLI-
+voltageoftheNEremainedunchanged,theminimumcellvoltage increasing LAMPE,li leads to ever higher PE voltages, potentially
+of2.7Vcouldnotbereached.Inreality,asthecellapproachesits destabilizingthePEmaterial.
+EoDand thecellvoltageis driventowards2.7 V,morelithium is AlossofdelithiatedPEmaterial(LAMPE,de)canpotentiallyaffect
+extracted from the NE and inserted into the positive electrode, thecellcapacityatearlystages,sincethereisonlyasmallerbuffer
+leading to a steep rise in the NE voltage, ultimately reaching the ofPEmaterial comparedtothatin the negative electrode. Asce-
+minimum cell voltage of 2.7 V (compare the two circular red nario of 30% LAMPE,de is illustrated in Fig. 5 f). The OCV of both
+markersontheNEOCVcurvesattheEoDinFig.5b)).Equivalently, electrodesatthecell'sEoCremainsconstantbuttheOCVofthePE
+asacellwith30%LLIapproachesitsEoC,theNEvoltageishigher at the cell's EoD decreases as the OCV curve of the PE shrinks
+than in a pristine cell. Therefore, as the cell is driven toward its comparedtoitsoriginalextent.InthecaseofcommercialLCO/NCO
+uppervoltagelimitof4.2V,morelithiumisextractedfromthePE material, there can be a steep drop in OCV below(cid:6)3:4V. Such a
+andinsertedintothenegativeelectrode,untiltheriseinPEvoltage dropleadstoanequivalentlylowerOCVoftheNEatthecell'sEoD
+triggers the uppercut-off condition of the cell (comparethe two (indicatedbythecircularmarkersintheOCVplotofFig.5f)).The
+circularbluemarkersonthePEvoltagecurveattheEoCinFig.5b). lithiuminsertedintheNEathigherNEvoltagescannolongerbe
+Inthecaseof30%LLI,thisstoichiometricoffsetcausesanoticeable accessedforcycling(illustratedbythered/goldstripedpatternin
+increase in cell capacity, on the order of 2%, as indicated by the theNEbarofFig.5f)),whichcausestheobservedcapacitylossof
+greenareaintheOCVplotofFig.5b).DrivingthePEtoeverhigher 24%.
+voltages can destabilize the structure and, in the worst case, the
+delithiated cathode material reacts exothermically with the elec-
+trolyte,triggeringthermalrunaway[30]. 3.2. TheOCVmodel
+The loss of lithiated active material in the NE (LAMNE,li) can
+occurasaresultofparticlecrackingorelectroniccontactlossbe- Inpreviouswork,wedevelopedaparametricOCVmodelwhich
+tween particles of the active electrode material or between the can be used as a functional expression of the OCV of both the
+activematerialandthecurrentcollector.Thelithiumtrappedinside electrodesandthecell[33].ThisOCVmodelisusedasthebasisfor
+theisolatedgraphiteparticlesandcannolongerbecycled,leading modellingandestimatingthedegradationmodesdiscussedinthis
+toadecreaseinthecell'scapacity.Thiscapacitylossisillustratedby work.AbriefaccountoftheapplicationoftheOCVmodelispro-
+ashortenedred/goldenNEbarontheleftofFig.5c)andtheyellow vided as follows. For a more detailed description, the reader is
+area in the OCV plot on the right of the figure. Less NE material referredto[33].
+remains to receive and release lithium, which is manifested in a Thenormalisedcapacityofanelectrodecanbeexpressedasthe
+shrinkageoftheOCVcurveoftheNE,asshowninFig.5c).LessNE ratio x of occupied to available lattice sites in a host structure,
+materialmeansthatthecurrentdensityontheremainingmaterial rangingfrom0to1.Insolidmulti-phaseintercalationmaterials,x
+isincreasedduringcycling,whichcouldinturnleadtoaccelerated canbecalculatedasafunctionoftheopencircuitvoltageEOC by
+--- PAGE 8 ---
+380 C.R.Birkletal./JournalofPowerSources341(2017)373e386
+EOC ¼EOC(cid:5)EOC: (4)
+(cid:1) (cid:3) XN D
+x
+Cell PE NE
+x EOC ¼ i (1) Theobjectivefunctionusedforthesecondoptimisationwas
+i¼1
+1þexpðEOC(cid:5)E0;i Þaie=kT
+v
+u
+ffiffiffiffiffiffi
+(cid:1)
+ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi
+(cid:3)
+ffiffiffiffiffi
+whereNisthenumberofphasesinthematerial,i¼f1;2;…Ng,Dx i u u t Pn b E O Ce C ll;i ð q Cell Þ(cid:5)EO Ce C ll;i 2
+isthefractionofmaterialattributedtophasei,E 0;i istheenergyof argq
+Cell
+minRMSE¼ i
+n
+l e t a h n t e e ti r B c g e o y lt s b z it e m e t s w an i e n n en p co h in n a t s s e t e a rc n i, a t l a a a i t n e i d s d T a io n t n h s a e , p t e p e r m is ox p t i h e m r e a a e t t u l i e o r m e n i e o n n f t K a t e h r l y e vi c n i h n . a te r r g a e c , t k io i n s v u u u t ffi P ffi n ffiffiffiffi (cid:1) ffiffiffi b E ffiffiffi O P ffiffi E ffi C ffi ; ffi i ffi (cid:5) ffiffiffi q ffiffi C ffiffi e ffiffi l ffi l ffi ; ffi P ffiffi E ffiffi (cid:6) ffiffiffi (cid:5) ffiffiffiffiffi E ffiffi O P ffiffi E ffi C ffi ; ffi i ffiffi (cid:3) ffiffi 2 ffiffiffi (5)
+InthefirststepoftheOCVmodelparametrization,Equation(1) þ i
+n
+wasfittedtothepseudo-OCVmeasurementsofthePEandNEhalf- vffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi
+i c n ell b s o . t I h np th re e v P io E u a s n w d o N rk E ,a m m at i e n r i i m al u f m or o t f h f i o s u p r a p rt h i a cu se la s r w c e e r ll e c id h e e n m t i i s fi t e r d y u u u t Pn (cid:1) b E O N C E;i (cid:5) q Cell;NE (cid:6) (cid:5)EO N C E;i (cid:3) 2
+[33].Inthiswork,highqualitiesoffitofelectrodeOCVsarepara- þ i :
+n
+mount in order to achieve accurate estimates of degradation
+modes.Forthisreason,anadditionalphasewasaddedtotheOCV Parametersq Cell canbesummarisedby
+model in order to improve the fit qualities from a root mean 2 3
+D D
+squarederror(RMSE)of7mVforthePEand12mVfortheNE[33] E 0;PE;1 x PE;1 a PE;1 E 0;NE;1 x NE;1 a NE;1
+6 D D 7
+E to qu < a 3 ti m on V ( f 1 o ) rb ca o n th n e o l t ec b t e ro e d x e p s r i e n ss t e h d is e w x o p r li k c , i a tl s y d a e s m E o O n Cð s x tr Þ a f t o e r d m in u F l i t g ip . l 6 e . q Cell ¼ 6 4 E 0;P « E;2 x P « E;2 a P « E;2 E 0;N « E;2 x N « E;2 a N « E;27 5 : (6)
+D D
+phasesNandisthereforesolvediterativelyduringtheoptimisation. E 0;PE;5 x PE;5 a PE;5 E 0;NE;5 x NE;5 a NE;5
+Theobjectivefunctionusedfortheoptimisationis q Cell;PE andq Cell;NE inEquation(5)includetheelectrodeparam-
+etersasdetailedinEquation(3).Usingtheparametersq ,Equa-
+Cell
+v u ffiffiffiffiffiffiffiffi (cid:1) ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi (cid:3) ffiffiffiffiffi tions(1)and(4)areappliedinthedegradationmodeltocompute
+u t P n b E OC ð q Þ(cid:5)EOC 2 theOCVsandnormalisedcapacitiesofelectrodesandcellsforthe
+argqminRMSE¼ i i i (2) basecase,i.e.apristinecellwithoutanysignsofdegradation.Itis
+n importanttoemphasizethattheOCVmodelisonlyparameterized
+wherenisthenumberofOCVmeasurementsand b E OC isthefitted inthisfashiononceforthebasecase.FittingtheOCVofdegraded
+i cells,thusidentifyingthedegradationmodes,isachievedusingthe
+electrode OCV. q are the model parameters obtained for each
+degradationmodeldescribedbelow.Thisisbasedontheassump-
+electrode,summarisedby
+tionthatthedegradationdoesnotimpacttheindividualphasesof
+theelectrodematerialsindifferentways.
+2 3
+D
+E 0;1 x 1 a 1
+6 D 7
+q ¼ 6 4 E 0 « ;2 « x 2 a « 27 5 : (3) 3.3. Thedegradationmodel
+D
+E 0;5 x 5 a 5
+The degradation modelis designedtoestimate three parame-
+InthesecondstepoftheOCVmodelparametrization,theOCVs ters only; the degradation modes LLI, LAMNE and LAMPE. The
+of the electrodes werefittedsimultaneouslywith the OCVof the objective of the model is to estimate the extent of the different
+cell - using pseudo-OCV measurements recorded on a full cell - degradationmodesatanypointinacell'slifebyfittingthecell's
+usingparametersqofeachelectrodeasaninitialguess.TheOCVof
+OCV.Onlythefullcell'sOCVmeasurementisrequiredforthis.The
+thecellwascalculatedby parameters of the OCV model described in Section 3.2 remain
+unaltered.
+Thedegradationmodesaffecttheelectrodes'capacityrangesin
+termsof(i)theiroffset,increasedbyLLI,(ii)theirscaling,affected
+by LAMNE and LAMPE and (iii) the stoichiometric offset, at EoC
+ð Dx EoCÞandEoDð Dx EoDÞduetotheconstantupperandlowercell
+voltagelimits.
+Equations(7)e(10)describehowLLI,LAMPE,LAMNE,Dx
+EoC
+and
+Dx affect the normalised capacity of the PE at the cell's EoC
+EoD
+ðx PE;EoCÞandEoDðx PE;EoDÞandthenormalisedcapacityoftheNEat
+thecell'sEoCðx NE;EoCÞandEoDðx NE;EoDÞ.
+D
+x
+x PE;EoC ¼
+1(cid:5)LA
+Eo
+M
+C (7)
+PE
+D
+x þ1(cid:5)LLIþLAM
+x PE;EoD ¼ EoD
+1(cid:5)LAM
+PE (8)
+PE
+D
+x þLLI(cid:5)LAM
+x NE;EoC ¼ EoC
+1(cid:5)LAM
+NE (9)
+NE
+Fig.6. OCVmodelfittingresults.
+--- PAGE 9 ---
+C.R.Birkletal./JournalofPowerSources341(2017)373e386 381
+(cid:7) (cid:8)
+x NE;EoD ¼
+1(cid:5)
+D
+L
+x
+A
+Eo
+M
+D
+NE
+(10) xb Cell ¼ x Cell;EoC ;…x Cell;EoD :
+bOC
+(17)
+LLI,LAMPEandLAMNEinEquations(7)e(10)rangefrom0to1, cap F a i c n i a ty lly r , a t n h g e e O xb C
+C
+V
+ell
+o , f by th s e o d lv e i g n r g ad E e q d ua c t e i l o l, n E ( C 2 e ) ll;d u e s g i , n i g sc b E a O
+P
+l
+E
+C cu a la n t d ed b E f O
+N
+o C
+E
+r .
+where1isequivalent tothecell's originalcapacity;e.g.LLI¼0:1 ParametersLLI,LAMNEandLAMPEareestimatedbyminimisingthe
+meansthatthelossoflithiuminventoryisequivalentto10%ofthe objectivefunction
+cell'soriginalcapacity.LAMPEandLAMNErefertothelossofactive v
+u
+ffiffiffiffiffiffi
+(cid:1)
+ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi
+(cid:1)
+ffiffiffiffiffiffiffiffiffiffiffi
+(cid:3)
+ffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffiffi
+(cid:3)
+ffiffiffiffiffi
+m wi a t t h e i r n ia t l he as ca a pa f c r i a t c y ti r o a n ng o e f of th th e e a f c u t l i l v c e el m l.T a h te e ri n a o l rm or a ig li i s n e a d lly cap u a ti c l i i t s i e e d s u u t Pn b E O Ce C ll;deg q deg (cid:5)EO Ce C ll;deg 2
+ofthepositiveandnegativeelectrodesatEoCandEoDarelinked argq minRMSE¼ i (18)
+deg n
+through the cell's upper and lower voltage limits, denoted as
+E C O e C ll;high andE C O e C ll;low ,respectively,accordingto where b E O Ce C ll;deg isthecalculatedOCVofthedegradedcell,E C O e C ll;deg is
+(cid:5) (cid:6) (cid:5) (cid:6) themeasuredpseudo-OCVofthedegradedcell,nisthenumberof
+E C O e C ll;high (cid:5) b E O PE C ;EoC x PE;EoC þ b E O N C E;EoC x NE;EoC ¼0 (11) measurementsandq deg aretheparameters
+and q deg ¼½LLI;LAM PE ;LAM NE (cid:7): (19)
+(cid:5) (cid:6) (cid:5) (cid:6) ThefittingprocedureiscarriedoutinMatlab,usingtheactive-
+E C O e C ll;low (cid:5) b E O PE C ;EoD x PE;EoD þ b E O N C E;EoD x NE;EoD ¼0: (12) setalgorithminMatlab'sfminconoptimisationfunction.Inorderto
+ensureconvergencetotheglobalminimum,theoptimisationisrun
+Equations(11)and(12)definetheOCVofelectrodesandcellat
+repeatedly(100times)fromdifferentstartingpointsusingMatlab's
+100% SoC and 0% SoC, respectively, when upper and lower cell
+globaloptimisationfunctionmultistart.
+voltagelimitsareimposed.TherespectivepointsontheOCVcurves
+Since the cell's OCV drops off rapidly near the EoD, errors
+ofcellandelectrodesaremarkedbythevertical,dash/dottedlines
+calculated at lowOCV are generallygreaterthan errors at higher
+in Fig.5.E C O e C ll;high andE C O e C ll;low havepredefined values, inthis case OCVwheretheOCVcurveisflat.Inordertoavoidabiasofthefit
+bOC bOC towardthelowerendoftheOCVcurve,thecalculationoftheRMSE
+4.2 V and 2.7 V, respectively. E PE=NE;EoC and E PE=NE;EoD are the
+asdescribedinEquation(18)wasconfinedtothepartoftheOCV
+modelledOCVofthePEandNEattheEoCandEoD,respectively.
+TheOCVsoftheelectrodesatthecell'sEoCandEoDinEquations curvewithagradientof D D E C O S e C o ll; C deg<0:1.
+(11) and (12) ð b E O PE C ;EoC ;b E O N C E;EoC ;b E O PE C ;EoD ;E N O E C ;EoD Þ are calculated using
+Equation (1). Dx and Dx can be calculated by substituting 4. Resultsanddiscussion
+EoC EoD
+Equations (7)e(10) into Equations (11) and (12) and solving the
+4.1. OCVmodelfitting
+linearsystemofequations.TheestimatedLLI,LAMPEandLAMNEare
+insertedintoEquations(7)e(10)duringtheoptimisationdescribed
+TheOCVmodeldescribedinSection3.2and[33]wasfittedto
+below.
+the pseudo-OCV measurements recorded on the electrode half-
+Thenormalisedcapacityrangesoftheelectrodesinadegraded
+cell are defined by vectors of discrete values limited by the nor- cells and a reference coin cell in order to obtain the OCV model
+parameters.HighqualitiesoffitwereachievedforboththeOCVof
+malisedcapacitiesattheEoCandEoDaccordingtoEquations(13)
+theelectrodesandthecellwithrootmeansquarederrors(RMSE)
+and (14). The numberof elements in the vectors depends on the
+<3mV (see Fig. 6). The solid lines in Fig. 6 show the fitted OCV
+number of sampling points obtained for the pseudo-OCV
+results of the cell and the electrodes over the SoC range of the
+measurements.
+pristine cell. The high fitting accuracy is essential for the degra-
+(cid:7) (cid:8)
+xb PE ¼ x PE;EoC ;…x PE;EoD (13) d m a o ti r o e n di m ffi o c d u e lt l t s o in id ce en a t n if y yd d e e g v r ia a t d i a o t n io f n ro m m od th es e ,w ac h tu ic a h l m OC ay V o m nl a y k h e a s v i e t
+(cid:7) (cid:8) veryslighteffectsontheOCVofadegradedcell.TheestimatedOCV
+xb NE ¼ x NE;EoC ;…x NE;EoD (14) model parameters - E 0;i ;a i and Dx i - for each of the phases
+TheOCVsoftheelectrodesinadegradedcellð
+b
+E
+OC;b
+E
+OC
+Þcanthus
+i¼f1:::5gofthePEandtheNEarelistedinTable5.
+PE NE
+be calculated by numerically solving Equation (1) for EOC of the
+respective electrode, using the normalised electrode capacity 4.2. Testofthediagnosticalgorithmusingsynthesizeddata
+rangesxb andxb .
+PE NE
+Atthecelllevel,thenormalisedcellcapacityatEoCandEoDis With the OCV model parameterized, the degradation model
+calculatedusingEquations(15)and(16). described in Section 3.3 was used in ‘forward mode’ to create a
+numberofscenariosofcellswithknownamountsofLLI,LAMPEand
+D
+x Cell;EoC ¼ x EoC (15) LAMNE. The OCVs of the hypothetical degraded cells were
+D
+x Cell;EoD ¼1(cid:5)LLIþ x EoD (16) Table5
+EstimatedOCVmodelparameters.
+Inapristine cell100%SoC isequivalent to x Cell;EoC ¼0 and0%
+SoCtox Cell;EoD ¼1.Thecell'soriginalcapacityisnormalised,sothat PE NE
+x Cell;EoD (cid:5)x Cell;EoC ¼1.Thedifferencebetweenx Cell;EoD andx Cell;EoC E0;PE;i[V] aPE;i[1] DxPE;i[1] E0;NE;i[V] aNE;i[1] DxNE;i[1]
+inadegradedcellcorrespondstothecell'snormalisedcapacityasa
+fractionofitsoriginalcapacity,e.g.x Cell;EoD (cid:5)x Cell;EoC ¼0:9means P
+P1
+2
+5
+4
+.
+.
+0
+0
+3
+7
+8
+9
+1
+0
+.
+.
+7
+1
+5
+7
+3
+8
+0
+0
+.
+.
+0
+5
+2
+2
+1
+3
+0
+0
+.
+.
+2
+2
+2
+1
+6
+9
+(cid:5)
+(cid:5)
+1
+0
+8
+.1
+.0
+6
+7
+5
+2 0
+0
+.
+.
+0
+1
+2
+1
+5
+2
+that the cell has lost 10% of its original capacity. The normalised P3 3.936 0.681 0.124 0.173 (cid:5)1.188 0.243
+capacityrangeofthecellisdefinedbyavectorofdiscretevalues P4 3.900 3.074 0.136 0.132 (cid:5)14.773 0.254
+limitedbyx Cell;EoC andx Cell;EoD accordingto P5 3.688 0.470 0.178 0.094 (cid:5)6.690 0.365
+--- PAGE 10 ---
+382 C.R.Birkletal./JournalofPowerSources341(2017)373e386
+subsequentlyusedtotesttheabilityofthediagnosticalgorithmto electrodeOCVofthereference(pristine)cell.Thefilledareasatthe
+identify thedifferentdegradation modes.It isimportant topoint EoCandEoDindicatecapacityloss(inyellow)orcapacitygain(in
+outthatthemodelestimatesthetotalamountsoflostactivema- green)oftherespectivecellasaresultofdegradation.Capacitygain
+terials LAMPE and LAMNE, both lithitated and delithiated. Any referstotheextractionofadditionallithiumfromthePEasaresult
+lithiumcontainedinlostactiveelectrodematerialisincludedinthe oftheimposeduppercellvoltagelimit,leadingtoastoichiometric
+estimateofthetotalLLI;i.e.thetotalestimatedLLIincludesboth offset.Thiscanbedetrimentaltothecell,sincethePEisdrivento
+the lithium lost through pure LLI (e.g. by SEI build up) and the highervoltages,whichmayaccelerateitsdegradation.Thecapacity
+lithiumlostinlithiatedactivematerial(LAMPE,liandLAMNE,li).For gain at the EoC is never greater than the accompanying capacity
+example,10%ofpureLLIand5%ofLAMNE,ligivesatotalof15%LLI. lossattheEoDbutitcanslightlyreducetheoverallcapacityloss.
+The reason for the diagnostic algorithm to be designed in this TheRMSEvaluesdisplayedintheOCVplotswerecalculatedfrom
+manneristhatacombinationofe.g.LLIandLAMNE,decreatesthe themeasuredandthefittedcellvoltagesfortheentirecellvoltage
+sameOCVsignatureasanequalamountofLAMNE,li.Thesameholds windowof2.7Ve4.2V.Theerrorbarsonthebarchartsontheright
+trueforcombinationsofLLIandLAMPE.Thefractions oflithiated ofFig.8arebasedonthestandarddeviationofthecapacitiesofthe
+anddelithiatedLAMcanthereforenotbeuniquelyidentifiedifthe referencecoincells(5.4%),asdescribedinSection2.2.Itshouldbe
+assumptionisthatLLIcanoccursimultaneously,resultingfroma emphasizedthattheuncertaintyof5.4%reflectsthereproducibility
+differentmechanism.AnexceptionalcasewouldbeonewhereLAM of the coin cell manufacturing. For applications on commercial
+isdetectedbutnoLLI.Insuchacase,therespectiveLAMcouldbe cells,highaccuraciescanbeexpectedforestimationsofdegrada-
+uniquely identified as loss of delithiated active material. In real- tion modes, as demonstrated in Section 4.2. The results are dis-
+world scenarios of Li-ion cell degradation, there is no reason to cussedindividuallyforeachdegradationscenario.
+assumethatthelossofactiveelectrodematerialoccursexclusively
+inlithiatedordelithiatedstates-itislikelytooccuroverarangeof 4.3.1. 25%LLI
+differentstagesoflithiation.Theapproachtoseparatethelossof The fitted OCV and estimated degradation mode of cell LLI25
+lithiumcontainedinlostactiveelectrodematerialfromthelossof (25%LLI)areshowninFig.8a)andb),respectively.Thediagnostic
+theactiveelectrodematerialitselfallowstoaccountforthesemore algorithmaccuratelyestimatedtheextentofLLIwithinthemargin
+realisticscenarios. oferror(seeFig.8b)).Thecoincell'sOCVwasfittedwithaRMSEof
+Threeartificialscenarioswerecreatedtotestthediagnostical- 6.7mV.The25%LLIledtotheexpectedincreasedoffsetbetween
+gorithmbyrunningthedegradationmodelin‘forwardmode’.The thepositiveandnegativeelectrode'sOCV,illustratedbyaleft-shift
+scenarios are listed inTable 6. The values inTable 6 are given as ofthenegativeelectrode'sOCVinFig.8a),whichdirectlytranslates
+percentageofthecell'soriginalcapacity.ValuesofLAMrefertothe into capacity loss of the cell. The offset and imposed upper cell
+lossofactivematerialasafractionoftheactivematerialoriginally voltage limit forced the PE to a slightly higher OCV, extracting a
+utilisedwithinthecapacityrangeofthefullcell. smallamountofadditionallithiumattheEoC,offsetting(cid:6)1%ofthe
+Thediagnosticalgorithmwasusedtofitthedegradationmodel overallcapacityloss.Thisisindicatedbythe dash/dottedvertical
+to the synthetically generated cell OCVs, thereby identifying the linesatthecell'sEoCandthecircularmarkersonthepositiveand
+amounts of total LLI, LAMPE and LAMNE. The fitting results are negativeelectrode'sOCVinFig.8a).
+depictedinFig.7,whichshowsthefittedcellandelectrodeOCVson
+theleft(Fig.7a),c)andd))andtheamountsofrealandestimated 4.3.2. 50%LLI
+LLI,LAMPEandLAMNEontheright(Fig.7b),d)andf)).Thedash/ Fig.8c)andd)showthefittedOCVandestimateddegradation
+dottedhorizontallinesintheOCVplotsofFig.7indicatethecell's modeofcellLLI50(50%LLI).50%LLIwasaccuratelyestimatedand
+upperandlowervoltagelimitsandtheverticallinesindicatethe other degradation modes were found to be negligible within the
+correspondingrelativecapacity.ThebrokenlinesshowtheOCVsof marginoferror.The RMSEof theOCVfitwas11.9mV.The same
+theelectrodesandcellofthereference(pristine)cell.Areasfilled trendswereobservedasforcellLLI25,albeittoagreaterextent;a
+withyellowindicate capacityloss. Forall three scenarios,perfect largeoffsetbetweenthepositiveandNEandanoticeablyhigherPE
+fitswereobtainedandalldegradationmodesaccuratelyidentified, OCV at EoC, extracting an additional (cid:6)2% of lithium from the
+which proves the ability of the diagnostic algorithm to uniquely positive electrode. The results obtained for cells LLI25 and LLI50
+identifythethreedifferentdegradationmodesbyfittingtheOCVof confirmthetheoryofLLIdiscussedinSection3.1.
+adegradedcell.
+4.3.3. 36%LAMNE,li
+Fig.8e)andf)showthefittedOCVandestimateddegradation
+4.3. Validationofthediagnosticalgorithmusingcoincelldata mode of cell LAMNE,li (36% LAMNE,li). LAMNE was successfully
+identified as a major degradation mode, although to a slightly
+Thediagnosticalgorithmwasusedtoestimatethedegradation smaller extent than expected, exceeding the margin of error by
+modesengineeredbymeansofthecustomisedcoincells(described (cid:6)4%.Againstexpectations,asmallamountofLAMPEwasdetected
+in Section 2.1). The degradation model was fitted tothe pseudo- bythediagnosticalgorithm,exceedingthemarginoferrorby(cid:6)5%.
+OCVmeasurementsrecordedonthecoincellsandtheresultsare Thisdiscrepancycouldbeexplainedasanartifactofthecoincell
+displayedinFig.8;OCVfittingresultsontheleftandtheextentof manufacturingtechnique.Theholepunchusedtocutthe12mm
+real and estimated degradation modes on the right. The broken electrodedisksslightlycrimpedthedisksaroundtheedge,causing
+lines in the OCV plotson the left of the figure showthe cell and asmallrimwhichwasbentawayfromtheinterfaceofelectrode
+andseparator.Arimofmerely0.3mmarounda12mmdiskcon-
+stainsanadditional5%oftheelectrode'scapacity.Duetothelackof
+Table6
+contactbetweentherimaroundtheNEdisk(whichwascutina
+ScenariosforsyntheticOCVdata.
+fullylithiatedstate)andtheseparator,thelithiumcontainedinthe
+Scenario LLI(pure) LAMNE,li LAMNE,de LAMPE,li LAMPE,de LLI(total) NEcouldnotbefullyextractedduringthepseudo-OCVdischargeof
+I 12% 0% 23% 6% 0% 18% thecell,whichwouldappearasalossofPEmaterial.Thefactthat
+II 21% 4% 0% 0% 7% 25% the extent of LAMNE was underestimated by roughly the same
+III 9% 0% 14% 0% 11% 9%
+amountastheLAMPEwasoverestimated,namelybetween4%and
+--- PAGE 11 ---
+C.R.Birkletal./JournalofPowerSources341(2017)373e386 383
+Fig.7. EstimationofknownamountsofLLI,LAMPEandLAMNE;a)andb)ScenarioI:12%(pure)LLI,23%LAMNE,de,6%LAMPE,li,c)andd)ScenarioII:21%(pure)LLI,4%LAMNE,li,7%
+LAMPE,de,e)andf)ScenarioIII:9%(pure)LLI,14%LAMNE,de,11%LAMPE,de.
+5%, supports this theory. The lithium contained within the lost normalisedcellcapacityandthenormalisedPEcapacity,whichis
+active NE material (LLI) was also slightly underestimated - to a equivalent to x
+PE
+at E
+C
+O
+e
+C
+ll
+¼4:2V (as obtained by the OCV model).
+similardegreeastheLAMNE,withinthemarginoferror.Overall,the NowLAMNE,plcanbecalculatedusingEquation(20).
+predominantdegradationmodeswerecorrectlyidentified-LLIand
+L l
+i
+i
+d
+A t
+e
+h M
+n
+ia
+t
+N t
+i
+E
+fi
+e . d
+e
+I
+d
+n n t
+e
+e h
+q
+g i
+u
+s a
+a
+t s i
+l
+c v e e
+a
+n
+m
+a e r
+o
+l i e
+u
+o c
+n
+, t a r
+ts
+o ll d
+o
+o e
+f
+f . t
+L
+h T
+L
+e h
+I
+e l
+a
+o
+n
+s d t
+d
+ia li g
+L
+t
+A
+i n h o
+M
+i s u
+N
+t m i
+E
+c
+,
+w
+s
+a
+u
+a lg s
+g
+o
+g
+c r
+e
+o i
+s
+t n h
+t
+t
+i
+m a
+n
+i
+g
+n c e
+t
+o d
+h
+r
+a
+i r n
+t
+ec t
+t
+t h
+h
+ly e
+e
+LAM NE;pl ¼1(cid:5)
+x
+x
+N
+N
+E;
+E
+C
+;
+e
+ce
+ll
+l
+;
+l
+m
+;p
+a
+l
+x
+(20)
+prevalentmechanismwasLAMNE,li. wherex NE;max¼1:25isthemaximumofthenormalisedcapacityof
+thenegativeelectrode,scaledwithrespecttothecellcapacity,in
+4.3.4. 36%LAMNE,de the reference cell. Equation (20) yields LAM NE;pl ¼26:4%, which
+ThediagnosticresultsforcellLAMNE,dearedisplayedinFig.8g) means that any loss of delithiated NE material exceeding 26.4%
+andh)-fittedOCVandestimateddegradationmodes,respectively. causestheonsetoflithiumplatingontheNEandleadstofurther
+Sincea36%lossofdelithiatedNEmaterialexceedstheadditional capacity loss due to irreversible deposition of metallic lithium.
+NEcapacitybuffer,lithiumplatingontheNEwasexpectedinthis Although some of the lithium plated during charging may be
+scenarioduringcharging.Theonsetoflithiumplatingoccursonce recoveredbystrippingduringdischarging[34],theassumptionin
+theNEvoltagedropsbelow0V.Thecellsusedinthisworkhavea thisworkisthattheamountofstrippedlithiumisnegligibleand
+NEcapacitybufferof(cid:6)25%,whichcanbeinferredfromtheOCVof any plated lithium leads toLLI. The amountof LLI resulting from
+thereferencecell'snegativeelectrode,shownasbrokenredlinein platingcanbeapproximatedbycalculatingthedifferencebetween
+theplotsontheleftofFig.8.TheamountofLAMNE,derequiredto LAMNE,de and LAMNE,pl, in this case amounting to 9.6% LLI. The
+consumealloftheNEbufferandreachtheonsetoflithiumplating diagnostic algorithm accurately identified both the amount of
+(LAMNE,pl)canbecalculatedasfollows.Firstly,thenormalisedca- LAMNEandLLIwithinthemarginoferror,asshowninFig.8h).The
+pacityoftheNEatE
+N
+O
+E
+C ¼0V,scaledwithrespecttothenormalised capacitylossattributedtoLAMNE,deisillustratedbytheyellowarea
+cellcapacityðx NE;Cell;pl Þ,iscalculated.x NE;Cell;pl isequivalenttothe atthecell'sEoCinFig.8g).Notethatcapacitylostduetolithium
+normalised and scaled capacity of the positive electrode, where trappedinsidethePE(yellowareainFig.8g)atthecell'sEoC),asa
+E
+P
+O
+E
+C ¼4:2V.ThelattercanbecalculatedusingEquation(1)forthe resultofLAMNE,de,isnotincludedinthetotalamountofLLI.The
+PEwith4.2VpluggedinasEOC,multiplyingtheresultbytheratio capacitylostasaresultoflithiumplatingismarkedbytheyellow
+PE
+of cell capacity to PE capacityand adding the offset between the areaatthecell'sEoDinFig.8g).ThesmallamountofLAMPEwhich
+--- PAGE 12 ---
+384 C.R.Birkletal./JournalofPowerSources341(2017)373e386
+Fig.8. Resultsofdegradationdiagnostics;fittedcellOCVs(leftcolumn)andestimateddegradationmode(rightcolumn).a)andb):cellLLI25,c)andd):cellLLI50,e)andf):cell
+LAMNE,li,g)andh):cellLAMNE,de,i)andj):cellLAMPE,li,k)andl):cellLLIþLAMPE,li.
+wasalsoidentifiedexceedsthemarginoferrorbyonly(cid:6)1%andis 4.3.6. 25%LLIþ13%LAMPE,li
+thereforeconsiderednegligible. Fig.8k)andl)showthefittedOCVandestimateddegradation
+modeofcellLLIþLAMPE,li(25%ofLLIand13%ofLAMPE,li).Inthis
+case,twodegradationmodeswerecombined.Thetotalamountof
+4.3.5. 36%LAMPE,li
+LLI(38%)includesthepureLLI(25%)andthelithiumlostinsidethe
+Fig.8i)andj)displaythefittedOCVandestimateddegradation
+active PE material (13%). The yellow area at the EoC in Fig. 8 k)
+o
+m
+f
+o
+l
+d
+os
+e
+t
+o
+l
+f
+it
+c
+h
+e
+ia
+ll
+te
+LA
+d
+M
+PE
+PE
+m
+,li
+a
+(3
+te
+6
+r
+%
+ia
+o
+l
+f
+o
+L
+n
+A
+t
+M
+he
+PE
+c
+,li
+e
+)
+l
+.
+l
+F
+'s
+ig
+c
+.
+a
+8
+pa
+i)
+ci
+i
+t
+ll
+y
+u
+,
+s
+w
+tr
+h
+a
+i
+t
+c
+e
+h
+st
+is
+he
+si
+e
+g
+f
+n
+fe
+ifi
+c
+-
+t representsthecapacitylossduetoLAMPE,liandtheyellowareaat
+theEoDthecapacitylossduetopureLLI.AsshowninFig.8l),the
+cantlyreducedattheEoC.ThecorrectamountsofLAMPEandLLI
+total amountof LLI was accuratelyestimated and the LAMPE was
+containedinthelostelectrodematerialwereestimatedusingthe slightly overestimated, exceeding the margin of error by 1:6%. A
+diagnosticalgorithm.

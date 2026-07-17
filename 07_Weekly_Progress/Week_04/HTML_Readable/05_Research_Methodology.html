@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>05 Research Methodology</title>
+  
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #1E293B;
+    background: #F8FBFF;
+    padding: 0;
+  }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 40px 32px 60px; background: #fff; }
+  h1 { font-size: 2em; color: #1B4F72; border-bottom: 3px solid #0096B7; padding-bottom: 10px; margin: 32px 0 16px; }
+  h2 { font-size: 1.45em; color: #025E8C; margin: 28px 0 10px; padding-left: 10px; border-left: 4px solid #0096B7; }
+  h3 { font-size: 1.15em; color: #0096B7; margin: 20px 0 8px; }
+  p  { margin: 8px 0; }
+  ul, ol { margin: 8px 0 8px 28px; }
+  li { margin: 4px 0; }
+  code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    background: #EBF5FB;
+    color: #025E8C;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 0.92em;
+  }
+  pre {
+    background: #1E293B;
+    color: #A8D8EA;
+    padding: 16px 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 14px 0;
+    font-size: 0.9em;
+    line-height: 1.55;
+  }
+  pre code { background: none; color: inherit; padding: 0; }
+  hr { border: none; border-top: 1px solid #E2E8F0; margin: 24px 0; }
+  blockquote {
+    border-left: 4px solid #0096B7;
+    background: #EBF5FB;
+    padding: 10px 16px;
+    margin: 14px 0;
+    color: #025E8C;
+    border-radius: 0 6px 6px 0;
+    font-style: italic;
+  }
+  a { color: #0096B7; }
+  a:hover { color: #E85D5D; }
+  .table-wrap { overflow-x: auto; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.93em; }
+  th { background: #1B4F72; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { border: 1px solid #D1E8F5; padding: 7px 12px; }
+  tr:nth-child(even) td { background: #F0F7FF; }
+  strong { color: #1B4F72; }
+  .nav { background: #1B4F72; padding: 16px 32px; position: sticky; top: 0; z-index: 100; }
+  .nav a { color: #A8D8EA; text-decoration: none; margin-right: 20px; font-size: 13px; font-weight: 500; }
+  .nav a:hover { color: #fff; }
+</style>
+</head>
+<body>
+  <div class="nav"><a href="00_README.html">README</a><a href="01_Literature_Review.html">Literature Review</a><a href="02_Dataset_Analysis.html">Datasets</a><a href="03_NMC_Chemistry.html">NMC Chemistry</a><a href="04_EV_Fleet_Data.html">Fleet Data</a><a href="05_Research_Methodology.html">Methodology</a></div>
+  <div class="page-wrap">
+    <h1>Research Methodology — 7-Stage Framework</h1>
+<h2>EG7030 Dissertation — Week 4 Detailed Notes</h2>
+<br>
+<hr>
+<br>
+<h2>Overview</h2>
+<br>
+<p>The dissertation follows a 7-stage methodology designed to move from raw data to a deployable, explainable battery degradation prediction tool for EV fleet applications.</p>
+<br>
+<p><strong>Timeline (from Dissertation Brief — Phase Plan):</strong></p>
+<div class="table-wrap"><table>
+<tr><th>Phase</th><th>Months</th><th>Tasks</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th>Phase 1</th><th>May–June</th><th>Literature review, data collection</th></tr>
+<tr><td>Phase 2</td><td>June</td><td>Dataset preprocessing, feature engineering</td></tr>
+<tr><td>Phase 3</td><td>July</td><td>ML model development</td></tr>
+<tr><td>Phase 4</td><td>August</td><td>SHAP explainability, PyBaMM simulation</td></tr>
+<tr><td>Phase 5</td><td>August–September</td><td>FSI development, validation</td></tr>
+<tr><td>Phase 6</td><td>September</td><td>Dissertation writing, submission</td></tr>
+<p></table></div></p>
+<br>
+<hr>
+<br>
+<h2>Stage 1: Data Collection & Preprocessing ✅ (In Progress)</h2>
+<br>
+<h3>What Has Been Done</h3>
+<ul><li>Downloaded CALCE Battery Dataset (CS, CX, A123, INR 18650-20R, Pouch)</li>
+<li>Downloaded NASA PCoE Battery Dataset (B0005, B0006, B0007, B0018 + Oxford)</li>
+<li>Obtained Fleet DNA delivery truck duty cycle data</li></ul>
+<h3>What Needs to Be Done (Week 5)</h3>
+<ol><li>Extract CALCE zip files and load INR 18650-20R NMC cycle data</li>
+<li>Parse NASA .mat files using <code>scipy.io.loadmat()</code></li>
+<li>Load Oxford .mat files and .csv files</li>
+<li>Standardise column names across all datasets</li>
+<li>Handle missing values and outliers</li>
+<li>Split into train/validation/test sets (70/15/15)</li></ol>
+<h3>Code Template</h3>
+<pre><code>import pandas as pd
+<p>import numpy as np</p>
+<p>import scipy.io</p>
+<br>
+<p>&lt;h1&gt;Load CALCE NMC&lt;/h1&gt;</p>
+<p>calce_nmc = pd.read_csv('INR18650_20R_Cycle1.csv')</p>
+<p>calce_nmc['SoH'] = calce_nmc['Discharge_Capacity'] / 2.0 * 100</p>
+<br>
+<p>&lt;h1&gt;Load NASA&lt;/h1&gt;</p>
+<p>nasa_data = scipy.io.loadmat('B0005.mat')</p>
+<p>cycles = nasa_data['B0005']['cycle'][0][0][0]</p>
+<br>
+<p>&lt;h1&gt;Load Oxford&lt;/h1&gt;</p>
+<p>oxford = scipy.io.loadmat('Oxford_Battery_Degradation_Dataset_1.mat')</p>
+<p></code></pre></p>
+<br>
+<hr>
+<br>
+<h2>Stage 2: Duty Cycle Feature Extraction ✅ (Starting Week 5)</h2>
+<br>
+<h3>Objective</h3>
+<p>Extract quantitative metrics that characterise how "hard" each duty cycle is on the battery. These metrics become features in the ML model and the inputs for the Fleet Severity Index (FSI).</p>
+<br>
+<h3>Features to Extract</h3>
+<br>
+<p><strong>From Battery Cycling Data (CALCE/NASA/Oxford):</strong></p>
+<div class="table-wrap"><table>
+<tr><th>Feature</th><th>Formula</th><th>Units</th><th>Significance</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th>Charge capacity</th><th>Direct measurement</th><th>Ah</th><th>Input to SoH</th></tr>
+<tr><td>Discharge capacity</td><td>Direct measurement</td><td>Ah</td><td>Primary SoH indicator</td></tr>
+<tr><td>C-rate</td><td>I / Q_nominal</td><td>h⁻¹</td><td>Stress intensity</td></tr>
+<tr><td>Coulombic efficiency</td><td>Q_discharge / Q_charge</td><td>%</td><td>Degradation health check</td></tr>
+<tr><td>Mean discharge voltage</td><td>∫V dt / T</td><td>V</td><td>State indicator</td></tr>
+<tr><td>Voltage variance</td><td>Var(V)</td><td>V²</td><td>Stress homogeneity</td></tr>
+<tr><td>Internal resistance</td><td>ΔV / ΔI</td><td>Ω</td><td>SEI growth proxy</td></tr>
+<tr><td>Temperature mean/max</td><td>Direct measurement</td><td>°C</td><td>Thermal stress</td></tr>
+<tr><td>Delta-capacity (ΔQ)</td><td>Q_n - Q_{n-1}</td><td>Ah</td><td>Rate of fade</td></tr>
+<p></table></div></p>
+<br>
+<p><strong>From Fleet DNA Data:</strong></p>
+<div class="table-wrap"><table>
+<tr><th>Feature</th><th>Formula</th><th>Units</th><th>Significance</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th>KI</th><th>Σ</th><th>a</th><th>/ d</th><th>m/s²/km</th><th>Overall aggressiveness</th></tr>
+<tr><td>RPA</td><td>Σ(v×a_pos) / d</td><td>—</td><td>Acceleration intensity</td></tr>
+<tr><td>PKE</td><td>Σ(0.5 × Δv²_pos) / d</td><td>J/kg/km</td><td>Energy-based severity</td></tr>
+<tr><td>Idle fraction</td><td>t_idle / t_total</td><td>%</td><td>Stop-go indicator</td></tr>
+<tr><td>Max speed</td><td>max(v)</td><td>mph</td><td>Highway vs. urban flag</td></tr>
+<tr><td>Speed standard deviation</td><td>Std(v)</td><td>mph</td><td>Speed variability</td></tr>
+<p></table></div></p>
+<br>
+<hr>
+<br>
+<h2>Stage 3: Exploratory Data Analysis (EDA) — Week 5</h2>
+<br>
+<h3>Tasks</h3>
+<ol><li><strong>Capacity fade curves</strong>: Plot SoH vs. cycle number for all batteries</li>
+<li><strong>Correlation heatmap</strong>: Which features correlate with SoH?</li>
+<li><strong>Comparison across datasets</strong>: Side-by-side capacity fade for CALCE NMC vs. Oxford NMC</li>
+<li><strong>Temperature effect</strong>: Does higher temperature → faster fade? (scatter plot)</li>
+<li><strong>C-rate effect</strong>: Higher C-rate → faster degradation? (boxplot by C-rate group)</li></ol>
+<h3>Key Expected Findings</h3>
+<ul><li>CALCE NMC cells with DST (dynamic) profiles should show faster degradation than CC profiles</li>
+<li>Higher C-rate experiments should show steeper capacity fade</li>
+<li>Temperature > 35°C should accelerate fade (Arrhenius relationship)</li></ul>
+<hr>
+<br>
+<h2>Stage 4: ML Model Development — July</h2>
+<br>
+<h3>Five Models Planned</h3>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Model</th><th>Type</th><th>Strengths</th><th>When to Use</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th><strong>Random Forest</strong></th><th>Ensemble (bagging)</th><th>Robust, handles non-linear, interpretable via feature importance</th><th>Baseline</th></tr>
+<tr><td><strong>XGBoost</strong></td><td>Ensemble (boosting)</td><td>High accuracy, handles missing values</td><td>Main model (Paper D2 validated)</td></tr>
+<tr><td><strong>LightGBM</strong></td><td>Ensemble (boosting)</td><td>Fastest, good for large data</td><td>Main model (Paper D3 validated)</td></tr>
+<tr><td><strong>SVM (RBF kernel)</strong></td><td>Kernel method</td><td>Good for small datasets</td><td>Comparison</td></tr>
+<tr><td><strong>LSTM</strong></td><td>Deep learning (RNN)</td><td>Captures temporal sequences</td><td>Sequence prediction</td></tr>
+<tr><td><strong>Bi-LSTM</strong></td><td>Deep learning</td><td>Bidirectional temporal context</td><td>Best for time series</td></tr>
+<p></table></div></p>
+<br>
+<h3>Evaluation Metrics</h3>
+<div class="table-wrap"><table>
+<tr><th>Metric</th><th>Formula</th><th>Target</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th>RMSE</th><th>√(Σ(ŷ-y)²/n)</th><th>< 2% SoH</th></tr>
+<tr><td>MAE</td><td>Σ</td><td>ŷ-y</td><td>/n</td><td>< 1.5% SoH</td></tr>
+<tr><td>R²</td><td>1 - SS_res/SS_tot</td><td>> 0.95</td></tr>
+<tr><td>MAPE</td><td>Σ</td><td>(ŷ-y)/y</td><td>/n × 100</td><td>< 5%</td></tr>
+<p></table></div></p>
+<br>
+<hr>
+<br>
+<h2>Stage 5: SHAP Explainability Layer — August</h2>
+<br>
+<h3>What is SHAP?</h3>
+<p>SHAP (SHapley Additive exPlanations) is a framework from game theory that explains individual model predictions by computing the marginal contribution of each feature to the output.</p>
+<br>
+<p><strong>Reference paper</strong>: Lundberg & Lee (2017) — "A Unified Approach to Interpreting Model Predictions" — NeurIPS</p>
+<ul><li>GitHub: https://github.com/slundberg/shap</li>
+<li>Documentation: https://shap.readthedocs.io/</li></ul>
+<h3>Implementation</h3>
+<pre><code>import shap
+<br>
+<p>&lt;h1&gt;Train your XGBoost model first&lt;/h1&gt;</p>
+<p>model = xgboost.train(params, dtrain)</p>
+<br>
+<p>&lt;h1&gt;Create SHAP explainer&lt;/h1&gt;</p>
+<p>explainer = shap.TreeExplainer(model)</p>
+<p>shap_values = explainer.shap_values(X_test)</p>
+<br>
+<p>&lt;h1&gt;Summary plot — shows feature importance&lt;/h1&gt;</p>
+<p>shap.summary_plot(shap_values, X_test, feature_names=feature_names)</p>
+<br>
+<p>&lt;h1&gt;Dependence plot — how one feature affects prediction&lt;/h1&gt;</p>
+<p>shap.dependence_plot("C_rate", shap_values, X_test)</p>
+<p></code></pre></p>
+<br>
+<h3>Expected Insights</h3>
+<p>From SHAP analysis on battery data, you expect to find:</p>
+<ul><li><strong>C-rate</strong> and <strong>temperature</strong> are high-importance features (supported by Mulpuri et al.)</li>
+<li><strong>Cycle number</strong> increases in importance as degradation accelerates past knee point</li>
+<li><strong>KI</strong> and <strong>RPA</strong> (fleet duty cycle features) will have measurable SHAP contributions</li>
+<li>Different features dominate at different life stages (early vs. late degradation)</li></ul>
+<hr>
+<br>
+<h2>Stage 6: PyBaMM Simulation — August</h2>
+<br>
+<h3>What PyBaMM Does</h3>
+<p>PyBaMM validates your data-driven ML predictions with physics-based electrochemical simulation. It answers: <em>"Can the physics explain what the data shows?"</em></p>
+<br>
+<h3>Setup</h3>
+<pre><code>pip install pybamm
+<p>import pybamm</p>
+<br>
+<p>&lt;h1&gt;Use SPMe model (Single Particle Model with electrolyte)&lt;/h1&gt;</p>
+<p>model = pybamm.lithium_ion.SPMe()</p>
+<br>
+<p>&lt;h1&gt;Use NMC-811 parameters (matches Mulpuri et al. LGM50 cell)&lt;/h1&gt;</p>
+<p>param = pybamm.ParameterValues("Chen2020")</p>
+<br>
+<p>&lt;h1&gt;Add degradation submodels&lt;/h1&gt;</p>
+<p>model = pybamm.lithium_ion.SPMe(</p>
+<p>options={</p>
+<p>"SEI": "ec reaction limited",</p>
+<p>"lithium plating": "irreversible",</p>
+<p>"particle mechanics": "swelling and cracking"</p>
+<p>}</p>
+<p>)</p>
+<p></code></pre></p>
+<br>
+<h3>Validation Plan</h3>
+<ol><li>Run PyBaMM simulation with NMC-811 parameters at <strong>low C-rate</strong> (C/5)</li>
+<li>Compare simulated capacity fade curve against CALCE NMC real data</li>
+<li>Run simulation at <strong>high C-rate</strong> (1C, 2C) — simulate aggressive fleet duty cycle</li>
+<li>Compare accelerated fade prediction against ML model prediction</li>
+<li><strong>If PyBaMM and ML agree</strong> → confidence in ML model mechanism</li>
+<li><strong>If they disagree</strong> → investigate data quality issues or model limitations</li></ol>
+<h3>Expected Output</h3>
+<p>A side-by-side comparison plot showing:</p>
+<ul><li>PyBaMM simulated capacity fade (physics-based)</li>
+<li>ML model predicted capacity fade (data-driven)</li>
+<li>Real CALCE NMC measured capacity fade (ground truth)</li></ul>
+<hr>
+<br>
+<h2>Stage 7: Fleet Severity Index (FSI) — Novel Contribution</h2>
+<br>
+<h3>What is the FSI?</h3>
+<p>The Fleet Severity Index is a <strong>single numerical score</strong> (0 to 1) that quantifies how degrading a fleet vehicle's duty cycle is for its battery. It is your dissertation's primary novel contribution.</p>
+<br>
+<h3>Why the FSI Matters</h3>
+<p>Current fleet battery management uses:</p>
+<ul><li>Fixed replacement schedules (e.g., every 3 years regardless of actual health)</li>
+<li>Simple odometer-based rules (replace at X miles)</li></ul>
+<p>The FSI enables:</p>
+<ul><li><strong>Condition-based replacement</strong>: Replace when FSI × cycles exceeds threshold</li>
+<li><strong>Route optimisation</strong>: Assign lower-FSI routes to newer batteries</li>
+<li><strong>Procurement guidance</strong>: Buy batteries rated for the fleet's specific FSI profile</li></ul>
+<h3>FSI Formula (Draft)</h3>
+<pre><code>FSI(v, t) = α × KI_norm(v,t) + β × T_factor(v,t) + γ × CR_factor(v,t) + δ × idle_factor(v,t)
+<p></code></pre></p>
+<br>
+<p>Where:</p>
+<ul><li><code>KI_norm</code> = normalised Kinetic Intensity (0–1)</li>
+<li><code>T_factor</code> = temperature stress factor (0–1, increases above 35°C)</li>
+<li><code>CR_factor</code> = charging rate stress factor (0–1)</li>
+<li><code>idle_factor</code> = fraction of micro-cycling events (0–1)</li>
+<li>α, β, γ, δ = weights learned from SHAP importance values of each feature</li></ul>
+<h3>How FSI Will Be Validated</h3>
+<ol><li>Compute FSI for each Fleet DNA delivery truck route</li>
+<li>Group routes by FSI quartile (low, medium-low, medium-high, high severity)</li>
+<li>Apply ML model to predict remaining life of NMC battery under each FSI quartile</li>
+<li>Compare predictions: high-FSI routes should predict 1.5–2× shorter battery life than low-FSI routes</li>
+<li>Cross-validate against Mulpuri et al.'s finding that urban driving (high FSI) = 2× faster degradation than highway (low FSI)</li></ol>
+<hr>
+<br>
+<h2>Dissertation Chapter Plan</h2>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Chapter</th><th>Content</th><th>Target Words</th><th>Deadline</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th>1. Introduction</th><th>Background, problem statement, objectives, scope</th><th>3,000</th><th>July</th></tr>
+<tr><td>2. Literature Review</td><td>5 confirmed papers + 5–8 additional</td><td>6,000</td><td>July</td></tr>
+<tr><td>3. Methodology</td><td>7-stage framework in detail</td><td>4,000</td><td>August</td></tr>
+<tr><td>4. Dataset Analysis</td><td>NASA/CALCE/Oxford preprocessing, EDA</td><td>4,000</td><td>August</td></tr>
+<tr><td>5. ML Model Results</td><td>Performance metrics, training details</td><td>5,000</td><td>September</td></tr>
+<tr><td>6. SHAP + PyBaMM</td><td>Explainability results, simulation validation</td><td>4,000</td><td>September</td></tr>
+<tr><td>7. FSI Framework</td><td>Novel contribution, fleet case study</td><td>3,000</td><td>September</td></tr>
+<tr><td>8. Discussion</td><td>Limitations, implications, comparison to literature</td><td>3,000</td><td>September</td></tr>
+<tr><td>9. Conclusion</td><td>Summary, contributions, future work</td><td>1,500</td><td>September</td></tr>
+<tr><td><strong>Total</strong></td><td></td><td><strong>~33,500</strong></td><td><strong>Sept</strong></td></tr>
+<p></table></div></p>
+<br>
+<hr>
+<br>
+<h2>9 Dissertation Objectives (From Brief)</h2>
+<br>
+<ol><li>Review literature on battery degradation modelling and EV fleet applications</li>
+<li>Collect and preprocess battery datasets (NASA, CALCE, Oxford)</li>
+<li>Extract and quantify duty cycle characteristics from Fleet DNA data</li>
+<li>Develop and compare ML models for SoH/RUL prediction</li>
+<li>Apply SHAP for explainability and feature attribution</li>
+<li>Validate results using PyBaMM electrochemical simulation</li>
+<li>Develop the Fleet Severity Index (FSI) as a novel metric</li>
+<li>Apply FSI to Fleet DNA delivery truck data</li>
+<li>Discuss implications for UK fleet electrification policy (ZEV Mandate, Faraday Challenge)</li></ol>
+  </div>
+</body>
+</html>

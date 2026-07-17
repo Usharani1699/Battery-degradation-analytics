@@ -1,0 +1,910 @@
+
+--- PAGE 1 ---
+Thisistheauthor’sversionofanarticlethatistoappearintheProceedingsoftheSixteenthInternationalConferenceon
+theIntegrationofConstraintProgramming,ArtficialIntelligence,andOperationsResearch(CPAIOR2019).
+A Constraint Programming Approach
+to Electric Vehicle Routing with Time Windows
+Kyle E. C. Booth and J. Christopher Beck
+DepartmentofMechanical&IndustrialEngineering
+UniversityofToronto,Toronto,OntarioM5S3G8,Canada
+kbooth,jcb @mie.utoronto.ca
+{ }
+Abstract. The Electric Vehicle Routing Problem with Time Windows
+(EVRPTW) extends traditional vehicle routing to address the recent
+development of electric vehicles (EVs). In addition to traditional VRP
+problemcomponents,theproblemincludesconsiderationofvehiclebat-
+tery levels, limited vehicle range due to battery capacity, and the pres-
+ence of vehicle recharging stations. The problem is related to others in
+emissions-consciousroutingsuchastheGreenVehicleRoutingProblem
+(GVRP).Weproposethefirstconstraintprogramming(CP)approaches
+formodelingandsolvingtheEVRPTWandcomparethemtoanexisting
+mixed-integer linear program (MILP). Ourinitial CPmodel follows the
+alternative resource approach previously applied to routing problems,
+whileoursecondCPmodelutilizesasingleresourcetransformation.Ex-
+perimental results on various objectives demonstrate the superiority of
+the single resource transformation over the alternative resource model,
+for all problem classes, and over MILP, for the majority of medium-to-
+largeproblemclasses.WealsopresentahybridMILP-CPapproachthat
+outperforms the other techniques for distance minimization problems
+overlongschedulinghorizons,aclassthatCPstruggleswithonitsown.
+Keywords: Electric Vehicle Routing Green Vehicle Routing Con-
+· ·
+straint Programming Mixed-Integer Linear Programming Optimiza-
+· ·
+tion
+1 Introduction
+Fueledbyemissionregulations,governmentsubsidies,andthebenefitsofamore
+eco-friendly image, electric vehicle (EV) utilization in logistics has seen signif-
+icant growth in recent years [9]. Outside of logistics, EVs have experienced a
+growingadoptionwithintheconsumerautomotiveindustry[28]andhaveshown
+promise in car sharing pilot projects [26]. While not currently cost-competitive
+with internal combustion engines due to high acquisition costs and limited op-
+erational range [14], the benefits of EVs coupled with an increasing number of
+socially and environmentally-aware consumers are driving the adoption of the
+technology.Theindustryhasalsoseensignificantinvestmentinthedevelopment
+ofrequiredrecharginginfrastructure.Aswithtraditionalfleets,thecaseforEVs
+can be significantly bolstered via effective route planning.
+--- PAGE 2 ---
+Thisistheauthor’sversionofanarticlethatistoappearintheProceedingsoftheSixteenthInternationalConferenceon
+theIntegrationofConstraintProgramming,ArtficialIntelligence,andOperationsResearch(CPAIOR2019).
+2 BoothandBeck
+The vehicle routing literature has recently addressed this emerging technol-
+ogythroughtheintroductionoftheElectricVehicleRoutingProblemwithTime
+Windows(EVRPTW)[29],buildingonpreviousworkconductedongreenlogis-
+tics, including the Green Vehicle Routing Problem (GVRP) [12]. The problem
+involves routing a fleet of vehicles to satisfy customer demands while adhering
+tothebatterycapacityandrangeofthefleetEVs.TheEVRPTWliteraturehas
+seen considerable research activity, including the development of sophisticated
+exactapproaches[10,7],metaheuristics[29,13],andtheintroductionofincreas-
+ingly rich problem definitions driven by real-world logistics use cases [27,17].
+There have been, however, no efforts thus far to explore the use of constraint
+programming (CP) to model and solve the problem.
+Recognizing EV routing as a strategic area for methodological development,
+weinvestigatetheuseofmonolithic(i.e.,non-decomposed)MILPandCPmodels
+to solve the problem. The contributions of this paper are as follows:
+i. We propose the first CP approaches for the EVRPTW.
+ii. We introduce a single resource transformation for CP formulations that use
+optional interval, sequence, and cumulative function expression variables.
+The transformation significantly extends the size of problems that can be
+solved with CP, and can be applied to other homogeneous VRP and multi-
+machine scheduling problems.
+iii. We demonstrate, through empirical evaluation, that our single resource CP
+approach significantly outperforms the alternative resource CP model, and
+outperforms MILP for nearly all medium-to-large problem classes.
+iv. Following the observation that MILP excels at quickly finding high quality
+solutions to distance minimization problems with large scheduling horizons,
+we propose a hybrid MILP-CP technique that outperforms the individual
+approaches on this problem class.
+This paper is organized as follows. Section 2 defines the EVRPTW problem
+and presents an existing MILP model. Section 3 details related work for the
+problem studied. Section 4 presents two CP models, alternate modeling strate-
+gies, and an initial empirical evaluation with accompanying analysis. Section
+5 illustrates a hybrid CP-MILP approach, motivated by the strength of MILP
+forlarger,longhorizonproblems,andpresentshybridexperimentalresultswith
+detailed analysis. Finally, Section 6 provides concluding remarks.
+2 Problem Definition
+The Electric Vehicle Routing Problem with Time Windows (EVRPTW) is a
+static optimization problem that aims to route a fleet of electric vehicles to
+satisfy customer requests [29]. Following existing notation, we let V = V F
+0 0
+∪
+bethesetofN verticeswhereV = v ,...,v isthesetofcustomerrequests,F
+1 n
+{ }
+isthesetofrechargingstations,andF = v ,...,v isthesetofaugmented
+0 n+1 N
+{ }
+rechargingstationsthatincludesdummyverticestoallowmultiplevisitstoeach
+of the stations in F. We let vertices v and v correspond to start and end
+0 N+1
+--- PAGE 3 ---
+Thisistheauthor’sversionofanarticlethatistoappearintheProceedingsoftheSixteenthInternationalConferenceon
+theIntegrationofConstraintProgramming,ArtficialIntelligence,andOperationsResearch(CPAIOR2019).
+ConstraintProgrammingforElectricVehicleRouting 3
+instancesofthevehicledepot,whereeachvehiclestartsandends.Setswithdepot
+subscriptsincludetheindicatedinstancesofthedepot(i.e.,V =V v
+N0+1 0
+∪{
+N+1
+}
+and V = V v ,v ). The problem is then defined on a graph with
+00,N+1 0
+∪{
+0 N+1
+}
+vertices V and undirected arcs A = (i,j)i,j V ,i = j . Each arc
+00,N+1
+{ | ∈
+00,N+1
+6 }
+is assigned a distance, travel time, and energy consumption, d , t , and h d ,
+ij ij ij
+·
+respectively,wherehisaconstantenergyconsumptionrate.Vehiclesareinitially
+positioned at the depot and start with maximum capacity C, while customer
+vertices, i V, are assigned a positive demand, q C, and a time window,
+i
+∈ ≤
+[e ,l ].1 Thetimewindowofthestartdepotis[0,0],andtheenddepotis[H,H],
+i i
+where H is the problem horizon. Each recharging station has a time window of
+the entire horizon, namely [e = 0,l = H], i F . Customer vertices, i V,
+i i 0
+∀ ∈ ∈
+have a service time s . The depot instances each have a null service time and
+i
+the service time at recharging stations is a variable. Vehicles have maximum
+batterycapacityQandrechargelinearlyatrateg.Theproblemthenminimizes
+an objective function, often a combination of fleet size and travel distance.
+An existing two-index MILP model from the literature [29] is detailed by
+Eqns. (1) through (12). Binary variable x is 1 if arc (i,j) A is traveled
+ij
+∈
+and 0 otherwise. Continuous variables τ , u , and y represent the arrival time,
+i i i
+remaining cargo, and remaining energy, respectively, at vertex i V . This
+∈
+00,N+1
+formulationassumesanunlimitednumberofhomogeneousvehiclesareavailable
+and only permits full vehicle recharges (i.e., if a vehicle visits a recharge station
+vertex, the service time is the difference between its maximum energy capacity
+andcurrentenergylevel,dividedbytherechargerate).Theaugmentedrecharge
+stationset,F ,isconstructedsuchthatthenumberofdummyverticesassociated
+0
+with each recharge station, n , represents the number of times the associated
+f
+rechargestationcanbevisitedacrossallvehicles(with F =n F ).Following
+0 f
+| | ·| |
+theliterature,n issettoberelativelysmall,toreducethenetworksize,butlarge
+f
+enough to not restrict multiple beneficial visits [12]. We note that heuristically
+choosing a value for n , as in the literature, can potentially remove optimal
+f
+solutions.
+Objective (1) details the weighted objective function, where α [0,1] iden-
+∈
+tifies the emphasis on fleet size minimization and β [0,1] on travel distance
+∈
+minimization. Constraint (2) ensures each customer request is satisfied, while
+Constraint (3) restricts each recharge station in the augmented set to be visited
+at most once (due to the augmented vertices, each recharge station can be vis-
+ited at most n times). Constraint (4) enforces the flow for non-depot nodes.
+f
+Constraints(5)-(6)preventtheformationofsubtours,withdisjunctiveconstant
+M =(l +g Q).Constraint(7)ensuresdemandfulfillmentatcustomervertices
+0
+·
+and Constraints (8)-(9) constrain energy levels to be feasible. Constraint (10)
+requires customer visits to satisfy the time windows and Constraints (11)-(12)
+identify binary and continuous variable domains.
+1 Servicemuststartwithinthetimewindow.
+--- PAGE 4 ---
+Thisistheauthor’sversionofanarticlethatistoappearintheProceedingsoftheSixteenthInternationalConferenceon
+theIntegrationofConstraintProgramming,ArtficialIntelligence,andOperationsResearch(CPAIOR2019).
+4 BoothandBeck
+min α x0j+β dijxij (1)
+jX∈ V0 iX∈ V00j
+∈
+VN0X+1,i
+6
+=j
+s.t.
+X
+j
+∈
+VN0+1,i
+6
+=j
+xij=1
+∀
+i
+∈
+V, (2)
+X
+j
+∈
+VN0+1,i
+6
+=j
+xij≤ 1
+∀
+i
+∈
+F0, (3)
+X
+i
+∈
+VN0+1,i
+6
+=j
+xji−
+X
+i
+∈
+V00,i
+6
+=j
+xij=0
+∀
+j
+∈
+V0, (4)
+τi+(tij+si)xij− l0(1
+−
+xij)
+≤
+τj
+∀
+i
+∈
+V0,j
+∈
+V N0+1 ,i
+6
+=j, (5)
+τi+tijxij+g(Q
+−
+yi)
+−
+M(1
+−
+xij)
+≤
+τj
+∀
+i
+∈
+F0,j
+∈
+V N0+1 ,i
+6
+=j, (6)
+0
+≤
+uj≤ ui− qixij+C(1
+−
+xij)
+∀
+i
+∈
+V 00,j
+∈
+V N0+1 ,i
+6
+=j, (7)
+0
+≤
+yj≤ yi− (h
+·
+dij)xij+Q(1
+−
+xij)
+∀
+j
+∈
+V N0+1 ,i
+∈
+V,i
+6
+=j, (8)
+0
+≤
+yj≤ Q
+−
+(h
+·
+dij)xij
+∀
+j
+∈
+V N0+1 ,i
+∈
+F 00,i
+6
+=j, (9)
+ej≤ τj≤ lj
+∀
+j
+∈
+V 00,N+1 , (10)
+xij∈{ 0,1
+} ∀
+i
+∈
+V 00,j
+∈
+V N0+1 ,i
+6
+=j, (11)
+τ0=0,u0=C,y0=Q. (12)
+TwoIndexFormulation. Withtheexceptionofx ,thevariablesarecontinuous,
+ij
+modelingvisittime,load,andenergylevelviasequencingconstraints.Themodel
+representsmultiplevehiclesbyrelaxingtheunitaryout-andin-flowonthestart
+and end depot vertices, respectively. This modeling technique is effective as it
+doesnotmultiplythenumberofvariablesbythenumberof(symmetric)vehicles.
+ProblemVariants. Thefixedfleetvariantcanbemodeledwiththeinclusionofa
+constraintoftheform: x m,wheremisthefleetsize.Avariantwith
+heterogeneousvehiclescan j ∈b V e 0 m 0 o j d ≤ eledfork differentvehicletypesbyaddingan
+P
+index for the vehicle type to the arc, cargo, and energy consumption variables
+(i.e.,xk,uk,andyk),withsimilaradjustmentstotheparameters[17].Additional
+ij i i
+problem variants, such as partial recharges, can also be considered through the
+inclusion of additional constraints/variables [10,7].
+3 Related Work
+Research on energy-aware, environmentally conscious vehicle routing is a rel-
+atively new area with a flurry of research in recent years [24]. In response
+to a growing commitment within the United States to investigate alternative
+fuel sources, the vehicle routing literature introduced the GVRP, detailing a
+MILP formulation, construction heuristic, and clustering algorithm [12]. Since
+the introduction of the GVRP, EV routing has grown dramatically, with initial
+EVRPTW work for homogeneous fleets and full re-charges including a MILP
+modelandahybridvariableneighborhoodsearch/tabusearchsolutiontechnique
+[29]. Subsequent research was developed with approaches for heterogeneous ve-
+hicles [17], and partial recharging problem variants [13,10,19]. Recent work has
+--- PAGE 5 ---
+Thisistheauthor’sversionofanarticlethatistoappearintheProceedingsoftheSixteenthInternationalConferenceon
+theIntegrationofConstraintProgramming,ArtficialIntelligence,andOperationsResearch(CPAIOR2019).
+ConstraintProgrammingforElectricVehicleRouting 5
+also been conducted on modeling non-linear energy consumption [27] as well as
+incorporating richer, industry-driven problem constraints [1].
+Although the literature for mathematical programming-based approaches
+(e.g.,MILP,branch-and-price,branch-and-cut)fortheGVRPandtheEVRPTW
+is abundant [12,29,10,17], to the authors’ knowledge, the use of CP for solving
+theseproblemshasnotyetbeeninvestigated.Whiletheperformanceachievedby
+sophisticatedbranch-and-price-and-cutalgorithmsforEVRPTW[10]isunlikely
+to be surpassed by monolithic modeling methods utilizing off-the-shelf solvers,
+thepracticalityandflexibilityofsuchapproaches,includingMILPandCP,often
+translate to more widespread adoption.
+In general vehicle routing, CP has been offered as an alternative to mathe-
+maticalprogrammingapproachesforquitesometime[30,2].Recentapplications
+includeworkonthemultipletravelingsalesmanproblem[31],teamorienteering
+[15], dynamic dial-a-ride routing [3], bike share balancing [11], joint vehicle and
+crew routing [23], and patient transportation [8,25], though these efforts do not
+consider fuel constraints. While CP has not been explicitly proposed for GVRP
+nor EVRPTW as of yet, previous work on snow plow routing [20] and robot
+task allocation and scheduling [5,6] propose CP models with consideration for
+energy consumption and replenishment.
+4 Constraint Programming Approaches
+InthissectionwepresenttwoCPformulationsfortheEVRPTW.Ourmodelsare
+posedasschedulingformulationswithoptionalactivities[21,22].Asisbecoming
+increasingly common in CP-based approaches [5,8,25], the proposed models
+make use of three primary decision variable types, namely: optional interval
+variables, sequence variables, and cumulative function expressions.
+Optional Interval Variables. Formally, optional interval variables are decision
+variableswhosepossiblevaluesareaconvexinterval: [s,(cid:15))s,(cid:15) Z,s (cid:15) ,
+{⊥}∪{ | ∈ ≤ }
+wheresand(cid:15)arethestartandendvaluesoftheintervaland isaspecialvalue
+⊥
+indicating the variable is not present in the solution. The presence (binary),
+start time, and length of an optional interval variable, var, can be expressed
+withinaCPmodelusingPres(var),Start(var),andLength(var),respectively.
+We use the notation optIntervalVar(p,[s,(cid:15)]) to define these variables in our
+models, where p is the processing time of the task (and can be variable). Model
+constraints are only enforced over present interval variables.
+SequenceVariables. Thisvariabletypeisusefulforexpressingmodelconstraints
+over a permutation of present (i.e., Pres(var)=1) interval variables. Given the
+definitionofasequencevariable,π,variousconstraintscanbeexpressed,includ-
+ing those on the interval variable previous to var in the sequence, Prev (var),
+π
+and temporal constraints such as the NoOverlap(π) constraint, which ensures
+the interval variables in the sequence do not interfere temporally.
+--- PAGE 6 ---
+Thisistheauthor’sversionofanarticlethatistoappearintheProceedingsoftheSixteenthInternationalConferenceon
+theIntegrationofConstraintProgramming,ArtficialIntelligence,andOperationsResearch(CPAIOR2019).
+6 BoothandBeck
+Cumulative Function Expressions. It is often useful to represent the usage of
+a renewable resource as the sum of individual interval variable contributions
+over time. Given a cumulative function expression variable, f, we can express
+impact on the expression using the f StepAtStart(var,impact) expression,
+±
+specifyingthatatthestartofintervalvariablevar,functionf hasanincrement
+(ordecrement)ofimpact.TheconstraintAlwaysIn(f,[s,(cid:15)],[min,max])ensures
+that min f max holds for all time points in s to (cid:15) and a similar constraint
+≤ ≤
+AlwaysIn(f,var,[min,max]) ensures that min f max holds during the
+≤ ≤
+processingofintervalvariablevar.Cumulativeexpressionvariablesareusefulin
+representing both the vehicle load and energy constraints, and have been used
+for similar problems [20,5].
+4.1 Alternative Resource Model
+OurfirstCPmodelfollowsthetraditionalalternativeresourcemodelforformu-
+lating VRPs in CP [20,8], and, in contrast to the two-index MILP presented in
+Section 2, explicitly represents the vehicles. We define an upper bound on the
+number of vehicles to be equal to the number of customer requests, K = V ,
+| | | |
+representingtheworst-casewhereeachcustomerisservicedbyaseparatevehicle.
+For each customer request, i V, we introduce a mandatory interval variable,
+∈
+x¯ . We create an optional interval variable, xk, for each vertex, i V , for each
+i i ∈ 0
+vehicle,k K.Wealsointroducestartandendintervalvariables,xk andxk ,
+∈ 0 N+1
+with null duration for each vehicle to represent the depot.
+The model considers a set of V interval variables and a sequence
+|
+00,N+1|
+variable, πk, for each vehicle k K. Each interval variable xk, for all i
+∈ i ∈
+V ,representsthetimeperiodinwhichthevehiclevisitsi.Thus,expressions
+00,N+1
+StartOf(xk)and EndOf(xk)correspondtothe arrivaland departure timeofve-
+i i
+hicle k at location i, respectively. The expression Pres(xk)=1 if vehicle k K
+i ∈
+visits location i (i.e., the interval variable is present in the solution), and 0 oth-
+erwise.Sequencevariableπk isdefinedoverthesetofintervalvariablesinvolving
+vehicle k, and represents the sequence of visits. Vehicle load consumption and
+energy level consumption/replenishment are modeled with cumulative function
+expressions. We let k and k be cumulative function expressions representing
+C Q
+the load and energy level of vehicle k K throughout its route.
+∈
+Our alternative resource CP model is detailed by Eqns. (13)-(27). Objective
+(13) represents the minimization of fleet size and distance traveled. Constraint
+(14) ensures that each customer is serviced by one vehicle and Constraint (15)
+enforces that tasks assigned to a vehicle, represented by the sequence variable
+πk,donotinterferetemporally,includingtraveltimes.Constraints(16)-(17)en-
+sure that the vehicle load does not fall below zero over the planning horizon,
+representedasacumulativefunctionexpressionwithnegativeimpactforserved
+customers. Constraints (18)-(19) ensure vehicle energy stays within permissible
+limits, also represented as a cumulative function expression with negative im-
+pact for travel between locations and a positive impact for vehicle recharging.
+We note that the impact for energy replenishment tasks includes the negative
+--- PAGE 7 ---
+Thisistheauthor’sversionofanarticlethatistoappearintheProceedingsoftheSixteenthInternationalConferenceon
+theIntegrationofConstraintProgramming,ArtficialIntelligence,andOperationsResearch(CPAIOR2019).
+ConstraintProgrammingforElectricVehicleRouting 7
+contribution of the travel to the recharge station. Constraint (20) ensures that
+during a recharge task, the energy of the vehicle is set to its capacity; whenever
+a vehicle recharges, it does so fully. Constraint (22) ensures each recharge sta-
+tionisusedatmostn timesacrossthefleet,whereF (i)representsalldummy
+f 0
+recharge stations associated with real recharge station i F. Constraint (21)
+∈
+enforces that the start and end depot instances for a vehicle be first and last in
+the sequence variable for that vehicle, while Constraints (23)-(27) provide the
+definitions of the interval and sequence variables.
+Asthealternativeresourceformulationexplicitlyrepresentseachvehicle,the
+number of variables can become unwieldy for larger problems. Specifically, the
+formulation has V + K V interval variables, K sequence variables,
+| | | |·|
+00,N+1|
+| |
+and 2K cumulative function expression variables.
+| |
+min
+kX∈ K(cid:18)
+αPres(xk 0 )+β
+i
+∈
+VXN0+1
+Pres(xk i ) · dPrev πk(i),i
+(cid:19)
+(13)
+s.t. Alternative(x¯i, { x1 i ,...,x|i V | } ) ∀ i ∈ V, (14)
+NoOverlap(πk,
+{
+tij:(i,j)
+∈
+A
+}
+)
+∀
+k
+∈
+K, (15)
+k=StepAtStart(xk,C)
+C 0
+− i V
+StepAtStart(xk
+i
+,qi)
+∀
+k
+∈
+K, (16)
+AlwaysI X n( k ∈ ,[0,H],[0,C]) k K, (17)
+C ∀ ∈
+k=StepAtStart(xk,Q)
+Q 0
+−
+X
+i
+∈
+VN0+1
+StepAtStart(xk
+i
+,h
+·
+dPrev πk(i),i)
++ StepAtStart(xk,g Length(xk)) k K, (18)
+AlwaysI X n( i k ∈ , F [ 0 0,H],[0,Q]) i · i ∀ k ∈ K, (19)
+Q ∀ ∈
+AlwaysIn(
+Q
+k,xk
+i
+,[Q,Q])
+∀
+i
+∈
+F0,k
+∈
+K, (20)
+First(πk,xk), Last(πk,xk ) k K, (21)
+0 N+1 ∀ ∈
+Pres(xk
+j
+)
+≤
+nf
+∀
+i
+∈
+F, (22)
+kX∈ Kj ∈XF0(i)
+xk
+i
+: optIntervalVar([0,Q
+·
+g− 1],[0,H])
+∀
+i
+∈
+F0,k
+∈
+K, (23)
+xk
+i
+: optIntervalVar(si,[ei,li])
+∀
+i
+∈
+V,k
+∈
+K, (24)
+x¯i : intervalVar(si,[ei,li])
+∀
+i
+∈
+V, (25)
+xk : intervalVar(0,[0,0]),xk : intervalVar(0,[H,H]) k K, (26)
+0 N+1 ∀ ∈
+πk : sequenceVar( xk,...,xk ) k K. (27)
+{ 0 N+1} ∀ ∈
+Model Strengthening
+Cumulative Resource Constraint. Similar to a previous CP formulation for pa-
+tient transportation [8], we strengthen the baseline formulation with a cumula-
+tiveresourceconstraint.Wedefineanauxiliaryintegervariablerepresentingthe
+number of vehicles in the fleet, z = Pres(xk). The cumulative constraint
+k K 0
+is then Cumulative(x¯ x :i F ,z)∈, which expresses that at any time point
+i 0
+∪{ ∈ }P
+--- PAGE 8 ---
+Thisistheauthor’sversionofanarticlethatistoappearintheProceedingsoftheSixteenthInternationalConferenceon
+theIntegrationofConstraintProgramming,ArtficialIntelligence,andOperationsResearch(CPAIOR2019).
+8 BoothandBeck
+in the horizon, the total number of customer interval variables, x¯, and present
+recharge interval variables is bounded by the number of vehicles in the fleet.
+Symmetry Breaking Constraints. Duetothelargenumberofhomogeneousvehi-
+cles,theuseofsymmetrybreakingcanbeeffective.Weintroduceaconstraintof
+the form Pres(xk) Pres(xk+1), ensuring vehicles are used in a lexicographic
+0 ≥ 0
+order. We then specify that if a vehicle depot task is not present, it cannot be
+assigned any other activities via Pres(xk) Pres(xk), i V .
+0 ≥ i ∀ ∈ N0+1
+Energy Expression Tightening. While the energy impact of a customer visit on
+vehicle energy level is a variable, we can tighten the domain of its impact by
+reasoning about minimum and maximum travel consumptions to the consid-
+ered customer location. More specifically, we add the constraint min (h
+i ∈ V 00 ·
+d ) HeightAtStart(xk) max (h d ), j V,k K, where the
+H i e j igh ≤ tAtStart(var,f) ex j pre ≤ ssion ev i a ∈ l V u 00 ates · th ij e i ∀ ndiv ∈ idual co ∈ ntribution of an
+interval variable, var, to a cumulative function expression, f.
+4.2 Single Resource Model
+Our second CP model, inspired by the modeling efficiency of the two-index
+MILPforhomogeneousvehicles,utilizesasingleresourcetransformationtosig-
+nificantly reduce the number of variables. The transformation represents the
+problem as an interval variable sequence over an augmented horizon and, like
+the MILP, does not explicitly represent the vehicles. This modeling strategy,
+while common in MILP models for VRPs, has been rarely used in CP. In pre-
+vious work on joint vehicle and crew routing, a similar strategy was used to
+artificially join the end of one route to the beginning of another when using the
+Circuitglobalconstraint[23],whichpreventstheformationofsubtoursamong
+a set of integer variables. However, to our knowledge, the single resource trans-
+formation has never been proposed for scheduling-based CP models involving
+interval, sequence, and cumulative function expression variables. The transfor-
+mationusingtheseformalismsischallengingasthemodelingparadigmdoesnot
+permit the “resetting” of time as in [23]; we detail how this is accomplished in
+the remainder of this section. The described transformation can also be applied
+to homogeneous machine scheduling problems, which we leave to future work.
+We visualize the single resource model in Figure 1. The transformation aug-
+mentstheproblemhorizonfromH to V H,generatingahorizonforeachpoten-
+| |·
+tialvehicleused.Inadditiontothestartandenddepotinstances,v andv ,
+0 N+1
+wedefineasetofauxiliarydepotinstances, = v ,...,v ,represent-
+ing the end depots of the additional horizon H segm { e N n + ts 2 . We d N efi + n| V e|t } he notation
+V =V and undirected arcs A = (i,j)i,j V ,i=j .
+Si 00 m ,N i + la 1 r , lHy, we 0 d 0,N efi + n 1 e ∪H = v and 0 { = | v , ∈ v 00,N+1, H. A 6 d } e-
+N+1 N+1 0,N+1 0 N+1
+H ∪H H { }∪H
+pot instance, represented as an interval variable, x , is assigned with null du-
+i
+ration for i . These interval variables have start time σ , such that
+0,N+1 i
+∈ H
+σ = 0,σ = H,σ = 2H, and so forth. We then create a mandatory
+0 N+1 N+2
+interval variable, x , for each customer request, i V, and an optional interval
+i
+∈
+--- PAGE 9 ---
+Thisistheauthor’sversionofanarticlethatistoappearintheProceedingsoftheSixteenthInternationalConferenceon
+theIntegrationofConstraintProgramming,ArtficialIntelligence,andOperationsResearch(CPAIOR2019).
+ConstraintProgrammingforElectricVehicleRouting 9
+Fig.1: Single resource transformation for problem with V = 3 and a single
+| |
+rechargestation, F =1,withn =2(suchthat F =2).Ahorizonsegmentis
+f 0
+| | | |
+createdforeachpotentialvehicleandtimewindowsareduplicated.Allcustomer
+tasksaremandatorywithdisjointstarttimedomainsandenergytasks(optional)
+have start time domain of [0,3H]. A cumulative function expression represents
+vehicle load and energy level (where notation SaS corresponds to StepAtStart
+in models). Vehicle assignments can then be inferred by the start times of the
+tasks themselves. The last horizon segment is not used (set as absent).
+variable for each recharge station instance in the augmented set, i F . Our
+0
+∈
+modelusesasinglesequencevariable,π,definedoverthesetofallintervalvari-
+ables,andasinglecumulativefunctionexpressiontomodelvehicleload, ,with
+C
+anotherforenergylevel, .Additionally,atthestartofeachenddepotinstance,
+Q
+i , the state of the vehicle must be reset to initial conditions. Thus, the
+N+1
+∈H
+cumulative function expressions for vehicle load and energy have auxiliary pos-
+itive impacts bringing them to their maximum capacity states. The start time
+domain for customer requests, i V, becomes a set of disjoint time windows,
+∈
+whereeachrequesttimewindowisreplicatedovereachofthehorizonsegments.
+Thestartdomainforcustomerrequestsistheentireaugmentedhorizonandthe
+disjoint time windows are enforced with constraints. The start time domain for
+recharge tasks, i F , becomes the entire augmented horizon.
+0
+∈
+OursingleresourceCPmodelisdetailedbyEqns.(28)-(42).Objective(28)is
+our fleet and distance minimization objective function. Constraint (29) enforces
+temporal feasibility of the interval variable sequence, π, including travel times.
+--- PAGE 10 ---
+Thisistheauthor’sversionofanarticlethatistoappearintheProceedingsoftheSixteenthInternationalConferenceon
+theIntegrationofConstraintProgramming,ArtficialIntelligence,andOperationsResearch(CPAIOR2019).
+10 BoothandBeck
+To make sure customers are serviced during a valid time window, we use Con-
+straint(30),whereφ = 0,..., V H δH+e ,...,δH+l +s .
+TheForbidExtentc i onst { raintpr | ev | e · nts } a \ nin δ ∈te{r 0 v ,. a .. l , | V va|}r { iable,x , i frombeing i sche i d } -
+i
+S
+uledduringanytimepointwithintheaugmentedhorizonthatisnotalsowithin
+one of the disjoint time windows. We discuss a number of alternatives for mod-
+eling disjoint time windows with CP in the next section. Constraints (31)-(32)
+ensure vehicle load feasibility. Constraints (33)-(35) ensure vehicle energy level
+feasibility while Constraints (36)-(37) dictate any present recharges, as well as
+horizon end tasks, must charge the vehicle to full energy level. To ensure the
+resetting of energy level at the end of each horizon, i , we use a positive
+N+1
+∈H
+impact StepAtStart with magnitude in [0,Q h d ] expressed by Con-
+− ·
+Prevπ(i),i
+straint(34),andtheAlwaysInexpressedbyConstraint(37).Thesecomponents
+are illustrated in Figure 1. The position of the start depot in the interval vari-
+ablesequence,π,isexpressedthroughConstraint(38)andConstraints(39)-(42)
+identify variable domains.
+min α Pres(xi)+β Pres(xi)
+·
+dPrevπ(i),i (28)
+i ∈HXN+1 i ∈ V H X0,N+1
+s.t. NoOverlap(π,
+{
+tij:(i,j)
+∈
+A0
+}
+) (29)
+ForbidExtent(xi,φi)
+∀
+i
+∈
+V, (30)
+C
+=StepAtStart(x0,C)
+− i V
+StepAtStart(xi,qi)
+X∈
++ StepAtStart(xi,[0,C]) (31)
+X
+i ∈HN+1
+AlwaysIn( ,[0, V H],[0,C]) (32)
+C | |·
+Q
+=StepAtStart(x0,Q)
+−
+X
+i
+∈
+V0
+StepAtStart(xi,h
+·
+dPrevπ(i),i)
++
+X
+i
+∈
+F0
+StepAtStart(xi,g
+·
+Length(xi))
++ StepAtStart(xi,ψi) (33)
+i ∈HXN+1
+0
+≤
+ψi≤ Q
+−
+h
+·
+dPrevπ(i),i
+∀
+i ∈HN+1, (34)
+AlwaysIn( ,[0, V H],[0,Q]) (35)
+Q | |·
+AlwaysIn(
+Q
+,xi,[Q,Q])
+∀
+i
+∈
+F0, (36)
+AlwaysIn(
+Q
+,[σi,σi+1],[Q,Q])
+∀
+i ∈HN+1, (37)
+First(π,x0) (38)
+xi : optIntervalVar([0,Q
+·
+g− 1],[0,H
+·|
+V
+|
+])
+∀
+i
+∈
+F0, (39)
+xi : intervalVar(si,[0,H
+·|
+V
+|
+])
+∀
+i
+∈
+V, (40)
+xi : intervalVar(0,σi)
+∀
+i ∈H0,N+1, (41)
+π : sequenceVar( { x0,...,xN+ | V |} ). (42)
+Thesingleresourcetransformationrequiresonly V + intervalvari-
+|
+00,N+1|
+|H|
+ables, one sequence variable, and two cumulative function expression variables,
+a significant reduction from the alternative resource model.
+--- PAGE 11 ---
+Thisistheauthor’sversionofanarticlethatistoappearintheProceedingsoftheSixteenthInternationalConferenceon
+theIntegrationofConstraintProgramming,ArtficialIntelligence,andOperationsResearch(CPAIOR2019).
+ConstraintProgrammingforElectricVehicleRouting 11
+Model Strengthening
+Optional Horizon Segments. Initially, a horizon segment must be created for
+each potential vehicle, recalling that the upper bound used is the number of
+customer requests, V . This augmented horizon significantly increases the start
+| |
+timedomainoftherechargetasks,eventhoughmosthighqualitysolutionsonly
+use a small fraction of the vehicles allotted. To improve upon this, we develop
+a technique, similar to the symmetry breaking in the alternate resource model,
+where horizon segments can be set absent. First, we set all auxiliary end depot
+instances,x , i ,asoptionalintervalvariables.Next,weintroduceaninteger
+i
+∀ ∈H
+variable for each of the end depot instances, w , and constrain its value to be
+i
+the start time of the interval variable (0 if the variable is set as absent), via
+StartOf(x ) = w , i . We then constrain the end time of the set of
+i i N+1
+∀ ∈ H
+customer and recharge visit tasks to be bounded by the maximum w value,
+i
+EndOf(x ) max w , j V . Finally, we impose an ordering on the
+j ≤ i ∈HN+1 i ∀ ∈ 0
+present depot instances using: Pres(x ) Pres(x ), i v .
+i ≥ i+1 ∀ ∈H\ N+ | V |
+Energy Expression Tightening. Similar to the technique presented for the alter-
+nativeresourcemodel,weintroduceenergyimpacttighteningconstraintsforthe
+single resource model as well, namely: min (h d ) HeightAtStart(x )
+i ∈ V 00 · ij ≤ j ≤
+max (h d ), j V.
+i ∈ V 00 · ij ∀ ∈
+4.3 Alternate Modeling Strategies
+We investigated a number of alternate modeling strategies that were found,
+through initial experiments, to under-perform the proposed models.
+Vehicle Energy and Load. The modeling of energy and vehicle load can also be
+accomplished via auxiliary tracking variables [20] similar to those used in the
+MILP. The idea is to introduce a numeric variable for each interval variable
+representing the load or energy level in the sequence after that particular task.
+Thistechniqueisadvantageousinthattheexactvehicleloadorenergylevelcan
+be accessed at any point along the route, whereas current implementations of
+cumulative function expressions, as within CP Optimizer, do not support this.
+Disjoint Time Windows. The single resource model results in a set of disjoint
+time windows for customer tasks.2 The model uses the ForbidExtent(var,T)
+constraint, restricting an interval variable var from executing at any time point
+withintherestrictedsetoftimepointsT.Thisrelationshipcanalsobeexpressed
+usingintervalvariablesbygeneratingasetoffixedintervalvariablesthatoccupy
+all the time points in T. Then, a NoOverlap(π ) is added to the model for each
+i0
+customer request task, i V, where the sequence variable π contains the set of
+∈
+i0
+allcustomerintervalvariablesandtheauxiliaryfixedintervalvariables.Finally,
+similar to the alternative resource CP model, one can generate an alternative
+2 TherealsoexistVRPvariantsposedwithmultipledisjointtimewindows[18].
+--- PAGE 12 ---
+Thisistheauthor’sversionofanarticlethatistoappearintheProceedingsoftheSixteenthInternationalConferenceon
+theIntegrationofConstraintProgramming,ArtficialIntelligence,andOperationsResearch(CPAIOR2019).
+12 BoothandBeck
+task for each of the time windows. Although these alternate techniques perform
+moderately well on smaller problems, the increased model size was detrimental
+for larger problems.
+4.4 Experimental Analysis
+WepresentanempiricalassessmentofourmodelsonthebenchmarkdatainTa-
+ble2.Weexplorethreedifferentobjectivefunctions:fleetdistanceminimization
+(α = 0,β = 1) as reported in [29,10], fleet size minimization (α = 1,β = 0),
+and fleet size minimization with distance minimization as a secondary objective
+(α=1,β =ξ), where ξ is a sufficiently small number to lexicographically order
+theobjectivecomponents.Wereiteratethattheintentofthisworkistoinvesti-
+gate the performance of off-the-shelf optimization models for EVPRTW; state-
+of-the-artresultsfordistanceminimizationarefoundin[10]usingsophisticated
+branch-price-and-cut techniques bolstered by customized labeling algorithms.
+Set-up. All experiments are implemented in C++ on an Intel Xeon CPU E5-
+2690v42.60GHzprocessorand16GBofRAMrunningUbuntu14.04.WeuseCP
+Optimizer for the CP models and CPLEX for the MILP model from the IBM
+ILOG CPLEX Optimization Studio version 12.8. All experiments are single-
+threaded with default search and inference settings. A five minute time limit is
+used for all experiments.
+Table 1: Problem instances. Each value represents the number of instances for
+a given size/characteristic combination. V 15 are small instances containing
+| |≤
+5, 10, and 15 customers. Clustered, random, and mix refer to the geographical
+distribution of customer vertices. F values are averages across the instances.
+| |
+ShortHorizon LongHorizon
+V F Total Clustered Random Mix Clustered Random Mix
+| | | |
+15 4.2 36 6 6 6 6 6 6
+≤25 21 56 9 12 8 8 11 8
+50 21 56 9 12 8 8 11 8
+Instances and Implementation. We conduct our analysis on problem instances
+taken from the literature [29,10]. Instances vary w.r.t. the number of customer
+and recharge station vertices, the length of the scheduling horizon (short and
+long) and the geographical distribution of the customer vertices (random, clus-
+tered, and a mixture of both). The benchmark utilized contains a total of 148
+instances summarized in Table 1.
+Followingtheprocedureoutlinedinpreviousworkonthesameinstances[10],
+we transform floating point parameter values to integer values such that the
+problems are amenable to CP modeling. As with most integer transformations,

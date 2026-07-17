@@ -1,0 +1,453 @@
+
+--- PAGE 1 ---
+FULL PAPER
+www.advtheorysimul.com
+Data-Driven Fast Clustering of Second-Life Lithium-Ion
+Battery: Mechanism and Algorithm
+Aihua Ran, Zihao Zhou, Shuxiao Chen, Pengbo Nie, Kun Qian, Zhenlong Li, Baohua Li,
+Hongbin Sun, Feiyu Kang, Xuan Zhang,* and Guodan Wei*
+1.Introduction
+Whileelectricalvehicles(EVs)areexpandingrapidlyandgettingmoreand
+morepopularinthemarket,researchershavestartedtoleveragethe Lithium-ion batteries (LIBs) have a very
+widerangeofapplicationsduetotheirlow
+remainingcapacityofusedorto-be-retiredbatteriesfortheirsecond-life
+price, decreasing cost, high energy den-
+applications.Itiscrucialtodevelopafastandefficienttechnologyto
+sity, and long lifetime[1,2] However, ow-
+.
+firstsortthemandthenextendtheirlifewhiledeliveringenergy,waste ing to the current manufacturing technol-
+reduction,andeconomicbenefits.Inthiswork,apulseclusteringmodel ogy, batteries currently used in electric ve-
+embeddedwithimprovedbisectingK-meansalgorithmisdevelopedto hicles (EVs) do not maximize the life of
+LIBs.[3,4] Generally, a large proportion of
+effectivelysortretiredbatterieswithlifecyclesrangingfromnewtoan
+batteriesretiredfromEVshaveabout80%
+end-of-lifestate.Therelevanceofselectedvariablesisrigorouslyvalidated,
+capacityoftheirinitialcapacity.[5,6] Accom-
+reachingtheaccuracyashighas88%comparedwiththetraditionalfull
+panying with aging, LIBs experience volt-
+charge–dischargetest.Tonote,thetesttimehaslargelyreducedfromhours agedecay,resistanceincreaseandcapacity
+tominutes.Thisdata-drivenclusteringmodelingwithfastpulsetestisa loss,causingtheobviousdifferenceamong
+promisingapproachforclusteringlithium-ionbatteries,whichis retired batteries.[7] Taking battery thermal
+management as an example, different de-
+demonstratedwithahome-builtandhighthroughputintelligentclustering
+greesofbatteryagingwillincreasethediffi-
+machine.Ingeneral,thetechnologyopensanewgenerationofbattery
+cultyofthermalmanagementandincrease
+clustering,improvingtheefficiencyandaccuracyoverthepastsemiempirical the risk of battery use.[8–10] Therefore, ac-
+approaches. curatelyclusteringtheusablebatterieswith
+the similar performance will open a new
+doorforsecond-lifeoftheseretiredLIBs.[11]
+Similarly,reusedbatterieswillundergoaclusteringprocess,but
+due to different working conditions where the loaded current,
+temperature[12] and state-of-charge[13] change dramatically. The
+impactonthedegradationandtheremaininglifeofthebattery
+is different[14–16] and it is in great need to develop fast cluster-
+A.Ran,Z.Zhou,S.Chen,P.Nie,Dr.K.Qian,Z.Li,Prof.H.Sun, ingtechnology.[17] Atpresent,approachesusingdata-driven[5,18]
+Prof.F.Kang,Prof.X.Zhang,Prof.G.Wei
+and machine-learning techniques enhanced high-throughput
+Tsinghua-BerkeleyShenzhenInstitute(TBSI)
+methodtopredictbatterylifehasbeendemonstratedwithrea-
+TsinghuaUniversity
+Shenzhen518055,China sonable results.[19] However, they need to use the full charge–
+E-mail:xuanzhang@sz.tsighua.edu.cn;weiguodan@sz.tsinghua.edu.cn dischargemethod,whichisextremelytimeconsuming.[20–22]In
+A.Ran,Z.Zhou,S.Chen,P.Nie,Dr.K.Qian,Z.Li,Prof.B.Li, contrast,externalshortpulsetesthasbeenemployedtoestimate
+Prof.H.Sun,Prof.F.Kang,Prof.X.Zhang,Prof.G.Wei theinternalelectrochemicalstatesuchasinternalbatterypoten-
+TsinghuaShenzhenInternationalGraduateSchool
+tials,concentrationgradientsandstate-of-health(SOH).[23] The
+TsinghuaUniversity
+Shenzhen518055,China rapidclustering,lifeprediction,andconsistencyselectionofre-
+Prof.H.Sun tiredlithium-ionbatteriesareverychallengingduetonohistori-
+DepartmentofElectricalEngineering caldatarecord[24]andnonlinearlifetimedecayofbatteries.[25,26]
+TsinghuaUniversity Therefore,variablesaredifferent,evenunderthesameworken-
+Beijing100084,China
+vironment, leading to cluster LIBs of the same performance is
+Prof.F.Kang
+extremelydifficult,especiallyforretiredbatteries.
+SchoolofMaterialsScienceandEngineering
+Manypreviousstudieshaverevealedtheagingmechanismof
+TsinghuaUniversity
+Beijing100084,China lithium batteries,[21,27–29] mainly caused by the solid-electrolyte
+inter phase,[30,31] the loss of active material,[21] the generation
+of dead lithium[32] and the increase of internal resistance.[33,34]
+TheORCIDidentificationnumber(s)fortheauthor(s)ofthisarticle
+canbefoundunderhttps://doi.org/10.1002/adts.202000109 Currently,theclusteringandthepredictionofremaininguseful
+life (RUL) are mainly semiempirical methods based on aging
+DOI:10.1002/adts.202000109
+Adv.TheorySimul.2020,3,2000109 2000109(1of9) ©2020WILEY-VCHVerlagGmbH&Co.KGaA,Weinheim
+--- PAGE 2 ---
+www.advancedsciencenews.com www.advtheorysimul.com
+mechanisms above.[35,36] More accurate tests such as elec- ity:C-rate=current/ratedcapacity).Itcanbeseenthatthebattery
+trochemical impedance spectroscopy[37–39] and coulomb retentionratioandconsistencyarebetterwhenthebatteryiscy-
+efficiency[40]canreflectbatteryagingincertainsituations.How- cledinthestartingcycles,andthedifferencebetweeneachcell
+ever,fromtheperspectiveofefficiencyandcost,thesemethods becomelargerwiththeincreasingcycles.[50,51] Figure1bshows
+areobviouslynotsuitableforthefastandefficientclustering.[41] thepulsevoltagedistributionof136cellsunderdifferentcapac-
+Therefore,itisurgenttodevelopanefficientclusteringmethod ities. As can be seen from the pulse data, a better the capacity
+toincreasetheefficiencyforLIBs’second-lifereusing. hasmoreconcentratedvoltage.Similarly,thedifferencebetween
+Thedatagenerationhasraisedstatisticaltechniquestostudy eachbatteryincreasedafteraging.FigureS1(SupportingInfor-
+themechanismandeventopredictthecyclelifeoflithiumion mation)showsthecapacitydistributionbetween550and800cy-
+batteries.[5,42–44] Thisnewapproachhasaccelerated progressin cles,thebatteryagingspeedisnotthesame,whichresultsfrom
+differentarea,includingmaterialdiscoveryforenergystorage,[45] variedbatterydegradationperformance.InFigureS2(Support-
+identification of synthesis methods,[19] prediction of material ingInformation),10batteriesaretokenasasampletest.Theini-
+properties[46] anddiscoveryofnewcatalysis.[42] Progresseshave tialconsistencyisgoodandthe0.5Ccapacitydifferenceisonly
+beenreportedonapplyingdata-driventechniquestopredictstate 1.3%.Afteracceleratingagingtest(cyclingat2Crate),whenthe
+ofhealthwithdatacollectedinbothlaboratoryandindustry,[43,47] cycleis500cycles,theremainingcapacityis80%.Theinconsis-
+thoughthesedataareobtainedbytheconventionalmethodvia tencyincreases,thecapacitydifferenceisgreaterthan6%,and
+testing several cycles or even hundreds of cycles to ensure the it needs to be reorganized after clustering. While, the samples
+accuracywithoutabnormalsamples.[18] areroughlydividedintotwogroups,theerrorrangeisreduced
+Herein,apulseclusteringmodelembeddedwithimprovedbi- (TableS1,SupportingInformation).Thedifferenceofbatteryca-
+sectingK-meansalgorithmhasbeendevelopedtoeffectivelysort pacitybecomeslargerwithincreasingnumberofcycles.[52]When
+outretiredbatterieswithlifecyclesrangingfromnewtotheend- thesesimilarbatteriesareclusteredintoonecategory,thediffer-
+of-lifestates.Atthesametime,theproposedclusteringmethod encebecomessmaller.Hence,obviously,areasonableclustering
+is integrated into high throughput intelligent sorting machine. canimprovetheconsistencyofthebattery.Figure1cshowsade-
+The130cellswithcyclelivesrangingfrom50to800hasbeen tailedcellcharge–dischargecurve,thedecreasingspeedofcapac-
+generated(thecyclelifeisdefinedasnumberofcyclesuntil50% ityenlargesobviously.Ontheotherhand,inFigure1d,forthe
+ofnominalcapacity).Thepulsedatahasbeencomparedwiththe same cell, the change of the pulse curve (every hundred cycle)
+traditional charge–discharge test,[48,49] reaching the accuracy of is consistent with capacity decay. Comparing Figure 1c with d,
+upto88%.Especially,thesortingtimehasbeengreatlyreduced asthebatterycycleincreases,thechangeinbatterypulsevoltage
+fromhoursto2min,greatlyimprovingtheefficiencyofbattery issomehow consistentwiththeattenuationofbatterycapacity.
+clustering. Moreover, when the clustering rules are selected by Throughthestudyofthestabilizationcurve,thesametrendis
+removingthebatteriesthataredifficulttoseparatetoensurecon- found.Ourformerworkhasprovedthatthevoltagestabilization
+sistentperformanceofthesametypeofbattery,higheraccuracy curvereflectsthestateofhealthoflithium-ionbattery.[7]
+can be achieved which is applicable in industry. Based on fast Giventhissimpletrend,adata-drivenapproachisemployed
+pulses,intelligentsortingmachinehasbeendesignedwithim- consideringtherelationbetweenthefullcharge–dischargedata
+provedbisectingK-meansalgorithm.Tonote,thismethoddoes andthepulsedata.[23]Fromthepulsetest,theresistanceandvolt-
+notrequirebatteryhistoryusagedataandcalibrationofthelabel, agestabilizationinformationcouldbeobserved,meanwhile,the
+whichisquitedifferentfromotherexistingbatteryperformance fullcharge-dischargetestintraditionalsortingapproachisused
+predictionandtypicalclassificationapproaches. forvalidatingtheaccuracyofpulsemethod.AsshowninFigure
+S3(SupportingInformation),thepulsetestismuchfasterthan
+the traditional full charge and discharge test. It only takes less
+than120s,whilethetraditionalmethodlastsforhours.
+1.1.DataGenerationandKeyParametersAcquisition Notethat,LIBsaresubjectedtothreestates:charge,discharge
+andrest.Thevoltagestabilization[53]inthereststageareidenti-
+The data contains a full range of variables for lithium batter- fiedandusedtoassesstheSOHofLIBs,themethodiselaborated
+iesisexpected,rangingfrombrandnewtoretiredbatteries.To inFigureS4(SupportingInformation).Whenthebatteryisrest,
+probethedata,18650cylindricalbatteries(NMC/graphite)(Mat- thevoltagewillpartiallyreturntoastablestate.Thiscurveofdif-
+sushita)werecycledinacontrolledtemperatureenvironmentat ferentstatebatterieswillbehavedifferently,whichiscalledthe
+25 °C under varied charging conditions (see Experimental Sec- voltagerelaxationbehaviors.[53]FromtheFormula(1),thiscurve
+tionfordetails).Bydeliberatelyvaryingthebatterycondition,a couldbefittogetthecorrespondingparameters:y (astabilization
+0
+data-set is generated that captures a wide range of cycles lives, curvecoefficientrelatedtoopen-currentvoltage);A (astabiliza-
+1
+fromnewto800cycles(averagecyclelifeof750cycles).While tioncurvecoefficient);t (Stabilizationcurvecoefficient)andR
+1 1
+thetesttemperatureiscontrolledin25°Cincubator,theeffectof (Resistancecalculatedbypulsecurve).[7]
+environmentaltemperatureonbatteryperformanceisnegligible.
+Figure1ashowsthedischargecapacityasafunctionofcycle y=y +A e−x∕t (1)
+0 1 1
+forallthetestedbatteries,wheredifferentcolorsrepresentvaried
+cyclelife.Thecolorofeachcurveisscaledbythebattery’scycle Sofar,capacity(Q),voltage(U)andresistance(R)aremostly
+life.Aftereach50or100cycles,thecurrenthasbeenreducedto usedparametersdescribingtheSOHofLIBs.Researchershave
+obtain capacity at 0.5 C rate (C-rate is the measurement of the reported several works on capacity evaluation, voltage change,
+chargeanddischargecurrentwithrespecttoitsnominalcapac- andresistanceidentificationandtheirevolutionaryperformance
+Adv.TheorySimul.2020,3,2000109 2000109(2of9) ©2020WILEY-VCHVerlagGmbH&Co.KGaA,Weinheim
+--- PAGE 3 ---
+www.advancedsciencenews.com www.advtheorysimul.com
+Figure1. Theelectrochemicalperformanceoftotalfeaturesdesignedforclusteringtest.a)Dischargecapacityfor800cyclesofNCM/graphitecells.
+Thecolorofeachcurveisscaledbythebattery’scyclelife,asisobeyedthemanuscript.Afterevery50or100cycles,thecurrentisreducedtoobtain
+theactualcapacity.b)Thepulsevoltagedistributionunderdifferentcapacities.c)J1cellcharge–dischargecurveat0.5Crate,therewillbeasignificant
+reductionincapacityper100cycles.d)Thepulsecurvecollectedper100cyclesforthesamecellJ1,theupwardtrendofpulsecurveisconsistentwith
+thechangeofcapacitydecayateachonehundredcycle.Ascanbeseenfromthepulsedata,abetterthecapacityhasmoreconcentratedthevoltagebut
+theworsethecapacityhasmoredispersedthevoltage.Hence,voltageisaneffectiveresponsetobatteryperformance.
+whencyclingorstorageindifferenttypesofLIBs.[49,50] Thecor- terminationofclusternumberKandthedeterminationofinitial
+respondencebetweenthepulseacquisitionfeaturesandthefull clustercenters.[56]Iftheseinitializationparametersarenothan-
+charge–dischargeobtainedfeaturesshowninTableS1(Support- dledproperly,thealgorithmwillfallintolocaloptima,becoming
+ingInformation).Accordingtothecorrespondingvariablesand verysensitivetoabnormalsamples.[57]Inreality,theexactnum-
+themeaningofthevariables,stabilizationcurvecoefficient(y ), berofclustersinabatchofretiredbatteriesisalwaysunknown.
+0
+firstdimensionafterpulsedimensionreduction(F ),andresis- Itisdifficulttogaintheknowledgeabouttheseinitializationpa-
+1
+tance calculated by pulse curve (R ) are selected as the cluster- rametersfromreal-worldexperience.Soothermethodsbasedon
+1
+ingindicators,andselectedthefull-chargeanddischargeU/R/Q thedataitselfneedtobeintroduced.
+astheverificationindex.Theircorrespondingcorrelationamong Here,acanopyalgorithmisusedtogaintheclusternumber.
+theparameters,theclusteringperformanceandmechanismswill This algorithm is a preclustering algorithm introduced by An-
+bediscussedindetaillater. drewMcCallum,KamalNigam,andLyleUngarin2000.Itisof-
+tenusedasapreprocessingstepfortheK-meansalgorithm.The
+main process of the canopy algorithm is shown in Figure S10
+1.2.Data-DrivenClusteringApproach (Supporting Information). To further deal with the problem of
+initialclustercenters,abisectingK-meansalgorithmisapplied,
+Unsupervisedclusteringtechniqueshavebeenappliedtosolve whichlargelyincreasesthestabilityofclusteringresult.Ineach
+manyimportantproblems.[54,55]Especially,theK-meanscluster- iterationofthebisectingK-meansalgorithm,theclustercenter
+ingalgorithmisoneofthemostwidelyusedalgorithmsincluster ischosenbasedonthecurrentclusterdensity.[58]Themainpro-
+analysis.However,itmainlyfacestwokindsofdrawbacks:thede- cessofthebisectingK-meansalgorithmisshowninFigureS11
+Adv.TheorySimul.2020,3,2000109 2000109(3of9) ©2020WILEY-VCHVerlagGmbH&Co.KGaA,Weinheim
+--- PAGE 4 ---
+www.advancedsciencenews.com www.advtheorysimul.com
+Figure2. Implementationpathofhigh-throughputintelligentsorting.a)Schematicillustratingahighthroughputintelligentsortingmachinesystem.
+b)Compositionofclusteringmachine.c)Thepristinestateandd)sixbatteriesareclustered.
+(SupportingInformation).Combiningtheabovealgorithms,an constant-voltage (CC-CV) charging and constant-current (CC)
+improvedbisectingK-meansalgorithmbasedoncanopyisim- discharging test is used for validation. Here, one pulse curve
+plementedforretiredbatteryclustering.Thewholelogicflowis isregardedasonesampleX i =(X i 1,X i 2,….,X i n)T whereX i t rep-
+illustratedinFigureS12(SupportingInformation). resents the voltage value at time point t. In average, there are
+Torealizetheaimoffastclustering,theimplementationpath aroundsixtythousandsofpointsinonepulsecurve.Incharge
+of high-throughput intelligent sorting is designed. Figure 2a stagesofthepulsetestasshowninFigureS3(SupportingInfor-
+showtheschematicofahighthroughoutputintelligentsorting mation),thevoltageimmediatelyreachesahighlevelandthen
+machine system. It is a closed loop optimization system. First, slightlychanges.Whileinthereststages,thevoltagevaluesre-
+the battery is tested, and the test data is used to establish an mainthesame.Inshort,thereexistsalotofredundantinforma-
+early clustering model, through the canopy algorithm to estab- tion in the pulse test data. Moreover, our former work investi-
+lishareasonableclusterK,throughthebisectingK-meansalgo- gatedthevoltagerelaxationcurvestoevaluatethestate-of-health
+rithmtodeterminetheclustercenter.Repeattheprogramuntil (SOH) on lithium-ion battery.[7] So it is necessary to simplify
+the most reasonable clustering. For decommissioned batteries, and extract useful information from the original data of pulse
+HPPCtestswereusedtoquicklyobtainelectrochemicaldata,in- test.
+put into the model, and quickly sorted. With this method, it is To reduce the dimension of each pulse sample, a principal
+possible to eliminate the need for long loops and improve the componentanalysis(PCA)methodisadopted.PCAisoneofthe
+clustering efficiency of retired batteries. At the same time, the most classical techniques to reduce the dimension of the data
+newdatacanfurtheroptimizethemodel.Thecooperationofma- set.Itmapstheoriginalsamplesontoprinciplecomponentvec-
+chinelearningclusteringalgorithmandintelligentsortingma- tors so that the number of features is reduced to the number
+chine will solve the problem of reuse of retired batteries. The ofprinciplecomponents,whileitstillmaintainsmostofthere-
+structural model of clustering machine is shown in Figure 2b, lations between samples. Figure S13 (Supporting Information)
+whichincludespaddingmodule,pulsetestingmoduleandclus- showstheprocessofPCA.Inthispaper,thelargesteigenvalue
+teringmodule.Figure2c,dshowstheclusteringmodulewiththe fromaPCAprocesscoversover95%ofthevarianceofthewhole
+output of clustering results inserted. Figure 2c shows the pris- dataset.SoanewfeatureF isgeneratedfromthemappingof
+1
+tinestateandsixbatteriesareclusteredinFigure2d.Theyare original data onto the eigenvector corresponding to the largest
+allcutoutfromthecontrolvideo(FigureS14Video,Supporting eigenvalue.BesidesthefeatureF ,therearetwomorefeatures
+1
+Information).Thecontrolpartcombinedwiththeclusteringal- calculatedfromthepulsetestdata:y fromvoltagestabilization
+0
+gorithmcansolvetheladderclusteringproblem.Thehumanand curveandR knownasinternalresistance.Thedetailedprocess
+1
+materialresourcescanbereducedbecause64ormorecellscan offeatureselectionisavailableinTableS2(SupportingInforma-
+betestedatthesametime. tion).Inconclusion,F y R areusedasnewfeaturesforlater
+1/ 0/ 1
+In this work, the data from the pulse test is used for train- clustering, while the validation is based on traditional U/R/Q
+ing the model while the data from the constant-current and features.
+Adv.TheorySimul.2020,3,2000109 2000109(4of9) ©2020WILEY-VCHVerlagGmbH&Co.KGaA,Weinheim
+--- PAGE 5 ---
+www.advancedsciencenews.com www.advtheorysimul.com
+Figure3. Theclusteringresultsofcanopyalgorithm.ThefeatureschosentoclusteraretheF1featurefromthePCAofpulsetest,R calculatedfromthe
+1
+pulsecurveandy camefromvoltagestabilizationcurve.Thecanopyalgorithmisusedtoobtainthebatterydataclusteringsituation,whicharea)three
+0
+categoriesandb)fourcategories.Onthisbasis,thebisectingK-meansalgorithmisusedforclustering,andtherelevantaccuracyischecked.
+1.3.PerformanceandSortingModels Table1.ClusteringresultsshowninFigure3.
+Thereportedremaininglifetimepredictionorothertechniques Batteryclustering Clusteringaccuracy
+tosortoranalyzethequalityofbatteryusuallyrequirethelife-
+Numberofcategories Numberofsamples Accuracy
+longinformationandlong-timetesting,whichistimeconsum-
+ingandexpensive.Thebatteryisclusteredwithoutrequiringdata 3 136 88.97
+abouthistoricalusageofbattery.First,thebatteryisdischarged 3 136 82.35
+and then charged to 5 % state-of-charge (SoC) to make all the
+Thesamplesrefertodatausedtoclusterwithpulsedataandevaluatewithfullcharge
+tested battery have the same condition. In the meantime, the
+anddischargefeature,respectively.Theaccuracyinthetestisthedataincluding
+data is observed in 10% SoC (Figure S7, Supporting Informa-
+thenewandthebadpatterns.Therefore,ifthetestingabnormaldataiserased,the
+tion).However,theaccuracyisreducedcomparedwith5%SoC. accuracycanbemuchhigher.
+In order to study the reasons, Figure S8 (Supporting Informa-
+tion)showsthey andinternalresistancefeaturesofthesample
+0
+atdifferentSoC.Theresultsof10%and15%SoCareconsistent, Q−U(Figure4c)andQ−R(Figure4d)asverificationindicators
+slightlylowerthan5%SoC.Theaccuracychangesfrom88.97% respectively.Inthethreefigures,theverificationofdifferentdi-
+to87.50%.ThereasonisthatwhentheSoCincreasesfrom5% mensionshasobtainedagoodaccuracy.Theverificationresults
+to15%,theopencurrentvoltage(OCV)approachesthevoltage ofK=4isshowninFigureS6(SupportingInformation).
+platform,whichmeansthelowerSoCcanreflectbatteryvariabil- Tofurtherunderstandthishighaccuracy,themechanismiden-
+itybetter.Thus,thepulsedataat5%SoCisselectedtomakesure tificationofpulsetestisestablishedtounderstandtherelation-
+allthedatacomparable.So,inlaterdiscussion,theresultsareall ships between new features F /y /R and traditional features
+1 0 1
+basedon5%SoCdata-set. U/R/Q Figure5.ItshowsnearlylinearcorrelationsQ−F (Fig-
+in 1
+Because of the random initialization of canopy algorithm, it ure5a),y −U (Figure5bf)andR−R (Figure5c)andensures
+0 1
+oftenhasseveraldifferentresults.However,itwilllargelynarrow the high accuracy. The R-square of Q−F reaches more than
+1
+downthereasonablerangeofK.Asforthedatasetinthispaper, 0.93andF featurefrompulsetestcontainsthesameproperty
+1
+Figure3showstheresultofcanopyalgorithm.Thereareonlytwo ofcapacityfromfullcharge-dischargetest.Ontheotherhand,y
+0
+differentconditions:K=3andK=4.Tofurtherdecidetheexact andR containsthesameinformationofvoltageandresistance.
+1
+valueofK,Calinski-Harabaz(CH)indexcanbecalculated.CH Thus, the linear relationship is easy to understand and the R-
+indexforK=3is204.86whileK=4is269.63.Therefore,K=3 square of both is higher than 0.82. However, the inner reason
+isusedforlaterclustering. forQ−F relationshiplaysontheagingprocessofbatteries.In-
+1
+Then, the bisecting K-means is used and the accuracy com- crementalcapacity(IC)havebeenusedforunderstandingdegra-
+binedwithvalidationresultischecked.Figure4ashows,thecom- dation mechanisms.[59] In addition, the capacity loss in 18650-
+parisonoftheresultisbasedonnewfeaturesF /y /R andon type NMC/graphite cells is proved due to the loss of cyclable
+1 0 1
+U/R/Q when K = 3. The inner core (C) represents the result lithium.[60]Figure6ashowscapacityincrementalcurveofaran-
+basedonnewfeatures,whiletheoutershell(C-real)represents domcells.Itcanbeclearlyseenthattheagingbatterypeakwill
+theresultfromU/R/Q.Ifasamplehassamecolorbetweenits graduallymoveupandcyclablelithiumisreduced,[61,62]resulting
+core and shell, it is correctly clustered, vice versa. So, when K thechangingpositionofextremepoints.Thepeakpolarizationof
+=3,theaccuracyreaches88.97%,whileK=4,theaccuracyis ICcurvescorrelatewellwiththecapacityretentiondata.[63]Simi-
+82.35%.(SeedetailinTable1)Theaccuracyoftheeverypairindi- larly,inFigure6b,thepulsefeatureF hasanearlylinearcorrela-
+1
+catorsofverificationcanbeobtainedbyusingR−U(Figure4b), tionwiththeseextremepointsinFigure6a.Thus,F canalsore-
+1
+Adv.TheorySimul.2020,3,2000109 2000109(5of9) ©2020WILEY-VCHVerlagGmbH&Co.KGaA,Weinheim
+--- PAGE 6 ---
+www.advancedsciencenews.com www.advtheorysimul.com
+Figure4. Theclusteringresults.a)Thedotsaretheclusteringresultswithpulsedata(C)andtheelectrochemicaldataobtainedbyfullcharge–discharge
+(Creal),thesamecolorrepresentstheclusteringisaccurate.Twodifferentcolorpointsindicateincorrectclustering.Itcanbeseenthattheclustering
+pulsetestdataclassifiesthebattery,andthereliabilityexceeds88%atthreeclassesinthisdata-set.Theaccuracyofthetwoindicatorsofverification
+canbeobtainedbyusingb)Q–U,c)R–Uandd)Q–Rasverificationindicatorsrespectively.Theyallhavehighaccuracy.
+Figure5. Themechanismsofpulsetestclustering.Thepulsetestdataareusedtocollectthefeatureofdifferentstageofbattery.Andweusethepulse
+testdatatogothroughtheclusteringalgorithmsandusingthetraditionchargeanddischargedatatoverifytheaccuracy.Thecorrelationbetween
+clusteringindicatorsandverificationindicatorsisasfollows:a)CorrelationbetweenQandF ,b)Uandy ,c)resistanceandR arenearlylinear(except
+1 0 1
+thereisadecayingformatFigure5bwhenthey arethelowestpointswhenbatteryhasextremelylowcapacity).Thenearlylinearrelationshipisthe
+0
+directcauseofachievinghigheraccuracy.
+flectthecapacityretentionordegradation,directlyrelatedtothe BacktoFigure4,itisclearthatmosterrorpointslocateinthe
+agingofbatteries.Hence,theF featurestandforsamemean- boundaryoftwoclusterswhilesomeerrorpointsresultfromab-
+1
+ingofQwhilethetestingtestisreducedalot.Inthemeantime, normaltest.Tofurtherunderstandwhytheseerrorpointsexist,
+wealsoobservedotherfeature’srelation.Theresultsshowthat somecharacteristicsofpulsetestsareshowninFigureS8(Sup-
+thecorrelationisnotverygood,(seedetailinFigureS5,Support- portingInformation).Inshort,whentheperformanceoftwobat-
+ingInformation).Hence,thereasonablefeaturesF /y /R from teriesisverysimilar,testsarenotsodistinguishablethattheer-
+1 0 1
+pulsetestcouldbedecidedtoclusterretiredbatteryfast. rorsmainlylocateintheboundaryofclusters.However,inreal-
+Adv.TheorySimul.2020,3,2000109 2000109(6of9) ©2020WILEY-VCHVerlagGmbH&Co.KGaA,Weinheim
+--- PAGE 7 ---
+www.advancedsciencenews.com www.advtheorysimul.com
+Figure6. Mechanismsofpulsetest.a)Capacityincrementalcurve,itcanbeclearlyseenthattheagingbatterypeakwillgraduallymoveup,andlive
+lithiumisreduced.Thevoltagechangeofthepulsecurveandthestabilizationcurveisthesameasthechangeofthecapacityincrement,sothepulse
+voltagecurvehastheoreticalsupportasafastclusteringindex.b)ThepulsefeatureF1hasanearlylinearcorrelationwiththeincrementalcapacity.
+world application, those samples located in cluster boundaries Clustering Algorithm: Before proposing the improved bisecting K-
+canbedirectlyabandonedsothatthefinalaccuracycanbemuch meansalgorithm,therearetwobasicalgorithmsneedtobeintroduced
+higher. first:K-meansandbisectingK-meansalgorithm.
+TheK-meansalgorithmisoneofthemostwidelyusedpartitionclus-
+teringalgorithms.Itiseasytoimplementandiswithafastconvergence
+speed.Basedonthesimilaritybetweensamples,thedata-setisdivided
+2.Conclusions intoKclusters,whilethevalueofKneedstobedetermined.Andthesim-
+ilarityisoftendefinedastheEuclideandistancebetweendatapoints.The
+In summary, a data-driven fast clustering approach of retired distanceandcostfunctionsareshownbelow.
+lithium-ionbatteryisdeveloped.Comparedwiththetraditional √
+√
+charge-dischargetest,thetimeusingpulsetestisreducedfrom √∑n ( )
+√ 2
+hours to minutes with the accuracy of 88%. The fundamental d(x i ,c j )= x i k−c j k (2)
+mechanisms are explored, in which pulse test feature is con- k=1
+sistent with charge–discharge test for the aging of lithium-ion
+battery. Moreover, it is found that pulse feature reflects active
+lithium-ioninabatterysystem.Ingeneral,ourapproachofbat- ∑k ∑ ( ) 2
+J= d c,x (3)
+teryclusteringimprovestheefficiencyandaccuracyofsemiem- j i
+pirical methods. This work develops a time-saving clustering
+j=1xi ∈cj
+method and the application of data based high throughput in-
+telligentsortingmachinecanpromotethepracticalapplication wherethec j representtheclustercenterforagroupofx i ,andx i kmeans
+thekthdimensionofx.
+oflithiumbattery. i
+However,thetraditionalK-meansfacestwomainproblems:thedeter-
+minationoftheinitialclustercenterpositionsandthenumberofclus-
+tersK.Todealwiththeproblemofinitialcenterpositions,abisectingK-
+3.ExperimentalSection meansalgorithmcanbeadopted.Itovercomesomedrawbacksofthetra-
+ditionalK-meansalgorithmandbecomemorerobust.Themaindifference
+CellCyclingandDataGeneration: Thirteencommercials18650cylin- betweenthebisectingK-meansalgorithmandthetraditionalK-meansal-
+derhigh-powerNCM/graphitecellswereusedinthiswork.Thecellshave gorithmisthat,intheformerone,onlyoneclustercenterneedstobead-
+anominalcapacityof2.1Ahandnominalvoltageof3.6V.Themanu- dressedineachiterationaccordingtothesampledistribution.Thus,the
+facturer’srecommendedfast-chargingprotocolis2Cconstantcurrent- bisectingK-meansalgorithmcaneffectivelyreducethechanceoffalling
+constantvoltage(CC-CV). intolocaloptimaandthesensitivitytowardsnoises.Thedetailedprocess
+AllcellsweretestedincylindricalfixturesonLANDbatterytestingcycler. ofbisectingK-meansisshowninFigureS12(SupportingInformation).
+Thetestswereperformedataconstanttemperatureof25°Cinaspecific Though, the problem of choosing initial cluster center positions is
+humidity. solved,thedeterminationofthenumberofclustersstillremainsunset-
+Inthiswork,cyclictestwasatthecurrentof2Candcapacitywascol- tled.Todealwithit,animprovedbisectingK-meansalgorithmbasedon
+lectedat0.5C.Moreover,foreachbattery,itsopen-circuitvoltage(OCR) acanopyalgorithmisapplied.Inthismethod,thenumberofclustersK
+wasapproximatedasthefinalvoltageintherestperiod,anditsinternal isprovidedbythecanopyalgorithm,whichisthenusedinafollowing
+resistance(R)wasderivedthroughdividingthetransientchargingvoltage bisectingK-meansalgorithm.
+bythecurrent,andthen,thethreeverificationparametersU/R/Qofeach The canopy algorithm is an unsupervised preclustering algorithm.
+batterywereobtainedwiththisfullcharge-dischargetest.Inthemean- Comparedtoothermethodssuchaselbowruleandexhaustivesearchus-
+time,thebatteriesweretestedviapulsetest.Thedetailedpulsestepsare ingsomeevaluationmetrics,canopyalgorithmdoesnotneedtooperate
+asfollows: manytimestosearchforthebestclusternumberK.Itcangenerateclus-
+ternumberKbasedonthesampledistribution.Alsoitismuchfasterthan
+1) Charge–dischargewitha0.5C(0.5A)currentfor5s,thenrestfor25 othermethodsespeciallywhendealingwithhigh-dimensionallargedata
+seach. sets.TheprocessofthealgorithmispresentedinFigureS13(Supporting
+2) Charge–dischargewitha1Ccurrentfor5s,thenrestfor25s. Information).
+Adv.TheorySimul.2020,3,2000109 2000109(7of9) ©2020WILEY-VCHVerlagGmbH&Co.KGaA,Weinheim
+--- PAGE 8 ---
+www.advancedsciencenews.com www.advtheorysimul.com
+Inshort,canopyalgorithmwasappliedtodeterminetheclusternum- [10] S.Panchal,ImpactofVehicleChargeandDischargeCyclesontheTher-
+berandthebisectingK-meansalgorithmwaschosentoclusterthebat- mal Characteristics of Lithium-Ion Batteries, University of Waterloo,
+tery.Thentheclusteringresultwasvalidatedwiththetraditionalsorting Waterloo,Canada,2014.
+method,reachingahighaccuracyof88%. [11] A. Cordoba-Arenas, S. Onori, Y. Guezennec, G. Rizzoni, J. Power
+Thedataclusteringprocessingincludingthetrainingandtestingwas Sources2015,278,473.
+performedinMATLAB.Whilethecontrolofthemachinewasperformed [12] S.M.Bak,K.W.Nam,W.Y.Chang,X.Q.Yu,X.Q.Yang,Chem.Mater.
+inpythonusingtheNumpy,pandasandsklearnpackages. 2013,25,337.
+[13] S.Tong,J.H.Lacap,J.W.Park,J.EnergyStorage2016,7,236.
+[14] S.Paul,C.Diegelmann,H.Kabza,W.Tillmetz,J.PowerSources2013,
+SupportingInformation 239,642.
+[15] S.F.Schuster,M.J.Brand,P.Berg,M.Gleissenberger,A.Jossen,J.
+SupportingInformationisavailablefromtheWileyOnlineLibraryorfrom PowerSources2015,297,242.
+theauthor. [16] X.S.Si,W.Wang,C.H.Hu,D.H.Zhou,Eur.J.Oper.Res.2011,213,
+1.
+[17] V. Ramadesigan, K. J. Chen, N. A. Burns, V. Boovaragavan, R. D.
+Braatz,V.R.Subramanian,J.Electrochem.Soc.2011,158,A1048.
+Acknowledgements
+[18] K.A.Severson,P.M.Attia,N.Jin,R.D.Braatz,Nat.Energy2019,4,
+383.
+TheauthorsthankfundingsupportfromShenzhenMunicipalDevelop-
+ment and Reform Commission (Grant Number: SDRC[2016]172) and [19] R.R.Richardson,M.A.Osborne,D.A.Howey,J.PowerSources2017,
+ShanghaiShunFengMachineryCo.,Ltd. 357,209.
+[20] S. Panchal, McGrory, J. Kong, M. Agelin-Chaab, Int. J. Energy Res.
+2017,41,2565.
+[21] H.H.Ryu,K.J.Park,C.S.Yoon,Y.K.Sun,Chem.Mater.2018,30,
+AuthorContributions
+1155.
+[22] P.H.Lee,S.H.Wu,W.K.Pang,V.K.Peterson,J.PowerSources2018,
+A.R.andZ.Z.contributedequallytothiswork.A.H.R.,Z.H.Z.,X.Z.,G.D.W,
+374,31.
+B.H.L.,H.B.S.,andF.Y.K.developedthisideaanddataanalysis.A.H.R.and
+[23] K.A.Smith,C.D.Rahn,C.Y.Wang,IEEETrans.ControlSyst.Technol.
+S.X.C.,K.Q.,P.B.N.,andZ.L.L.carriedoutexperimentanddatacollection.
+2010,18,654.
+Z.H.Z.andX.Z.carriedoutalgorithmoptimization.Allauthorsdiscussed
+[24] M.Berecibar,F.Devriendt,M.Dubarry,I.Villarreal,J..VanMierlo,J.
+theresultsandcommentsonthemanuscript.
+PowerSources2016,320,239.
+[25] T.C.Bach,S.F.Schuster,E.Fleder,G.Sextl,J.EnergyStorage2016,
+5,212.
+ConflictofInterest [26] S.F.Schuster,T.Bach,E.Fleder,G.Sextl,A.Jossen,J.EnergyStorage
+2015,1,44.
+Theauthorsdeclarenoconflictofinterest.
+[27] M.Song,S.Y.Choe,J.PowerSources2019,436,226.
+[28] S.J.Harris,D.J.Harris,C.Li,J.PowerSources2017,342,589.
+[29] T.Baumhöfer,M.Brühl,S.Rothgang,D.U.Sauer,J.PowerSources
+Keywords 2014,247,332.
+[30] C.Yu,S.Ganapathy,E.Eck,H.Wang,S.Basak,Z.Li,M.Wagemaker,
+bisectingK-meansalgorithms,fastclustering,lithium-ionbatteries,pulse Int.Commun.2017,8,1086.
+tests,retiredbatteries [31] M.B.Pinson,M.Z.Bazant,J.Electrochem.Soc.2013,160,A243.
+[32] N.Balke,S.Jesse,A.N.Morozovska,E.Eliseev,S.V,Kalinin,Nat.
+Received:May15,2020 Nanotechnol.2010,5,749.
+Publishedonline:July10,2020 [33] M.T.F.Rodrigues,K.Kalaga,S.E.Trask,I.A.Shkrob,D.P.Abraham,
+J.Electrochem.Soc.2018,165,A1697.
+[34] Y.Zheng,Y.B.He,K.Qian,B.H.Li,F.Y.Kang,J.AlloysCompd.2015,
+639,406.
+[35] C.Hu,G.Jain,P.Tamirisa,T.Gorka,Appl.Energy2014,126,182.
+[1] V.Etacheri,R.Marom,R.Elazari,G.Salitra,D.Aurbach,EnergyEnvi- [36] T.Waldmann,S.Gorse,T.Samtleben,G.Schneider,V.Knoblauch,M.
+ron.Sci.2011,4,3243. A.Wohlfahrt-Mehrens,J.Electrochem.Soc.2014,161,A1742.
+[2] R.Schmuch,R.Wagner,G.Hörpel,T.Placke,M.Winter,Nat.Energy [37] D.Kong,R.Wen,P.Ping,R.Peng,J.Q.Zhang,G.M.Chen,Int.J.
+2018,3,267. EnergyRes.2018,43,552.
+[3] Y.Zhang,R.Xiong,H.He,M.G,Pecht,IEEETrans.Ind.Electron2019, [38] L.Ungurean,G.Cârstoiu,M.V.Micea,V.Groza,Int.J.EnergyRes.
+66,1585. 2017,41,151.
+[4] S.B.Peterson,J.Apt,J.F.Whitacre,J.PowerSources2010,195,2385. [39] U.Tröltzsch,O.Kanoun,H.R.Tränkler,Electrochim.Acta2006,51,
+[5] Y.Song,D.Liu,C.Yang,Y.Peng,Microelectron.Reliab.2017,75,142. 1664.
+[6] R.B.Wright,J.P.Christophersen,C.G.Motloch,C.G.Motloch,R. [40] B.Gyenes,D.A.Stevens,V.L.Chevrier,J.R.Dahn,J.Electrochem.
+A.Sutula,J.PowerSources2003,119-121,865. Soc.2014,162,A278.
+[7] K.Qian,G.H.Huang,A.H.Ran,B.H.Li,F.Y.Kang,Electrochim.Acta [41] J.C.Burns,A.Kassam,N.N.Sinha,L.E.Downie,B.M.Way,J.R.
+2019,303,183. Dahn,J.Electrochem.Soc.2013,160,A1451.
+[8] S.Panchal,S.Mathewson,R.Fraser,R.Culham,M.Fowler,SAEInt. [42] P.Raccuglia,K.C.Elbert,P.D.Adler,C.Falk,M.B.Wenny,A.Mollo,
+J.Altern.Powertrains2015,4,293. M.Zeller,S.A.Friedler,A.J.Norquist,Nature2016,533,73.
+[9] S.Panchal,I.Dincer,R.Agelin-Chaab,M.Fraser,HeatMassTransfe [43] L.Ward,A.Agrawal,A.Choudhary,C.Wolverton,npjComput.Mater.
+2017,53,937. 2016,2,16028.
+Adv.TheorySimul.2020,3,2000109 2000109(8of9) ©2020WILEY-VCHVerlagGmbH&Co.KGaA,Weinheim
+--- PAGE 9 ---
+www.advancedsciencenews.com www.advtheorysimul.com
+[44] K.T.Schutt,H.E.Sauceda,P.J.Kindermans,A.Tkatchenko,K.R. [54] J.Zhang,J.Yu,D.Tao,IEEETrans.ImageProcess.2018,27,2420.
+Muller,J.Chem.Phys.2018,148,241722. [55] Y.Zheng,B.Jeon,L.Sun,J.Zhang,H.Zhang,IEEETrans.CircuitsSyst.
+[45] M.Aykol,S.Kim,V.I.hegde,D.Morgan,C.Wolverton,Int.Commun. VideoTechnol.2018,28,2586.
+2016,7,13779. [56] V.Y.Kiselev,T.S.Andrews,M.Hemberg,Nat.Rev.Genet.2019,20,
+[46] M.H.S.Segler,M.Preuss,M.P.Waller,Nature2018,555,604. 273.
+[47] D.Liu,J.Pang,J.Zhou,Y.Peng,M.Pecht,Microelectron.Reliab.2013, [57] Q. Wang, F. Zhang, X. Li, IEEE Trans. Geosci. Electron. 2018, 10,
+53,832. 980.
+[48] M.Lewerenz,A.Marongiu,A.Warnecke,D.U.Sauer,J.PowerSources [58] G.Zhang,C.Zhang,H.Zhang,Knowl.-BasedSyst.2018,145,289.
+2017,368,57. [59] M.Dubarry,C.Truchot,B.Y.Liaw,J.PowerSources2012,219,204.
+[49] N.Paul,J.Keil,F.M.Kindermann,O.Dolotko,A.Jossen,R.Gilles,J. [60] E.Sarasketa-Zabala,F.Aguesse,I.Villarreal,C.M.Lopez,P..Kubiak,
+EnergyStorage2018,17,383. J.Phys.Chem.C2014,119,896.
+[50] Y.K.Ahn,Y.N.Jo,W.Cho,J.S.Yu,K.J.Kim,Energies2019,12,1638. [61] C.R.Birkl,M.R.Roberts,E.McTurk,P.G.Bruce,D.A.Howey,J.
+[51] J.Oh,J.Kim,Y.M.Lee,D.O.Shin,J.Y.Kim,Y.G.Lee,K.M.Kim, PowerSources2017,341,373.
+Mater.Chem.Phys.2019,222,1. [62] D.Anseán,M.Dubarry,A.Devie,B.Y.Liaw,V.M.García,J.C.Viera,
+[52] Y.Wu,M.Li,W.Wahyudi,G.Sheng,X.Miao,T.D.Anthopoulos,K. M.González,J.PowerSources2017,356,36.
+W.Huang,Y.Li,Z.Lai,ACSOmega2019,4,13972. [63] J.H.Kim,H.H.Ryu,S.J.Kim,C.S.Yoon,Y.K.Sun,ACSAppl.Mater
+[53] V.Barone,B.Fahlman,Y.Ding,Mater.Chem.Phys.2019,227,347. Interfaces2019,11,30936.
+Adv.TheorySimul.2020,3,2000109 2000109(9of9) ©2020WILEY-VCHVerlagGmbH&Co.KGaA,Weinheim

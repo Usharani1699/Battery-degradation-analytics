@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep Paper Analysis — EG7030 Dissertation</title>
+<style>
+  :root {
+    --bg: #0d1117; --card: #161b22; --border: #30363d;
+    --text: #c9d1d9; --muted: #8b949e; --accent: #58a6ff;
+    --green: #3fb950; --yellow: #d29922; --red: #f85149;
+    --purple: #bc8cff; --orange: #ffa657;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 15px; line-height: 1.7; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+
+  h1 { font-size: 2rem; color: var(--accent); margin-bottom: 6px; }
+  .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 40px; }
+
+  /* TOC */
+  .toc { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 24px; margin-bottom: 40px; }
+  .toc h2 { color: var(--accent); font-size: 1.1rem; margin-bottom: 16px; }
+  .toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; }
+  .toc a { color: var(--text); text-decoration: none; font-size: 0.88rem; }
+  .toc a:hover { color: var(--accent); }
+  .toc-section { color: var(--purple); font-weight: 600; margin-top: 10px; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* Paper cards */
+  .paper { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 28px; scroll-margin-top: 20px; }
+  .paper-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 18px; }
+  .paper-num { background: var(--accent); color: #000; font-weight: 700; font-size: 1.1rem; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .paper-title { font-size: 1.15rem; font-weight: 600; color: #fff; line-height: 1.4; }
+  .paper-ref { color: var(--muted); font-size: 0.82rem; margin-top: 4px; }
+
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+  .tag { padding: 3px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; }
+  .tag-chem { background: #1c2d1c; color: var(--green); border: 1px solid #2d4a2d; }
+  .tag-method { background: #1c1c2d; color: var(--purple); border: 1px solid #2d2d4a; }
+  .tag-data { background: #2d1c1c; color: var(--orange); border: 1px solid #4a2d2d; }
+  .tag-topic { background: #1c2535; color: var(--accent); border: 1px solid #2d3f55; }
+  .tag-year { background: #252525; color: var(--muted); border: 1px solid var(--border); }
+
+  .section-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 18px 0 6px; }
+  p { margin-bottom: 12px; }
+
+  .highlight-box { background: #0d2137; border-left: 3px solid var(--accent); border-radius: 4px; padding: 14px 16px; margin: 14px 0; font-size: 0.92rem; }
+  .highlight-box.green { background: #0d1e0d; border-color: var(--green); }
+  .highlight-box.yellow { background: #1e1a0d; border-color: var(--yellow); }
+  .highlight-box.purple { background: #1a0d2d; border-color: var(--purple); }
+  .highlight-box.orange { background: #1e1208; border-color: var(--orange); }
+
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88rem; }
+  th { background: #1c2535; color: var(--accent); padding: 10px 12px; text-align: left; border: 1px solid var(--border); }
+  td { padding: 9px 12px; border: 1px solid var(--border); vertical-align: top; }
+  tr:nth-child(even) td { background: #12161c; }
+
+  .kv { display: grid; grid-template-columns: 160px 1fr; gap: 8px 16px; margin: 12px 0; font-size: 0.9rem; }
+  .kv-key { color: var(--muted); font-weight: 600; }
+
+  /* Synthesis section */
+  .synthesis { background: var(--card); border: 1px solid var(--purple); border-radius: 12px; padding: 28px; margin-bottom: 28px; scroll-margin-top: 20px; }
+  .synthesis h2 { color: var(--purple); font-size: 1.3rem; margin-bottom: 18px; }
+
+  .theme-card { background: #0f0f1a; border: 1px solid #2d2d4a; border-radius: 8px; padding: 16px; margin-bottom: 14px; }
+  .theme-card h3 { color: var(--purple); font-size: 0.95rem; margin-bottom: 8px; }
+
+  .paper-map { background: #0f1a0f; border: 1px solid #2d4a2d; border-radius: 8px; padding: 16px; margin-bottom: 14px; }
+  .paper-map h3 { color: var(--green); font-size: 0.95rem; margin-bottom: 8px; }
+
+  .gap-card { background: #1a0f0f; border: 1px solid #4a2d2d; border-radius: 8px; padding: 16px; margin-bottom: 14px; }
+  .gap-card h3 { color: var(--orange); font-size: 0.95rem; margin-bottom: 8px; }
+
+  .chapter-map { background: #0f1520; border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 14px; }
+  .chapter-map h3 { color: var(--accent); font-size: 0.92rem; margin-bottom: 10px; }
+
+  ul { padding-left: 20px; }
+  li { margin-bottom: 5px; }
+  strong { color: #e6edf3; }
+
+  .viva-q { background: #1a1200; border-left: 3px solid var(--yellow); border-radius: 4px; padding: 14px 16px; margin: 12px 0; }
+  .viva-q .q { color: var(--yellow); font-weight: 600; margin-bottom: 6px; }
+  .viva-q .a { font-size: 0.9rem; }
+
+  h2.section-heading { color: var(--accent); font-size: 1.4rem; margin: 40px 0 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+  h3 { color: var(--green); font-size: 1rem; margin: 14px 0 8px; }
+
+  .doi { font-family: monospace; color: var(--muted); font-size: 0.8rem; }
+
+  @media (max-width: 700px) {
+    .toc-grid { grid-template-columns: 1fr; }
+    .kv { grid-template-columns: 120px 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Deep Paper Analysis — All 9 Papers</h1>
+<div class="subtitle">EG7030 · MSc Electric Vehicle Engineering · UEL · u2965962<br>
+Dissertation: "Duty Cycle-Aware Battery Degradation Analytics for Electric Vehicle Fleet Applications"<br>
+Last updated: June 2026</div>
+
+<!-- TOC -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <div class="toc-grid">
+    <div>
+      <div class="toc-section">Individual Papers</div>
+      <a href="#p1">1. Mulpuri et al. 2025 — Drive Cycle + PyBaMM</a><br>
+      <a href="#p2">2. İnan et al. 2025 — SoC Estimation + DBSCAN</a><br>
+      <a href="#p3">3. Si et al. 2025 — EIS + Knee Point (LMB)</a><br>
+      <a href="#p4">4. Birkl 2016 JPS — LLI/LAM Diagnostics (Theory)</a><br>
+      <a href="#p5">5. Birkl 2017 JES — LLI/LAM at Low Temp (Experiment)</a><br>
+      <a href="#p6">6. Ran et al. 2020 — Second-Life Clustering</a><br>
+      <a href="#p7">7. Sulzer et al. 2021 — PyBaMM Software</a><br>
+      <a href="#p8">8. Booth & Beck 2019 — EV Routing (CP)</a><br>
+      <a href="#p9">9. Paz et al. 2018 — Multi-Depot EV Fleet Routing</a>
+    </div>
+    <div>
+      <div class="toc-section">Synthesis</div>
+      <a href="#common">Common Themes Across Papers</a><br>
+      <a href="#gaps">Gaps in Literature (Your Contribution)</a><br>
+      <a href="#chapters">How to Cite Each Paper by Chapter</a><br>
+      <a href="#defence">Viva Defence Q&amp;A</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAPER 1 ===== -->
+<div class="paper" id="p1">
+  <div class="paper-header">
+    <div class="paper-num">1</div>
+    <div>
+      <div class="paper-title">Beyond Drive Cycles: Physics-Based Modelling of Duty-Cycle-Dependent Battery Degradation in Real-World Indian EV Scenarios</div>
+      <div class="paper-ref">Mulpuri, B.K., Mondal, A., Kummitha, N.K. et al. · RSC Advances, 2025 · DOI: 10.1039/d5ra04379d</div>
+    </div>
+  </div>
+
+  <div class="meta-row">
+    <span class="tag tag-chem">NMC-811</span>
+    <span class="tag tag-method">PyBaMM / SPMe</span>
+    <span class="tag tag-method">Physics-based model</span>
+    <span class="tag tag-data">LGM50 21700 cylindrical, 5Ah</span>
+    <span class="tag tag-topic">Drive cycles</span>
+    <span class="tag tag-topic">Degradation prediction</span>
+    <span class="tag tag-year">2025</span>
+  </div>
+
+  <div class="section-label">What This Paper Does (The Core Question)</div>
+  <p>This paper asks: <strong>does the specific drive cycle a vehicle experiences matter more than the standard test cycle (WLTC) for predicting how quickly a battery degrades?</strong> The answer is: yes, significantly. Real Indian city driving (Hyderabad, Delhi, Panskura) degrades batteries 12–18% faster than the WLTC lab standard.</p>
+
+  <div class="section-label">Dataset & Experimental Setup</div>
+  <div class="kv">
+    <span class="kv-key">Cell type</span><span>LGM50 21700 NMC-811 cylindrical, 5 Ah (Samsung), Chen et al. 2020 parameters</span>
+    <span class="kv-key">Model</span><span>PyBaMM SPMe (Single Particle Model with Electrolyte) — NOT a simple empirical fit</span>
+    <span class="kv-key">Drive cycles tested</span><span>Pattern-S (WLTC), Pattern-1 (Panskura, gentle), Pattern-2 (Delhi, moderate), Pattern-3 (Hyderabad, most aggressive)</span>
+    <span class="kv-key">Temperatures</span><span>Zone-A (Kolkata: 16–40°C), Zone-B (Delhi: 1.8–47.2°C), Zone-C (Rajasthan: 14.4–47°C)</span>
+    <span class="kv-key">Charge scenarios</span><span>DS-1 (home overnight charge only), DS-2 (work + home = partial daytime top-up)</span>
+    <span class="kv-key">Charge rates</span><span>0.1C, 0.5C, 1C</span>
+    <span class="kv-key">Simulation length</span><span>500 days continuous equivalent</span>
+  </div>
+
+  <div class="section-label">Key Drive Cycle Metrics (The Vocabulary This Paper Uses)</div>
+  <table>
+    <tr><th>Metric</th><th>Formula</th><th>What It Measures</th><th>Pattern-3 vs Pattern-S</th></tr>
+    <tr><td><strong>KI</strong> — Kinetic Intensity</td><td>RPA / v_avg</td><td>Overall aggressiveness of speed changes</td><td>KI=0.0046 vs KI=0.0010 (4.6× more aggressive)</td></tr>
+    <tr><td><strong>RPA</strong> — Relative Positive Accel.</td><td>Σ(a×v when a>0.1 m/s²) / d</td><td>Frequency of hard acceleration events</td><td>Higher in city</td></tr>
+    <tr><td><strong>PKE</strong> — Positive Kinetic Energy</td><td>Σ(v_f² - v_i²)/2d when v_f>v_i</td><td>Energy waste via frequent braking</td><td>Higher in stop-start city driving</td></tr>
+  </table>
+
+  <div class="section-label">Degradation Mechanisms Modelled</div>
+  <ul>
+    <li><strong>SEI growth</strong> — solvent-diffusion model: side reactions on graphite anode consume lithium irreversibly → LLI</li>
+    <li><strong>Lithium plating</strong> — occurs when intercalation can't keep up with current; produces reversible + irreversible (dead) lithium → LLI + capacity loss</li>
+    <li><strong>Particle cracking</strong> — mechanical stress from volume changes during cycling → LAM (Loss of Active Material)</li>
+  </ul>
+  <p>Each is modelled with differential equations inside PyBaMM. The SEI thickness grows as √(time × current), lithium plating uses Butler-Volmer kinetics, and particle cracking uses a fatigue model.</p>
+
+  <div class="section-label">Key Results</div>
+  <div class="highlight-box">
+    <strong>Pattern-3 (Hyderabad aggressive) degrades the battery 12–18% faster than Pattern-S (WLTC)</strong> over the same distance. At 500 days, Pattern-3 reaches ~80% SoH (end-of-life threshold) while WLTC is still at ~87–88%. This means using WLTC for fleet battery life prediction is UNSAFE — it overestimates remaining life.
+  </div>
+  <ul>
+    <li>DS-2 (partial work charge) reduces degradation vs DS-1 (full overnight) because it avoids high-SoC dwell time</li>
+    <li>Temperature matters: Zone-B (Delhi extreme winter–summer swing, 1.8–47.2°C) causes more degradation than Zone-A</li>
+    <li>Higher charge rate (1C) causes more SEI growth and plating than 0.1C</li>
+    <li>LLI is the dominant mechanism (~70% of total capacity loss); particle cracking contributes ~15%; plating ~15%</li>
+  </ul>
+
+  <div class="section-label">Your Dissertation Connection</div>
+  <div class="highlight-box green">
+    <strong>This is the single most important paper for your dissertation.</strong> It directly models drive-cycle-dependent battery degradation — exactly your thesis. You replicate/extend their FSI (Fleet Severity Index) concept by adding real EV fleet data. Your contribution: they simulated 4 drive patterns; you cluster real GPS/drive data into fleet duty cycle profiles and then apply similar degradation analysis. Cite in: Chapter 2 (Literature Review), Chapter 3 (Methodology), Chapter 5 (Discussion).
+  </div>
+
+  <div class="viva-q">
+    <div class="q">Q: "How is your work different from Mulpuri et al.?"</div>
+    <div class="a">A: "Mulpuri et al. use 4 pre-defined drive patterns from Indian cities with a simulated PyBaMM model. I work with real-world EV fleet operational data, where duty cycles are not pre-defined but discovered through unsupervised clustering (DBSCAN). I also introduce the Fleet Severity Index as a composite metric, whereas they analyse each drive parameter individually. My approach is closer to what a fleet operator would actually implement — it uses data that already exists in telematics systems, not a physics simulation."</div>
+  </div>
+</div>
+
+<!-- ===== PAPER 2 ===== -->
+<div class="paper" id="p2">
+  <div class="paper-header">
+    <div class="paper-num">2</div>
+    <div>
+      <div class="paper-title">Descriptive Proximity-Based Modeling with LightGBM and DBSCAN for State of Charge Estimation</div>
+      <div class="paper-ref">İnan, A. et al. · Journal of Energy Storage, 2025 · Article 118150 · DOI: 10.1016/j.est.2025.118150</div>
+    </div>
+  </div>
+
+  <div class="meta-row">
+    <span class="tag tag-chem">LCO/NMC 18650</span>
+    <span class="tag tag-method">LightGBM</span>
+    <span class="tag tag-method">DBSCAN clustering</span>
+    <span class="tag tag-method">SHAP</span>
+    <span class="tag tag-topic">SoC estimation</span>
+    <span class="tag tag-topic">Explainability</span>
+    <span class="tag tag-year">2025</span>
+  </div>
+
+  <div class="section-label">What This Paper Does</div>
+  <p>This paper asks: <strong>can we improve SoC (State of Charge) estimation accuracy by first clustering the battery operating data, then training a gradient boosting model within each cluster?</strong> The key innovation is combining unsupervised clustering (DBSCAN) with supervised regression (LightGBM) — a hybrid approach the authors call "descriptive proximity-based modeling."</p>
+
+  <div class="section-label">Important Distinction</div>
+  <div class="highlight-box yellow">
+    <strong>This paper estimates SoC (how much charge remains RIGHT NOW), not SoH (long-term health).</strong> SoC changes every second; SoH changes over hundreds of cycles. However, the METHODOLOGICAL approach — DBSCAN + ML + SHAP — is directly transferable to your SoH/degradation work.
+  </div>
+
+  <div class="section-label">Dataset & Setup</div>
+  <div class="kv">
+    <span class="kv-key">Cell</span><span>18650 cylindrical Li-ion, 2.8 Ah, tested at 0°C and 25°C</span>
+    <span class="kv-key">Discharge rates</span><span>1C, 2C, 3C, 4C — creating 8 test conditions (2 temps × 4 rates)</span>
+    <span class="kv-key">Features</span><span>Current (A), Voltage (V), Capacity (mAh), Energy (Wh), Cycle count, Temperature (°C)</span>
+    <span class="kv-key">DBSCAN ε parameter</span><span>ε = 1.21 (determined adaptively using MAD — Median Absolute Deviation of nearest-neighbour distances)</span>
+    <span class="kv-key">ML model</span><span>LightGBM (gradient boosted decision trees, fast, handles non-linearity)</span>
+    <span class="kv-key">Validation</span><span>5-fold cross-validation; RMSE=0.188, MAE=0.145, R²=1.000 (on SoC 0–100 scale)</span>
+  </div>
+
+  <div class="section-label">How DBSCAN Is Used Here</div>
+  <p>DBSCAN (Density-Based Spatial Clustering of Applications with Noise) groups battery measurements by proximity in feature space — it finds "natural" operating regions without needing to specify number of clusters. The adaptive ε = 1.21 was chosen as 1.5× the median nearest-neighbour distance (MAD approach), making it data-driven rather than manual. Each cluster represents a distinct operating regime (e.g., high-temperature 1C charging vs. low-temperature 4C discharge). The cluster label is then added as a feature to LightGBM.</p>
+
+  <div class="section-label">SHAP Analysis — What Features Matter Most</div>
+  <table>
+    <tr><th>Rank</th><th>Feature</th><th>SHAP Contribution</th><th>Why It Makes Sense</th></tr>
+    <tr><td>1</td><td>Capacity (mAh)</td><td>Highest (dominant)</td><td>Remaining capacity directly determines SoC</td></tr>
+    <tr><td>2</td><td>Voltage (V)</td><td>High</td><td>OCV-SoC relationship is well known</td></tr>
+    <tr><td>3</td><td>Cluster label</td><td>Moderate but significant</td><td>Adds operating regime context — proves clustering adds information</td></tr>
+    <tr><td>4</td><td>Temperature</td><td>Low–moderate</td><td>Affects electrochemistry but less so real-time SoC</td></tr>
+    <tr><td>5</td><td>Current, Energy, Cycle count</td><td>Low</td><td>Secondary factors</td></tr>
+  </table>
+
+  <div class="section-label">Why Cluster Label Appears in Top 3</div>
+  <div class="highlight-box">
+    Adding the cluster label as a feature to LightGBM allowed the model to understand that "voltage=3.6V at 25°C 1C" means something different from "voltage=3.6V at 0°C 4C." Without clustering, the model sees identical voltage readings in very different conditions and gives a single, averaged response. With clustering, it knows which regime it's in and adjusts accordingly. This is the paper's core methodological insight.
+  </div>
+
+  <div class="section-label">Your Dissertation Connection</div>
+  <div class="highlight-box green">
+    You borrow DBSCAN from this paper for clustering EV fleet duty cycles into operational regimes, and you borrow the SHAP explainability framework for showing which fleet severity features (KI, DoD, temperature, charge rate) most strongly predict battery degradation. Cite in: Chapter 3 (Methodology — DBSCAN choice justification, SHAP implementation).
+  </div>
+</div>
+
+<!-- ===== PAPER 3 ===== -->
+<div class="paper" id="p3">
+  <div class="paper-header">
+    <div class="paper-num">3</div>
+    <div>
+      <div class="paper-title">Capacity Estimation and Knee Point Prediction of Lithium Metal Batteries Using EIS and XGBoost with SHAP Interpretability</div>
+      <div class="paper-ref">Si, Y. et al. · Advanced Science, 2025</div>
+    </div>
+  </div>
+
+  <div class="meta-row">
+    <span class="tag tag-chem">NMC-811 (Lithium Metal)</span>
+    <span class="tag tag-method">EIS</span>
+    <span class="tag tag-method">XGBoost</span>
+    <span class="tag tag-method">SHAP</span>
+    <span class="tag tag-topic">Capacity estimation</span>
+    <span class="tag tag-topic">Knee point detection</span>
+    <span class="tag tag-year">2025</span>
+  </div>
+
+  <div class="section-label">What This Paper Does</div>
+  <p>This paper solves two related problems using electrochemical impedance spectroscopy (EIS) as the input feature source: <strong>(1) estimate remaining capacity during ageing, and (2) predict when the dangerous "knee point" (KP) in the degradation curve occurs.</strong> The knee point is critical: it marks where degradation accelerates nonlinearly, and identifying it early allows fleet operators to retire or reassign batteries before sudden failure.</p>
+
+  <div class="section-label">What Is EIS?</div>
+  <p>EIS applies a small AC voltage signal across a range of frequencies (typically 0.01 Hz to 100 kHz) and measures the battery's complex impedance response Z(ω) = Z_re + jZ_im. Different frequency ranges reveal different physical processes:</p>
+  <table>
+    <tr><th>Frequency Range</th><th>Physical Process</th><th>Symbol</th></tr>
+    <tr><td>Very high (>1 kHz)</td><td>Ohmic resistance (electrolyte + current collector)</td><td>Re</td></tr>
+    <tr><td>High (100 Hz–1 kHz)</td><td>SEI layer impedance</td><td>R_SEI</td></tr>
+    <tr><td>Mid (1–100 Hz)</td><td>Charge transfer resistance at electrode</td><td>Rct</td></tr>
+    <tr><td>Low (<1 Hz)</td><td>Diffusion (Warburg element)</td><td>Z_w</td></tr>
+  </table>
+
+  <div class="section-label">Dataset</div>
+  <div class="kv">
+    <span class="kv-key">Cells</span><span>16 NMC-811 lithium metal batteries — 8 training, 8 testing (small dataset!)</span>
+    <span class="kv-key">EIS measurements</span><span>EIS spectrum recorded at multiple states-of-health across ageing cycles</span>
+    <span class="kv-key">Features extracted</span><span>Real impedance at various frequencies, imaginary impedance at various frequencies, phase angle</span>
+    <span class="kv-key">Models</span><span>XGBoost for capacity estimation; separate XGBoost for knee point prediction</span>
+  </div>
+
+  <div class="section-label">SHAP Findings — Different Features for Different Tasks</div>
+  <div class="highlight-box purple">
+    <strong>Key insight: the most important EIS feature DIFFERS depending on what you're predicting.</strong><br><br>
+    For <strong>capacity estimation</strong>: Low-frequency imaginary impedance (Z_im at ~0.01–1 Hz) is most important. This represents the Warburg diffusion process — how well lithium ions diffuse through the electrolyte and electrodes. As capacity drops, diffusion slows because pores clog with SEI products and active material is lost.<br><br>
+    For <strong>knee point prediction</strong>: High-frequency real impedance (Z_re at >1 kHz) is most important. This is the ohmic/SEI resistance. The knee point occurs when SEI suddenly grows faster or when lithium plating begins — both increase high-frequency resistance before the knee appears in the capacity curve.
+  </div>
+
+  <div class="section-label">The Knee Point Concept</div>
+  <p>Battery degradation follows a roughly S-shaped or L-shaped curve when you plot capacity vs. cycle number. Early in life, capacity drops slowly and linearly. Then at the "knee point," the degradation accelerates suddenly — you go from losing 0.05% capacity/cycle to losing 0.3% capacity/cycle. After the knee, the battery rapidly reaches end-of-life (80% SoH). Predicting when this knee occurs is extremely valuable for fleet management: you can schedule replacement 50–100 cycles before catastrophic decline rather than responding reactively.</p>
+
+  <div class="section-label">Your Dissertation Connection</div>
+  <div class="highlight-box green">
+    Your CALCE and NASA datasets show this knee point phenomenon in the SoH curves (B0006 shows a knee ~cycle 150). Si et al. gives you the language and framework to discuss knee point detection. Even without EIS data, you can detect the knee from cycle-capacity curves using numerical differentiation (find where d²Q/dn² is maximum). Cite in: Chapter 2 (Literature Review — degradation trajectory, knee point), Chapter 5 (Discussion — your SoH curve knee observations).
+  </div>
+</div>
+
+<!-- ===== PAPER 4 ===== -->
+<div class="paper" id="p4">
+  <div class="paper-header">
+    <div class="paper-num">4</div>
+    <div>
+      <div class="paper-title">Degradation Diagnostics for Lithium Ion Cells</div>
+      <div class="paper-ref">Birkl, C.R., Roberts, M.R., McTurk, E., Bruce, P.G., Howey, D.A. · Journal of Power Sources, 2017 (submitted 2016) · DOI: 10.1016/j.jpowsour.2017.05.004</div>
+    </div>
+  </div>
+
+  <div class="meta-row">
+    <span class="tag tag-chem">LCO+NCO Kokam 740mAh pouch</span>
+    <span class="tag tag-method">OCV fitting / diagnostic algorithm</span>
+    <span class="tag tag-method">Electrochemical model</span>
+    <span class="tag tag-topic">LLI / LAM</span>
+    <span class="tag tag-topic">Degradation modes</span>
+    <span class="tag tag-year">2016/2017</span>
+  </div>
+
+  <div class="section-label">What This Paper Does — The Foundational Framework</div>
+  <p>This is the paper that formally established the LLI/LAM degradation diagnostic framework as a practical tool. Before this paper, researchers knew these degradation modes existed in theory, but Birkl et al. provided an algorithm to <strong>quantify exactly how much of the capacity loss comes from each mode</strong> using just the open-circuit voltage (OCV) curve — without dismantling the cell.</p>
+
+  <div class="section-label">The Three Degradation Modes (Your Core Framework)</div>
+  <table>
+    <tr><th>Mode</th><th>Full Name</th><th>Physical Cause</th><th>Effect on Cell</th><th>OCV Signature</th></tr>
+    <tr>
+      <td><strong>LLI</strong></td>
+      <td>Loss of Lithium Inventory</td>
+      <td>SEI growth traps Li+ ions; lithium plating creates dead lithium; Li deposits on separator</td>
+      <td>Fewer Li+ ions available for intercalation → capacity fade</td>
+      <td>OCV curve compresses/contracts; endpoints shift</td>
+    </tr>
+    <tr>
+      <td><strong>LAM_PE</strong></td>
+      <td>Loss of Active Material — Positive Electrode</td>
+      <td>Particle cracking in cathode (NMC, LCO); phase transition fatigue; chemical dissolution</td>
+      <td>Fewer cathode sites → capacity fade; impedance rises</td>
+      <td>Features from positive half-cell OCV diminish</td>
+    </tr>
+    <tr>
+      <td><strong>LAM_NE</strong></td>
+      <td>Loss of Active Material — Negative Electrode</td>
+      <td>Graphite exfoliation; lithium plating blockages; binder decomposition</td>
+      <td>Fewer anode sites → capacity fade; especially severe at low temperature</td>
+      <td>Features from negative half-cell OCV diminish</td>
+    </tr>
+  </table>
+
+  <div class="section-label">The Diagnostic Algorithm</div>
+  <p>The algorithm works by fitting a simulated OCV curve to the measured full-cell OCV curve. The simulated OCV is built from two half-cell OCV curves (measured separately): U_pe(x) for the positive electrode and U_ne(y) for the negative electrode. Three parameters (LLI, LAM_PE, LAM_NE) are adjusted until the simulated OCV matches the measured OCV. The values of these parameters at convergence tell you <em>how much</em> of each degradation mode has occurred.</p>
+
+  <div class="highlight-box">
+    Full-cell OCV ≈ U_pe(x) − U_ne(y), where x and y are stoichiometric coordinates that shift depending on LLI, LAM_PE, LAM_NE. By fitting this curve at different ageing stages, you track how much of each mode has accumulated.
+  </div>
+
+  <div class="section-label">Dataset Used (Critical!)</div>
+  <div class="kv">
+    <span class="kv-key">Cell</span><span>Kokam 740 mAh LCO+NCO pouch cell</span>
+    <span class="kv-key">Ageing conditions</span><span>Multiple C-rates, temperatures, DoD ranges</span>
+    <span class="kv-key">Same cell as Oxford dataset</span><span>YES — the Oxford Battery Degradation Dataset (which you have) uses this exact cell and methodology from this group</span>
+  </div>
+
+  <div class="section-label">Your Dissertation Connection</div>
+  <div class="highlight-box green">
+    This paper is the methodological foundation behind the Oxford dataset you already have extracted (519 cycles, 8 cells). When you look at your Oxford SoH data (Cell5=62%, Cell7=80%), the degradation is explained by LLI and LAM as quantified by Birkl's algorithm. You don't need to rerun the diagnostic algorithm — you use it to explain your observations in the literature review. Cite in: Chapter 2 (Literature Review — degradation modes theory), Chapter 5 (Discussion — interpreting your SoH results mechanistically).
+  </div>
+</div>
+
+<!-- ===== PAPER 5 ===== -->
+<div class="paper" id="p5">
+  <div class="paper-header">
+    <div class="paper-num">5</div>
+    <div>
+      <div class="paper-title">Degradation Diagnostics for Commercial Lithium-Ion Batteries Used in Electric Vehicles</div>
+      <div class="paper-ref">Birkl, C.R. et al. · Journal of the Electrochemical Society, 2017 · (Same Oxford group, companion paper)</div>
+    </div>
+  </div>
+
+  <div class="meta-row">
+    <span class="tag tag-chem">LCO+NCO Kokam 740mAh pouch</span>
+    <span class="tag tag-method">OCV diagnostics</span>
+    <span class="tag tag-method">SEM / EDX validation</span>
+    <span class="tag tag-topic">Low temperature degradation</span>
+    <span class="tag tag-topic">LAM_NE dominance</span>
+    <span class="tag tag-year">2017</span>
+  </div>
+
+  <div class="section-label">What This Paper Does</div>
+  <p>This is the companion experimental paper to Birkl JPS 2016. It applies the diagnostic algorithm to cells aged under <strong>specifically harsh conditions: −10°C temperature at 2C charge rate</strong>, conditions representative of EV operation in cold climates (UK winter, northern Europe). The key question: which degradation mode dominates under these extreme conditions?</p>
+
+  <div class="section-label">Key Finding — LAM_NE Dominates at Low Temperature</div>
+  <div class="highlight-box">
+    <strong>At −10°C + 2C charging:</strong> LAM_NE (Loss of Active Negative Electrode Material) is the dominant degradation mode, not LLI. Why? At low temperature, lithium-ion diffusion in the electrolyte and through the graphite anode slows dramatically. The ions cannot intercalate fast enough, so they plate on the graphite surface as metallic lithium (lithium plating). This metallic lithium then reacts with electrolyte, creating dead lithium and blocking graphite pores — both of which count as LAM_NE.
+  </div>
+
+  <div class="section-label">Experimental Validation</div>
+  <ul>
+    <li><strong>SEM (Scanning Electron Microscopy)</strong>: Post-mortem imaging confirmed graphite surface deposits matching lithium plating morphology</li>
+    <li><strong>EDX (Energy Dispersive X-ray spectroscopy)</strong>: Chemical analysis of surface deposits confirmed elemental lithium</li>
+    <li><strong>3-electrode cells</strong>: Separated anode and cathode measurements confirmed the anode degraded far more than the cathode</li>
+  </ul>
+  <p>This is rare in literature: most degradation studies rely only on full-cell electrical measurements. Having physical post-mortem validation makes the diagnostic algorithm's conclusions credible.</p>
+
+  <div class="section-label">Your Dissertation Connection</div>
+  <div class="highlight-box green">
+    When your Oxford SoH data shows Cell5 degrading faster than Cell7, and when you note temperature effects in your fleet data, this paper gives you the mechanistic explanation: low-temperature operations (cold climate parking, winter charging) accelerate LAM_NE via lithium plating, not just LLI. This is why temperature appears in your Fleet Severity Index. Cite in: Chapter 2 (Literature Review — temperature-dependent degradation), Chapter 5 (Discussion — temperature effects in your FSI analysis).
+  </div>
+</div>
+
+<!-- ===== PAPER 6 ===== -->
+<div class="paper" id="p6">
+  <div class="paper-header">
+    <div class="paper-num">6</div>
+    <div>
+      <div class="paper-title">Data-Driven Fast Clustering of Second-Life Lithium-Ion Batteries</div>
+      <div class="paper-ref">Ran, A. et al. · Journal of Energy Storage, 2020</div>
+    </div>
+  </div>
+
+  <div class="meta-row">
+    <span class="tag tag-chem">Mixed (retired EV batteries)</span>
+    <span class="tag tag-method">Pulse test clustering</span>
+    <span class="tag tag-method">Bisecting K-means</span>
+    <span class="tag tag-topic">Second-life batteries</span>
+    <span class="tag tag-topic">Battery sorting</span>
+    <span class="tag tag-year">2020</span>
+  </div>
+
+  <div class="section-label">What This Paper Does</div>
+  <p>When EV batteries retire from vehicles (typically at 80% SoH), they can still be used for stationary energy storage (second life). But retired batteries from different vehicles, conditions, and histories have wildly different remaining capacities and internal resistances. <strong>This paper develops a fast data-driven method to sort these batteries into homogeneous groups for second-life applications.</strong></p>
+
+  <div class="section-label">The Problem With Standard Testing</div>
+  <p>Traditional full charge-discharge characterization of retired batteries takes 4–8 hours per cell and is expensive. When dealing with thousands of retired EV batteries, this is completely impractical. Ran et al.'s solution: use a <strong>short pulse test</strong> (applying known current pulses and measuring voltage response over minutes) plus clustering to group batteries in hours, not days.</p>
+
+  <div class="section-label">Method</div>
+  <div class="kv">
+    <span class="kv-key">Input features</span><span>Voltage response during short current pulses (5–10 minutes per battery)</span>
+    <span class="kv-key">Clustering algorithm</span><span>Bisecting K-means (hierarchical variant that bisects the largest cluster iteratively)</span>
+    <span class="kv-key">Accuracy</span><span>88% match with full C/D characterization — reduces test time from hours to minutes</span>
+    <span class="kv-key">Key degradation causes cited</span><span>SEI growth, loss of active material, dead lithium accumulation, internal resistance increase</span>
+  </div>
+
+  <div class="section-label">Why Clustering Works Here</div>
+  <p>The pulse test voltage response creates a "fingerprint" of each battery's internal state. Batteries that degraded similarly (same mechanism, similar severity) produce similar fingerprints and cluster together. Bisecting K-means finds these natural groupings without requiring you to know in advance how many groups exist.</p>
+
+  <div class="section-label">Your Dissertation Connection</div>
+  <div class="highlight-box green">
+    This paper demonstrates that clustering-based methods work for battery state assessment at scale — exactly the problem your dissertation addresses for fleet-level degradation analytics. The parallel is direct: they cluster retired batteries by degradation fingerprint; you cluster active fleet vehicles by duty-cycle severity fingerprint. Both enable differentiated, data-driven decision-making rather than treating all batteries identically. Cite in: Chapter 2 (Literature Review — data-driven clustering for battery management), Chapter 3 (Methodology — justification for using clustering in fleet analytics).
+  </div>
+</div>
+
+<!-- ===== PAPER 7 ===== -->
+<div class="paper" id="p7">
+  <div class="paper-header">
+    <div class="paper-num">7</div>
+    <div>
+      <div class="paper-title">Python Battery Mathematical Modelling (PyBaMM)</div>
+      <div class="paper-ref">Sulzer, V., Marquis, S.G., Timms, R., Robinson, M., Chapman, S.J. · Journal of Open Research Software, 2021 · DOI: 10.5334/jors.309</div>
+    </div>
+  </div>
+
+  <div class="meta-row">
+    <span class="tag tag-method">Python / Open-source</span>
+    <span class="tag tag-method">DFN / SPMe / SPM</span>
+    <span class="tag tag-topic">Physics-based modelling</span>
+    <span class="tag tag-topic">SEI degradation model</span>
+    <span class="tag tag-year">2021</span>
+  </div>
+
+  <div class="section-label">What This Paper Does</div>
+  <p>This is a software paper — it describes PyBaMM (Python Battery Mathematical Modelling), an open-source Python library developed by researchers at Oxford, Stanford, and Berkeley. It provides a <strong>modular, extensible framework for implementing physics-based battery models without reimplementing basic equations from scratch.</strong></p>
+
+  <div class="section-label">Models Available in PyBaMM</div>
+  <table>
+    <tr><th>Model</th><th>Full Name</th><th>Complexity</th><th>Use Case</th></tr>
+    <tr><td>SPM</td><td>Single Particle Model</td><td>Low</td><td>Fast simulation, rough estimates</td></tr>
+    <tr><td>SPMe</td><td>Single Particle Model with Electrolyte</td><td>Medium</td><td>Includes electrolyte concentration effects — good for high C-rate and temperature effects</td></tr>
+    <tr><td>DFN</td><td>Doyle-Fuller-Newman</td><td>High</td><td>Full porous electrode model — most accurate, but computationally expensive</td></tr>
+  </table>
+
+  <div class="section-label">The Expression Tree Architecture</div>
+  <p>PyBaMM's key engineering contribution is an "expression tree" system: model equations are represented as symbolic mathematical objects (like a computer algebra system) that can be differentiated, discretized, and solved numerically without the user writing manual derivative code. This makes adding degradation submodels straightforward — you define equations symbolically, and PyBaMM handles the numerical solution.</p>
+
+  <div class="section-label">Degradation Submodels Available</div>
+  <ul>
+    <li>SEI growth (solvent-diffusion model, reaction-limited model)</li>
+    <li>Lithium plating (kinetic model)</li>
+    <li>Particle cracking (mechanical fatigue model)</li>
+    <li>Electrode/electrolyte decomposition</li>
+  </ul>
+
+  <div class="section-label">Your Dissertation Connection</div>
+  <div class="highlight-box green">
+    Mulpuri et al. (Paper 1) use PyBaMM SPMe for their degradation simulations. By citing Sulzer et al., you cite the underlying software tool those simulations were built on. In your methodology, if you run any PyBaMM simulations (for synthetic data or model validation), cite this paper. More importantly, it positions PyBaMM as the state-of-the-art physics-based tool — contrasting with your data-driven ML approach. Cite in: Chapter 2 (Literature Review — physics-based modelling background), Chapter 3 (Methodology — note that physics-based models like PyBaMM are an alternative approach your ML method complements).
+  </div>
+</div>
+
+<!-- ===== PAPER 8 ===== -->
+<div class="paper" id="p8">
+  <div class="paper-header">
+    <div class="paper-num">8</div>
+    <div>
+      <div class="paper-title">A Constraint Programming Approach to Electric Vehicle Routing with Time Windows (EVRPTW)</div>
+      <div class="paper-ref">Booth, K.E.C. & Beck, J.C. · CPAIOR 2019 · University of Toronto</div>
+    </div>
+  </div>
+
+  <div class="meta-row">
+    <span class="tag tag-method">Constraint Programming</span>
+    <span class="tag tag-method">MILP</span>
+    <span class="tag tag-topic">EV fleet routing</span>
+    <span class="tag tag-topic">Charge scheduling</span>
+    <span class="tag tag-year">2019</span>
+  </div>
+
+  <div class="section-label">What This Paper Does</div>
+  <p>This paper tackles the <strong>Electric Vehicle Routing Problem with Time Windows (EVRPTW)</strong> — the problem of planning optimal routes for a fleet of EVs that must: (1) visit customers within specific time windows, (2) manage battery range anxiety, and (3) schedule recharging at available stations. The authors propose the first Constraint Programming (CP) formulations for this problem.</p>
+
+  <div class="section-label">The EVRPTW Problem Structure</div>
+  <ul>
+    <li><strong>Nodes</strong>: Depot (start/end), Customer locations (demand), Charging stations (partial or full recharge)</li>
+    <li><strong>Vehicle constraints</strong>: Battery capacity limit, energy consumption per unit distance, recharge time at stations</li>
+    <li><strong>Time constraints</strong>: Arrive at customer within [earliest, latest] time window</li>
+    <li><strong>Objective</strong>: Minimize total distance, number of vehicles, or time</li>
+  </ul>
+
+  <div class="section-label">CP vs. MILP — Why This Matters</div>
+  <table>
+    <tr><th>Approach</th><th>Strength</th><th>Weakness</th></tr>
+    <tr><td>MILP (Mixed Integer Linear Programming)</td><td>Finds high-quality solutions quickly for small-medium problems; optimal for distance minimization with long scheduling horizons</td><td>Scales poorly to large fleets/many customers</td></tr>
+    <tr><td>CP (Constraint Programming) — Alternative Resources</td><td>Flexible constraint modelling</td><td>Slower than MILP for this problem class</td></tr>
+    <tr><td>CP — Single Resource Transformation (THEIR CONTRIBUTION)</td><td>Uses interval, sequence, and cumulative function variables; outperforms MILP for medium-to-large problems</td><td>Struggles with large scheduling horizons</td></tr>
+    <tr><td>Hybrid MILP-CP</td><td>Best for distance minimization, large scheduling horizons</td><td>More complex to implement</td></tr>
+  </table>
+
+  <div class="section-label">Why This Paper Exists in Your Reading List</div>
+  <div class="highlight-box yellow">
+    This paper is about <strong>fleet-level operations</strong>, not battery degradation directly. The connection to your dissertation is operational: EVRPTW models show that route planning decisions (which roads, which sequence of customers, where to charge, when to charge) directly control how batteries are loaded. A fleet that optimises routes for minimal distance may inadvertently cause aggressive duty cycles; a fleet that optimises for battery health must consider degradation cost. Your dissertation's FSI (Fleet Severity Index) can be thought of as the degradation-awareness component missing from EVRPTW optimisations like this one.
+  </div>
+
+  <div class="section-label">Your Dissertation Connection</div>
+  <div class="highlight-box green">
+    Cite this paper in Chapter 2 to motivate the fleet operations context: "existing EV fleet routing optimisation (Booth & Beck, 2019) focuses on range and time constraints, but does not incorporate battery degradation cost as an objective. Our Fleet Severity Index provides the missing link — a quantitative degradation severity metric that can be integrated into future routing optimisations." Cite in: Chapter 2 (Literature Review — EV fleet operations context), Chapter 6 (Conclusion/Future Work — suggest integrating FSI into EVRPTW as future direction).
+  </div>
+</div>
+
+<!-- ===== PAPER 9 ===== -->
+<div class="paper" id="p9">
+  <div class="paper-header">
+    <div class="paper-num">9</div>
+    <div>
+      <div class="paper-title">The Multi-Depot Electric Vehicle Location Routing Problem with Time Windows (MDVLRP)</div>
+      <div class="paper-ref">Paz, J.C., Granada-Echeverri, M., Escobar, J.W. · International Journal of Industrial Engineering Computations, 2018 · DOI: 10.5267/j.ijiec.2017.4.001</div>
+    </div>
+  </div>
+
+  <div class="meta-row">
+    <span class="tag tag-method">MILP</span>
+    <span class="tag tag-topic">Multi-depot EV routing</span>
+    <span class="tag tag-topic">Battery swapping</span>
+    <span class="tag tag-topic">Charging infrastructure</span>
+    <span class="tag tag-year">2018</span>
+  </div>
+
+  <div class="section-label">What This Paper Does</div>
+  <p>This extends the standard EV routing problem to the <strong>multi-depot case with location decisions</strong>: not just "how to route vehicles" but also "where to place depots and charging stations." It's a planning-level optimisation model for EV logistics networks. The paper considers two energy supply technologies: conventional plug-in charging (partial or full) and Battery Swapping Stations (BSS).</p>
+
+  <div class="section-label">Three MILP Models Proposed</div>
+  <ul>
+    <li><strong>Model 1 — Conventional charging only</strong>: Vehicles can charge at any node (depot, customer, special station); partial or full charge allowed</li>
+    <li><strong>Model 2 — Battery Swapping Stations (BSS) only</strong>: BSS located only at special vertices (not customer nodes due to infrastructure complexity); instant battery swap</li>
+    <li><strong>Model 3 — Mixed (both technologies)</strong>: If a charging vertex is activated → BSS; if customer vertex → conventional charge</li>
+  </ul>
+
+  <div class="section-label">Key Insight — Routing and Location Decisions Are Coupled</div>
+  <div class="highlight-box">
+    The paper shows that routing decisions (which vehicles go where) and location decisions (where to put charging stations) are <strong>mutually dependent</strong>: placing a station further from typical routes increases detour time; detours change which routes are optimal. This interdependency means you can't solve them separately — you need a joint optimisation model. This is the paper's fundamental mathematical contribution.
+  </div>
+
+  <div class="section-label">Battery Swapping vs. Conventional Charging</div>
+  <p>BSS takes a fixed short time (battery swap is fast, but infrastructure is expensive and batteries must be standardised). Conventional charging time is a function of the amount of energy needed. The paper finds that BSS reduces fleet travel time substantially (no long charging waits) but requires careful placement because vehicles must detour specifically to BSS nodes, not customer nodes.</p>
+
+  <div class="section-label">Your Dissertation Connection</div>
+  <div class="highlight-box green">
+    This paper reinforces the fleet operations context from Paper 8. Together, Papers 8 and 9 establish that EV fleet management involves complex spatial and temporal constraints. Neither paper, however, models how the resulting duty cycles actually degrade batteries over time — that's your contribution. Specifically: in BSS scenarios, batteries are swapped frequently and must maintain health across many short-cycle uses; your FSI and degradation analytics directly quantify this hidden cost. Cite in: Chapter 2 (Literature Review — fleet operations, charging infrastructure), Chapter 6 (Future Work — integrating degradation-aware FSI into MDVLRP optimisation).
+  </div>
+</div>
+
+<!-- ===== SYNTHESIS ===== -->
+<h2 class="section-heading" id="common">Cross-Paper Common Themes — The Researcher's View</h2>
+
+<div class="synthesis">
+  <h2>Theme 1: SHAP Explainability Is the Standard for Battery ML Papers (2025)</h2>
+
+  <div class="theme-card">
+    <h3>Papers: Mulpuri (1), İnan (2), Si (3)</h3>
+    <p>Every 2025 paper that uses a machine learning model also uses SHAP (SHapley Additive exPlanations) to explain which input features drive predictions. This is no longer optional — it's the expected standard for publishable battery ML work. SHAP moves battery ML from a "black box" to an interpretable tool that electrochemists can trust.</p>
+    <p><strong>What SHAP reveals in each paper:</strong></p>
+    <ul>
+      <li>Mulpuri: KI (Kinetic Intensity) is the dominant drive-cycle predictor of degradation</li>
+      <li>İnan: Capacity (mAh) and Voltage (V) dominate SoC estimation; cluster label adds significant independent information</li>
+      <li>Si: Low-frequency imaginary impedance for capacity; high-frequency real impedance for knee point</li>
+    </ul>
+    <p><strong>Your dissertation must include SHAP analysis</strong> of your XGBoost/LightGBM model showing which FSI components (KI, DoD, Temperature, C_peak) most strongly predict battery degradation. This is a direct requirement for publication-quality work in 2025.</p>
+  </div>
+
+  <div class="theme-card">
+    <h3>Theme 2: Clustering Reveals Operational Structure That Statistics Misses</h3>
+    <p>Papers: İnan (DBSCAN for SoC), Ran (bisecting K-means for second-life sorting), your dissertation (DBSCAN for fleet duty cycle profiling)</p>
+    <p>A consistent finding across all clustering-based papers: the cluster label itself becomes a significant predictive feature. This means the <em>operating regime</em> matters beyond the raw measurements. In battery terms: "which type of usage pattern" contains information not captured by any single variable like average temperature or average C-rate. This is the strongest methodological justification for clustering in your dissertation — without clustering, your fleet data looks like one noisy dataset; with clustering, you can separately analyse "gentle urban delivery routes" vs. "aggressive motorway courier routes."</p>
+  </div>
+
+  <div class="theme-card">
+    <h3>Theme 3: LLI Is the Dominant Degradation Mode, But Temperature Changes the Story</h3>
+    <p>Papers: Mulpuri (1), Birkl JPS (4), Birkl JES (5)</p>
+    <p>Under normal operating conditions (room temperature, moderate C-rate), LLI (Loss of Lithium Inventory — primarily from SEI growth) accounts for ~70% of capacity loss. But at low temperature (−10°C, 2C charge) or high charge rates, LAM_NE (graphite anode damage from lithium plating) can become equally or more important. This context-dependence is exactly why fleet severity classification matters: different fleets operating in different temperature regimes will experience fundamentally different degradation mechanisms, not just different rates of the same mechanism.</p>
+  </div>
+
+  <div class="theme-card">
+    <h3>Theme 4: Physics-Based and Data-Driven Models Are Complementary</h3>
+    <p>Papers: Mulpuri/Sulzer (physics — PyBaMM SPMe), İnan/Si (data-driven — LightGBM/XGBoost), Birkl (electrochemical diagnostics)</p>
+    <p>The literature has moved beyond treating physics-based and data-driven as competitors. Physics models (PyBaMM) provide mechanistic understanding and work with small datasets but require known parameters. Data-driven models (XGBoost, LightGBM) scale to large real-world datasets without knowing internal cell parameters but require explanability tools (SHAP) to trust their outputs. The state-of-the-art approach is hybrid: use physics models to generate synthetic training data or constrain ML model outputs, then use ML for real-time fleet-scale prediction.</p>
+  </div>
+
+  <div class="theme-card">
+    <h3>Theme 5: Fleet Operations and Battery Degradation Are Currently Separate Research Fields</h3>
+    <p>Papers: Booth (8), Paz (9) vs. all battery papers (1–7)</p>
+    <p>Booth and Paz optimise EV fleet routing (minimise distance, time, number of vehicles). Battery papers (1–7) quantify degradation mechanisms and predict SoH. <strong>Zero papers in this set bridge both domains.</strong> No paper says: "given a routing plan, what is the resulting battery degradation cost?" or "how should routes be modified to minimise total-cost-of-ownership including battery replacement?" This is not just a gap — it is the explicit research gap your dissertation fills.</p>
+  </div>
+</div>
+
+<!-- ===== GAPS ===== -->
+<h2 class="section-heading" id="gaps">Literature Gaps Your Dissertation Fills</h2>
+
+<div class="synthesis" style="border-color: var(--orange)">
+  <h2 style="color: var(--orange)">Your Novel Contributions vs. the Literature</h2>
+
+  <div class="gap-card">
+    <h3>Gap 1: No Prior Work Quantifies Fleet-Level Duty Cycle Severity as a Composite Index</h3>
+    <p>Mulpuri et al. analyse drive cycle metrics (KI, RPA, PKE) individually. No prior paper creates a composite Fleet Severity Index (FSI) that weights multiple factors (KI, DoD, temperature, peak C-rate) into a single operational health indicator. Your FSI = 0.30×KI + 0.25×DoD + 0.25×T_avg + 0.20×C_peak fills this gap by providing fleet operators with a single actionable number per vehicle per day.</p>
+  </div>
+
+  <div class="gap-card">
+    <h3>Gap 2: Fleet Duty Cycle Clustering Has Not Been Applied to Battery Degradation Prediction</h3>
+    <p>İnan and Ran use clustering for battery state estimation and sorting. Booth and Paz use optimisation for routing. Nobody uses clustering to discover fleet-level duty cycle profiles and then link those profiles to quantitative degradation predictions. Your methodology — DBSCAN on fleet telemetry → duty cycle clusters → SoH prediction per cluster — is methodologically novel.</p>
+  </div>
+
+  <div class="gap-card">
+    <h3>Gap 3: Battery Degradation Cost Is Absent from EV Fleet Optimisation Models</h3>
+    <p>Booth and Paz treat battery range as a hard constraint (vehicles must not run out) but do not include battery degradation rate as part of the objective function or as a soft constraint. In reality, route A might cost £5 less in fuel/energy but cause £50 more in accelerated battery wear. Your FSI provides the missing degradation cost term that should appear in fleet optimisation models.</p>
+  </div>
+
+  <div class="gap-card">
+    <h3>Gap 4: Real Multi-Dataset Validation Across Chemistry and Temperature</h3>
+    <p>Individual papers study one dataset. Your dissertation uses NASA (LCO, 0.5C/1C/2C discharge, cycling data with impedance), Oxford (Kokam LCO+NCO, controlled ageing), and CALCE (CS2/CX2 LCO, multiple profiles) simultaneously, allowing cross-validation and chemistry-agnostic degradation pattern identification. This multi-dataset approach is rare.</p>
+  </div>
+</div>
+
+<!-- ===== CHAPTER MAP ===== -->
+<h2 class="section-heading" id="chapters">Which Paper to Cite in Which Dissertation Chapter</h2>
+
+<div class="synthesis" style="border-color: var(--accent)">
+  <h2>Citation Map by Chapter</h2>
+
+  <div class="chapter-map">
+    <h3>Chapter 1 — Introduction (Background & Motivation)</h3>
+    <p>Booth (2019) + Paz (2018): EV fleet adoption, routing complexity → "but battery degradation costs are not integrated"<br>
+    Mulpuri (2025): Drive cycles cause significantly different degradation rates → justifies your research question</p>
+  </div>
+
+  <div class="chapter-map">
+    <h3>Chapter 2 — Literature Review</h3>
+    <table>
+      <tr><th>Topic</th><th>Papers to Cite</th></tr>
+      <tr><td>Battery degradation mechanisms (LLI, LAM, SEI, plating)</td><td>Birkl JPS 2017 (4), Birkl JES 2017 (5), Mulpuri 2025 (1)</td></tr>
+      <tr><td>Physics-based degradation models</td><td>Sulzer PyBaMM (7), Mulpuri (1)</td></tr>
+      <tr><td>Data-driven SoH/SoC estimation</td><td>İnan (2), Si (3), Ran (6)</td></tr>
+      <tr><td>EIS for battery diagnostics</td><td>Si (3), Birkl JPS (4)</td></tr>
+      <tr><td>Drive cycle impact on batteries</td><td>Mulpuri (1)</td></tr>
+      <tr><td>Fleet operations and routing</td><td>Booth (8), Paz (9)</td></tr>
+      <tr><td>Second-life batteries</td><td>Ran (6)</td></tr>
+      <tr><td>Research gap statement</td><td>All — none integrate fleet duty cycles with degradation analytics</td></tr>
+    </table>
+  </div>
+
+  <div class="chapter-map">
+    <h3>Chapter 3 — Methodology</h3>
+    <table>
+      <tr><th>Methodological Choice</th><th>Justification Paper</th></tr>
+      <tr><td>Using DBSCAN for clustering</td><td>İnan (2) — proves adaptive ε + DBSCAN effective for battery operating regimes</td></tr>
+      <tr><td>Using XGBoost/LightGBM for SoH prediction</td><td>İnan (2), Si (3) — both show gradient boosting outperforms traditional methods</td></tr>
+      <tr><td>Using SHAP for explainability</td><td>İnan (2), Si (3), Mulpuri (1) — SHAP is 2025 standard for battery ML</td></tr>
+      <tr><td>Fleet Severity Index design</td><td>Mulpuri (1) — KI, RPA, PKE metrics; your weighted composite is novel extension</td></tr>
+      <tr><td>Dataset selection (NASA, Oxford, CALCE)</td><td>Birkl (4,5) — validates Oxford; CALCE self-describes; NASA widely cited</td></tr>
+      <tr><td>LLI/LAM framework for interpreting results</td><td>Birkl JPS (4)</td></tr>
+    </table>
+  </div>
+
+  <div class="chapter-map">
+    <h3>Chapter 5 — Results & Discussion</h3>
+    <p>When interpreting your SoH curves (NASA, Oxford, CALCE): Birkl (4,5) for LLI/LAM mechanistic explanation<br>
+    When discussing knee points in degradation curves: Si (3) for knee point detection theory<br>
+    When comparing drive cycle severity classes: Mulpuri (1) for baseline comparison to Indian city cycles<br>
+    When presenting SHAP outputs: İnan (2) + Si (3) for comparison of feature importance patterns</p>
+  </div>
+
+  <div class="chapter-map">
+    <h3>Chapter 6 — Conclusion & Future Work</h3>
+    <p>Future work direction 1: "Integrate FSI into EVRPTW routing models (Booth 2019, Paz 2018) to enable degradation-aware fleet scheduling"<br>
+    Future work direction 2: "Apply PyBaMM (Sulzer 2021) to simulate optimal charging protocols for each FSI fleet cluster, extending Mulpuri et al.'s approach to real-world fleet profiles"<br>
+    Future work direction 3: "Apply second-life clustering (Ran 2020) to FSI-profiled fleet batteries at retirement to optimise second-life application assignment"</p>
+  </div>
+</div>
+
+<!-- ===== VIVA DEFENCE ===== -->
+<h2 class="section-heading" id="defence">Viva Defence Q&A — Paper-Specific Questions</h2>
+
+<div class="viva-q">
+  <div class="q">Q: "Why do you use DBSCAN for clustering instead of K-means?"</div>
+  <div class="a">A: "DBSCAN (Density-Based Spatial Clustering of Applications with Noise) was chosen for two reasons. First, it does not require specifying the number of clusters in advance — the number of fleet duty cycle groups emerges from the data. K-means requires you to specify k, which is arbitrary without prior knowledge of how many distinct fleet usage patterns exist. Second, DBSCAN handles noise and outlier driving events naturally by labelling them as noise points rather than forcing them into the nearest cluster. İnan et al. (2025) demonstrated this approach effectively for battery operating regime clustering, using adaptive ε selection via median absolute deviation — I applied the same methodology to fleet telemetry data."</div>
+</div>
+
+<div class="viva-q">
+  <div class="q">Q: "How do you validate that your Fleet Severity Index actually predicts battery degradation?"</div>
+  <div class="a">A: "I validate FSI in two ways. First, I cross-reference FSI scores computed from the experimental datasets (NASA, Oxford, CALCE) with measured SoH at known cycle counts — higher FSI conditions should correspond to steeper SoH decline, which I verify statistically. Second, the weighting coefficients (0.30 KI, 0.25 DoD, 0.25 Temperature, 0.20 C-peak) are grounded in the literature: Mulpuri et al. show KI is the strongest drive-cycle predictor of degradation; Birkl et al. show temperature is critical especially for LAM_NE; DoD and C-rate weights follow established degradation model literature. SHAP analysis of my trained ML model then provides data-driven confirmation of which FSI components contribute most — if SHAP rankings match literature expectations, the FSI design is validated."</div>
+</div>
+
+<div class="viva-q">
+  <div class="q">Q: "You use NMC chemistry in your FSI design but your datasets (NASA, CALCE CS2/CX2) are LCO. Isn't that a contradiction?"</div>
+  <div class="a">A: "Not a contradiction, but an acknowledged limitation. The degradation mechanisms are largely shared — LLI from SEI growth and LAM from particle cracking occur in both LCO and NMC chemistries. The FSI is designed around these universal mechanisms, so the index structure transfers across chemistries. However, the rate constants differ: NMC-811 (as studied by Mulpuri et al. and Si et al.) has higher energy density but is more vulnerable to mechanical stress and thermal runaway than LCO. My CALCE and NASA datasets provide extensive LCO cycling data for training and validation, and I note explicitly that the FSI coefficients should be recalibrated for NMC-specific fleet deployments using NMC-specific datasets, which I identify as a limitation and future work direction."</div>
+</div>
+
+<div class="viva-q">
+  <div class="q">Q: "What is the knee point and why does it matter for fleet operators?"</div>
+  <div class="a">A: "The knee point is the inflection in the capacity-vs-cycle-number curve where degradation transitions from slow linear decline to rapid nonlinear decline. Before the knee, a fleet operator might lose 0.05% capacity per cycle; after the knee, this accelerates to 0.3% per cycle or faster, rapidly approaching the 80% SoH end-of-life threshold. Si et al. (2025) showed that high-frequency real impedance from EIS predicts this knee point before it appears in the capacity curve. For fleet operators, the practical value is scheduling-driven: if you can predict 50–100 cycles before the knee that a specific vehicle's battery is approaching it, you can proactively reassign that vehicle to lighter duty cycles, reducing fleet risk. My FSI clusters enable this: vehicles in high-FSI clusters reach their knee points faster, giving a basis for predictive maintenance scheduling."</div>
+</div>
+
+<div class="viva-q">
+  <div class="q">Q: "Booth (2019) and Paz (2018) are routing papers, not degradation papers. Why are they in your literature review?"</div>
+  <div class="a">A: "Precisely because they illustrate the gap my dissertation fills. The routing literature treats battery capacity as a range constraint — vehicles must not run out of energy — but does not model how the specific routes chosen affect long-term battery health. Booth and Paz optimise for distance, time, and vehicle count. Neither incorporates a battery degradation cost term. My Fleet Severity Index provides exactly this missing component: a degradation-aware metric that quantifies the long-term battery wear cost of any given operational profile. This positions my work as a bridge between the fleet operations optimisation literature and the battery degradation literature — two communities that have not yet converged."</div>
+</div>
+
+<div class="viva-q">
+  <div class="q">Q: "PyBaMM (Sulzer 2021) is a physics-based model. Your approach is data-driven. Are you saying physics-based models are wrong?"</div>
+  <div class="a">A: "Not at all — they're complementary. Physics-based models like PyBaMM SPMe (as used by Mulpuri et al.) are mechanistically correct but require precise cell parameters (diffusivity, exchange current density, particle radius) that fleet operators don't have for their battery packs. My data-driven approach works with electrical measurements (voltage, current, temperature) that fleet telematics systems already collect. The two approaches validate each other: if my ML model assigns high degradation risk to high-KI, high-temperature driving patterns, and Mulpuri's PyBaMM simulation shows the same patterns cause 12–18% faster capacity loss, that convergence strengthens both findings. The ideal long-term approach — which I identify as future work — is a hybrid: use PyBaMM to generate synthetic training data for rare operating conditions, then use that to train the ML model on underrepresented cases."</div>
+</div>
+
+<hr style="border-color: var(--border); margin: 40px 0;">
+<div style="color: var(--muted); font-size: 0.82rem; text-align: center;">
+  EG7030 Dissertation · u2965962 · Usha Rani V. · MSc Electric Vehicle Engineering · UEL<br>
+  Supervised by Dr. Abdulrahman Albar · Generated June 2026
+</div>
+
+</div>
+</body>
+</html>

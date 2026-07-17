@@ -1,0 +1,1128 @@
+
+--- PAGE 1 ---
+A2644 JournalofTheElectrochemicalSociety,164(12)A2644-A2653(2017)
+Degradation Diagnostics for Commercial Lithium-Ion Cells Tested
+at −10 ◦ C
+ChristophR.Birkl,a,∗EuanMcTurk,b StefanieZekoll,c,∗FelixH.Richter,c
+MatthewR.Roberts,cPeterG.Bruce,c,∗∗andDavidA.Howeya,∗∗,z
+aDepartmentofEngineeringScience,UniversityofOxford,OxfordOX13PJ,UnitedKingdom
+bWMG,UniversityofWarwick,CoventryCV47AL,UnitedKingdom
+cDepartmentofMaterials,UniversityofOxford,OxfordOX13PH,UnitedKingdom
+Degradationoflithiumion(Li-ion)cellsaffectsbothperformanceandsafetyofLi-ionbatteries.Inordertoavoidpotentialsafety
+hazards,itiscrucialtodetecttheonsetandextentofcriticaldegradationmodesincommercialLi-ioncells.Thisworkdemonstrates
+theapplicationofadiagnosticalgorithmtoidentifyandquantifydegradationmodesofcommercialLi-ionpouchcellscycledat
+−10◦CandaC-rateof2C.Rapidlossofactivenegativeelectrodematerialwassuccessfullyidentifiedandresultswerevalidatedusing
+3-electrodecells,scanningelectronmicroscopy(SEM)andenergy-dispersiveX-rayspectroscopy(EDX).Thepositiveelectrode
+materialwaslessstronglyaffectedbythetests,asfoundbythediagnosticalgorithmandconfirmedwithEDXandSEMresults.
+©TheAuthor(s)2017.PublishedbyECS.ThisisanopenaccessarticledistributedunderthetermsoftheCreativeCommons
+Attribution Non-Commercial No Derivatives 4.0 License (CC BY-NC-ND, http://creativecommons.org/licenses/by-nc-nd/4.0/),
+whichpermitsnon-commercialreuse,distribution,andreproductioninanymedium,providedtheoriginalworkisnotchangedinany
+wayandisproperlycited.Forpermissionforcommercialreuse,pleaseemail:oa@electrochem.org.[DOI:10.1149/2.1401712jes]
+Allrightsreserved.
+ManuscriptsubmittedMay9,2017;revisedmanuscriptreceivedJuly31,2017.PublishedSeptember1,2017.
+Lithiumion(Li-ion)cellsdegradeasaresultofusageandenviron- cyclelife.Ansea´netal.16havemadesignificantprogressinthisarea
+mentalinfluences,typicallyresultingincapacityfadeandincreasedin- by applying incremental capacity analysis in order to identify and
+ternalresistance.1–3Somedegradationmechanismscanleadtosafety tracklithiumplatingexsituunderadynamicdrivecycleschedule.
+hazards through increased risk of fire or explosion. The deposition Inthisworkwebuildonthesameconceptofdegradationmodes–
+ofmetalliclithiumanddendriteformationongraphitenegativeelec- lossoflithiuminventory(LLI),lossofactivePEmaterial(LAM )
+PE
+trodes (NE) are particularly dangerous mechanisms, since metallic andlossofactiveNEmaterial(LAM )–byapplyingadiagnostic
+NE
+dendritescanpiercetheseparatorandleadtointernalshort-circuits algorithm,presentedinRef.26,toidentifyandquantifythedifferent
+resultinginthermalrunaway.4–6Understandinganddetectinglithium degradationmodes.Thedegradationmodesareestimatedbyfittingthe
+platinganddendriteformationareimportantmilestonesonthepath- opencircuitvoltage(OCV)ofLi-ioncellsmeasuredatvariousstages
+waytosafer,morereliableLi-ionbatteries.Lowoperatingtempera- throughoutthecells’cyclelife.TheOCVofthecelliscomputedfrom
+turesduringchargeincreasetheriskoflithiumplatinganddendrite itsconstituentelectrodevoltagesusingtheOCVmodelintroducedin
+formation.7–16Thismakesitimportanttoassessandmodelthebehav- Ref.27.
+iorofLi-ionbatteriesatlowtemperatures,whichisundertakeninthis In this work the diagnostic algorithm was used on commercial
+study. Kokampouchcells(740mAh)and3-electrodecells,cycledat−10◦C
+Aroraetal.4proposedamathematicalmodeltopredictlithiumde- and 2 C, in order to identify and quantify the onset and extent of
+positionontheNEduringchargeandovercharge,whichcanbeused LAM , LAM and LLI from OCV measurements. Results were
+NE PE
+todetermineoperationalanddesignlimitationsinordertominimize validatedbycomparingthemodeledelectrodevoltageswiththeelec-
+safety hazards. Other authors have focused on in-situ detection of trodevoltagesmeasuredonthe3-electrodecells.Furthervalidation
+lithiumplatingusingelectrochemicalcalorimetry,17acombinationof was achieved by post-mortem analysis using scanning electron mi-
+anelectrochemicalmodelwithaparticlefilter,18differentialanalysis croscopy(SEM)andenergy-dispersiveX-rayspectroscopy(EDX).
+ofcellvoltagemeasurements,7measurementsofchangesincellthick-
+nessinpouchcells,19,20 analysisofmeasuredvoltagetransientsand
+subsequentrelaxation,21highprecisioncoulometry22andimpedance
+Experimental
+spectroscopy.23
+Althoughin-situdetectionoflithiumplatingisanimportantad- Threetypesofexperimentswerecarriedoutforthiswork:
+vance, safety hazards can be further reduced by detecting the fac-
+(cid:2)
+tors leading up to lithium plating before the onset of the plating
+(cid:2) Electricaltestsonhalf-cellstoparameterizetheOCVmodel.
+mechanismitself.DepositionofmetalliclithiumongraphiteNEsoc-
+Electricaltestson3-electrodecellsandunmodifiedpouchcells
+cursunderhighchargingrates,atlowchargingtemperaturesandin
+tova(cid:2)lidatethediagnosticalgorithm.
+poorlybalancedcellswithanexcessofactivepositiveelectrode(PE)
+Post-mortem analysis for further validation of the diagnostic
+material.4,12,24,25Thesecircumstancesareeasilyavoidedinnewcells
+algorithm,consistingofSEMandEDX.
+byappropriatecelldesignandobservationofoperationallimitations
+suchasminimalchargingtemperatureandmaximalcellvoltagesand
+currentrates.However,ascellsdegrade,activeelectrodematerialcan Kokam pouch cells, model SLPB 533459H, 740 mAh nominal
+belost,changingtheratioofnegativetopositiveelectrodematerial capacity,wereusedforallexperimentsinthiswork.Half-cellswere
+and the current rates and voltage limits imposed on the remaining manufacturedfromelectrodematerialharvestedfromthepouchcells.
+activematerial.LossofNEmaterialleadstohighercurrentrateson Themethodforthemanufactureofhalf-cellsisdescribedelsewhere.27
+theNEandahigherratioofactivePEtoNEmaterial,bothofwhich ThePEmaterialoftheKokampouchcellsisablendoflithiumcobalt
+increasetheriskoflithiumdepositionandassociatedsafetyhazards. oxide (LCO) and lithium nickel cobalt oxide (NCO) and the NE
+ItisthereforecrucialtodetectandtrackthelossofactiveNEmaterial materialisgraphite.Twohalf-cellsweremade—onePEandoneNE
+inordertoensuresafeoperationofLi-ionbatteriesthroughouttheir half-cell.
+3-electrode cells were made by inserting a reference electrode,
+∗ consistingofacopperwireplatedwithlithium,intotheKokampouch
+ElectrochemicalSocietyStudentMember.
+∗∗ cells.AdetailedaccountofthemethodisprovidedinRef.28.Inorder
+ElectrochemicalSocietyMember.
+zE-mail:david.howey@eng.ox.ac.uk toensurethatthemodificationtechniqueusedtoinsertthereference
+--- PAGE 2 ---
+JournalofTheElectrochemicalSociety,164(12)A2644-A2653(2017) A2645
+allothercells.AllexperimentswerecarriedoutinaVo¨tschthermal
+Table I. Overview of test subjects. Standard numerals denote
+cellswithreferenceelectrodesandRomannumeralscellswithout chamber,usingBio-LogicSP-150andHCP1005batterytesters.
+referenceelectrodes.
+Half-cell tests.—The two half-cells—one PE and one NE half-
+Cell Ref CV Charact. Post- cell—were cycled at a rate of C/25; the same rate as used for the
+ID electrode Cycles period intervals mortem characterization steps of the pouch cells. Given a measured active
+electrodesurfaceareaof600cm2andanominalcapacityof740mAh,
+Cell0 √ × 0 - - SEM,EDX thenominalcurrentdensityofthepouchcellswas1.233mAh/cm2.
+Cell1 √ 120 20min variable EDX Assuming the same nominal current density for the coin cells with
+Cell2 √ 70 25min 10cycles - a diameter of 12mm (surface area of 1.767cm2), a C-rate of C/25
+Cell3 √ 80 25min 20cycles - forthecoincellsisequivalentto0.056mA.Thehalf-celltestswere
+C
+C
+e
+e
+l
+l
+l
+l
+4
+I × 1
+8
+2
+0
+0
+2
+2
+5
+0
+m
+m
+i
+i
+n
+n
+2
+v
+0
+ar
+c
+i
+y
+a
+c
+b
+l
+l
+e
+e
+s SEM
+ED
+,E
+X
+DX conductedinsideaVo¨tschthermalchamberat25◦CusingaBio-Logic
+CellII × 80 25min 20cycles SEM,EDX SP150potentiostat.Voltagemeasurementswererecordedevery1min
+CellIII × 80 25min 20cycles - or1mVchange.Thesecondcyclewasusedfortheparameterization
+CellIV × 80 25min 20cycles - oftheOCVmodel.
+SEMandEDX.—SamplesforSEMimagesandEDXspectrawere
+TableII. Testprocedurecell1andI. extractedfromthepositiveandNEsofthepristinecell0andcycled
+pouchcells1,4,IandII.Thecellswereopenedinanargon-filledglove
+Test Step Current Stop-criterion box using a ceramic scalpel. Positive and negative electrode sheets
+Charact.(atT=25◦C) Rest 0mA t>3h were extracted from the cell stack, rinsed with dimethyl carbonate
+CCcharge 740mA Vcell >4.2V and dried under vacuum for 20min. Square sections of 5 × 5mm
+CVcharge variable I<40mA werecutfromboththePEandNEusingascalpel.
+Rest 0mA t>3h BothSEMimagesandEDXspectrawererecordedonaMerlin-
+C/25discharge 29.6mA Vcell <2.7V 60-62instrument.TheSEMimageswererecordedusingasecondary
+Cycling(atT=−10◦C) Rest 0mA t>3h electron detector at a working distance of 8.9–9.2 mm and an ac-
+CCcharge 1480mA Vcell >4.2V celeratingvoltageof2kV.EDXspectrawererecordedataworking
+CVcharge variable t>20min distanceof8.2-8.8mmandanacceleratingvoltageof10kV.
+CCdischarge 1480mA Vcell <2.7V
+Methodology
+electrodesdidnotaffecttheperformanceanddegradationofthecells, ThediagnosticalgorithmintroducedinRef.26isusedinthiswork
+unmodifiedcellsweretestedalongsidethe3-electrodecells. toidentifyandquantifythedegradationmodesinKokampouchcells
+exposedtoextremecyclingconditions.TheOCVmodel,presentedin,
+Electrical cell tests.—A total of nine Kokam 740 mAh pouch Ref.27,wasparameterizedatthebeginningofthecelltestsbyfitting
+pseudo-OCV measurements of the half-cells and the full-cells. As
+cellswereusedfortheexperiments.Thisincludesonepristinecell,
+the cells degrade, more pseudo-OCV measurements were recorded
+whichdidnotundergoanyelectricaltestsbutwasusedforcompara-
+at set intervals. These pseudo-OCV measurements were fitted us-
+tivepost-mortemanalysiswithSEMandEDX.Referenceelectrodes
+ingthediagnosticalgorithm,whichcomputesthedegradationmodes
+wereintroducedintofourofthecellswhiletheremainingfourwere
+LLI, LAM and LAM . The degradation modes were calculated
+unmodified. In this paper, the cells containing reference electrodes PE NE
+from changes in the pseudo-OCV of the PE and NE, as computed
+arelabeledwithstandardnumeralsandtheunmodifiedcellsarela-
+by the diagnostic algorithm. The reference electrodes inserted into
+beled with Roman numerals. All cells were subjected to high-rate,
+the3-electrodecellsallowustovalidatetheaccuracyofthemodeled
+low-temperature cycling (constant current (CC) charging followed
+by constant voltage (CV) charging and CC discharging) at −10◦C electrodevoltageswhich,byextension,isameasureoftheaccuracyof
+theestimateddegradationmodes.Furthervalidationoftheestimated
+(whichisoutsidethemanufacturer’srecommendedtemperaturelim-
+its) and repeated low-rate characterization at 25◦C. The number of degradationmodeswasachievedthroughpostmortemanalysisofthe
+PEandNEmaterialsbymeansofSEMimagingandEDXanalysis.
+cyclesbetweencharacterizationsandtheCVchargingperiodduring
+low-temperaturecyclingwerevariedbetweenthedifferentcells.The
+OCVmodelparameterestimation.—Thissectionprovidesabrief
+cellandelectrodevoltagesrecordedduringthecharacterizationsteps
+overview of the OCV model and parameter estimation. For a more
+wereusedtoparameterizethediagnosticalgorithm.Duetothelow
+detailed account, the reader is referred to Ref. 27. The OCV of the
+C-rateusedduringthecharacterizationsteps,themeasurementsare
+electrodescanbedescribedimplicitlyby
+referredtoaspseudo-OCV.TableIgivesanoverviewofthetestsub-
+jectsandthecorrespondingtestconditions.AsspecifiedinTableI, (cid:2)N (cid:2)x
+SEMandEDXwerecarriedoutonaselectionofthecells.Thecelltest x(EOC)= i [1]
+proceduresaredescribedinTableIIforcell1andIandinTableIIIfor i=1
+1+exp[(EOC−E
+i
+0)a
+i
+e/kT]
+where x is the fraction of intercalated lithium, ranging from 0 for
+fully de-intercalated to 1 for fully intercalated electrode materiald,
+TableIII. Testprocedurecells2,3,4,II,III,IV. EOCistheOCVoftheelectrode,(cid:2)x i isthefractionoflithiuminter-
+calatedinphasei oftheelectrodematerial, E0isthestandardredox
+i
+Test Step Current Stop-criterion potentialofphasei ofthematerial,a i isadimensionlessfactorfor
+the approximation of effects of interaction energies of intercalated
+Charact.(atT=25◦C) Rest 0mA t>3h ionsontheelectrodepotential,27 eistheelementarycharge,k isthe
+CCdischarge 370mA Vcell <2.7V
+BoltzmannconstantandT isthetemperature.Theparticularelectrode
+C/25charge 29.6mA Vcell >4.2V
+materialusedinthisworkwasfoundtoexhibitfiveobservablephase
+C/25discharge 29.6mA Vcell <2.7V
+Cycling(atT=−10◦C) Rest 0mA t>3h
+CCcharge 1480mA Vcell >4.2V dInthisworkweconsidertheelectrodematerialtobefullyde-intercalated(x=0)and
+CVcharge variable t>25min fullyintercalated(x=1)atthespecifiedmaximumandminimumpotentiallimitsofthe
+CCdischarge 1480mA Vcell <2.7V materials.
+--- PAGE 3 ---
+A2646 JournalofTheElectrochemicalSociety,164(12)A2644-A2653(2017)
+transitions,26whichcorrespondstothenumberofphasesusedtode- necessarybutitwasconductedinthisworkinordertominimizeinac-
+fine N inEquation1.Equation1canthusbewrittenforthePEand curaciesintheinitialfitofthepseudo-OCVdata,whichcouldaffect
+theNEas theestimationofdegradationmodesatlaterstagesinthecells’slife.
+Theobjectivefunctionusedtorefinetheestimatesofparametersin
+x PE (E P O E C)= (cid:2) i= 5 1 1+exp[(E P O E C (cid:2) − x E PE 0 , , i PE,i )a PE,i e/kT] [2] θ PE a a n rg d m θ N in E R is MSE(θ ,θ )= (cid:11) (cid:10) i n(Eˆ P O E C ,cell,i(θ PE)−E P O E C ,cell,i)2
+and θ PE ,θ NE PE NE (cid:11) (cid:10) n [10]
+x (EOC)=
+(cid:2)5 (cid:2)x
+NE,i . [3]
++ i n(Eˆ N O E C ,cell,i(θ
+n
+NE)−E N O E C ,cell,i)2.
+NE NE i=1 1+exp[(E N O E C−E 0,NE,i )a NE,i e/kT] Theestimatedparametersinθ PE andθ NE areusedinEquations2,
+3 and 8 in order to compute the cell voltage. The parameterization
+Given the known ranges of the OCV of the electrode materials,
+oftheOCVmodelwasonlycarriedoutonceatthebeginningofthe
+x andx canbecalculatednumericallyusingEquations2and3.
+NE PE cells’life.
+Theparameters(cid:2)x,E0anda werecalculatedforeachelectrodeand
+i i i
+eachphaseibyfittingtherecordedpseudo-OCVmeasurementsofthe
+Estimationofdegradationmodes.—ThedegradationmodesLLI,
+half-cellsusingMatlab’sconstrainednonlinearoptimizationfunction
+LAM and LAM were estimated using a diagnostic algorithm
+fmincon.TheparameterscanbesummarizedforthePEbythematrix PE NE
+which is described in detail in Ref. 26. This section gives a brief
+overviewoftheapplicationofthisalgorithm.Thedegradationmodes
+⎡ ⎤
+E P 0 E,1 (cid:2)x PE,1 a PE,1 LLI,LAM PE andLAM NE canbederivedfromthecapacityrangesof
+θ PE = ⎢ ⎢ ⎢ ⎢ ⎣ E P 0 . . . E,2 (cid:2)x . . . PE,2 a P . . . E,2 ⎥ ⎥ ⎥ ⎥ ⎦ , [4] th L e L P I E i = an 1 d − th x e ce N ll, E i − us x e N d E, w Eo i D th , x 0 in N − E t , h 0 x e NE f , u E l o l D -c ,i e + llb x y PE,EoC x , P 0 E − ,cel x l,0 PE,EoC,i [11]
+andfortheNEbythem
+⎡
+atr E ix P 0 E,5 (cid:2)x PE,5 a PE,5
+⎤
+LAM PE,i = x PE,EoD
+x
+,
+P
+i
+E
+−
+,cel
+x
+l,
+P
+0
+E,EoC,0 [12]
+θ NE = ⎢ ⎢ ⎢ ⎢ ⎣ E E N N 0 0 . . E E , , 1 2 (cid:2) (cid:2) x x . . N N E E , , 1 2 a a N N . . E E , , 1 2 ⎥ ⎥ ⎥ ⎥ ⎦ . [5] LAM NE,i = x NE,EoC x , N 0 E − ,cel x l, N 0 E,EoC,i, [13]
+. . . where
+E N 0 E,5 (cid:2)x NE,5 a NE,5 x cell ={x cell,EoC ...x cell,EoD } [14]
+Theparametersinθ andθ wereestimatedbyminimizingthe
+PE NE
+root-mean-squarederror(RMSE)betweenthemeasuredandthecom-
+putedpseudo-OCVsofthePEandNEhalf-cellsusingtheobjective x PE,cell ={x PE,EoC ...x PE,EoD } [15]
+functions
+(cid:9)
+(cid:10) n (EˆOC(θ )−EOC)2 x NE,cell ={x NE,EoC ...x NE,EoD }. [16]
+argminRMSE(θ )= i=1 PE,i PE PE,i [6]
+θ PE n ThesubscriptEoCindicatesendofchargeandthesubscriptEoD
+PE end of discharge. Values corresponding to the first characterization
+(cid:9)
+(cid:10) cycle are marked with the subscript 0 and values corresponding to
+n (EˆOC (θ )−EOC )2 characterizationcycleiaremarkedwiththesubscripti.Thedegrada-
+argminRMSE(θ )= i=1 NE,i NE NE,i , [7]
+θ NE n tionmodes,summarizedby
+NE
+θ =[LLI,LAM ,LAM ], [17]
+where EˆOC and EˆOC aretheestimatedpseudo-OCVofthePEand deg PE NE
+PE,i NE,i
+theNE,respectivelyandnisthenumberofdatapointsofthepseudo- wereestimatedbyminimizingtheobjectivefunction
+(cid:9)
+OCVmeasurements. (cid:10)
+Afull-celldoesnotutilizetheentireavailablecapacityrangesof argminRMSE(θ )= i n =1 (Eˆ c O e C ll,i (θ deg )−E c O e C ll,i )2 . [18]
+the electrodes, which means that the PE and the NE are not fully θ deg n
+lithiated and de-lithiated during the charge and discharge within a deg
+full-cell. The capacity ranges of the electrodes within the full-cell The estimation of the parameters in θ deg was repeated at every
+wereestimatedbyfittingthecell’spseudo-OCV.Thecellvoltageis characterizationcyclei throughoutthecells’lifetime.
+calculatedfromtheelectrodevoltagesby
+Post-mortemanalysis.—SEMandEDXanalyseswerecarriedout
+E c O e C ll = E P O E C(x PE,cell )−E N O E C(x NE,cell ), [8] onNEandPEsamplesofapristinecell(cell0),anunmodifiedcell
+where x PE,cell and x NE,cell are the capacity ranges utilized within the after80cycles(cellII)andamodified,3-electrodecellafter80cycles
+full-cell.Thesecapacityrangesareestimatedbyminimizingtheob- (cell4).EDXanalyseswerealsoconductedafter120cyclesonNE
+jectivefunction andPEsamplesoftheunmodifiedcellI,andthemodified,3-electrode
+(cid:9) cell1.
+(cid:10)
+xP
+a
+E,
+r
+c
+g
+ell ,
+m
+xN
+i
+E
+n
+,cell
+RMSE(x PE,cell ,x NE,cell)= i n =1 (Eˆ c O e C ll,i (x PE,cel
+n
+l ,x NE,cell)−E c O e C ll,i )2 i
+o
+n
+f
+f
+c
+o S
+o
+r E m
+at
+M a
+in
+ti
+g
+a o n
+s
+n a
+o
+a l
+r
+y b s
+l
+o
+a
+i u s
+rg
+t o
+e
+t f h t
+c
+e h
+r
+i e
+a
+r
+c
+m e
+k
+le o
+s
+c r
+i
+p t
+n
+r h o
+t
+o d
+h
+l e
+e
+o a g
+a
+r
+c
+y e
+t
+, a
+i
+w
+v
+s
+e
+h a i f
+m
+c te h
+a
+r
+t
+c
+e
+c a
+r
+e n
+i
+l
+a
+l i
+l
+d n
+s
+i d
+o
+s i a
+f
+c s a
+N
+s t e e
+E
+m t
+a
+h b
+n
+e l
+d
+y fo p
+P
+r r
+E
+m o
+.
+v a i t d io e n s
+[9] EDXrevealstheelementalcompositionoftheelectrodesnearthe
+electrodesurface.Changesincompositionbetweenthesamplesofthe
+wherenisthenumberofdatapointsrecordedforEOC. pristine cell and the cycled cells provide insights into the chemical
+cell
+In the final step of the parameter estimation procedure, the pa- changesneartheelectrodes’surface,whichcouldbeduetosurface
+rametersinθ andθ arerefinedbyfittingthepseudo-OCVofthe film formation, metallic depositions or decomposition reactions af-
+PE NE
+electrodesmeasuredonthe3-electrodecells.Thisstepisnotstrictly fectingactivematerialsand/ortheelectrolyte.
+--- PAGE 4 ---
+JournalofTheElectrochemicalSociety,164(12)A2644-A2653(2017) A2647
+4.6
+4.4
+4.2
+4
+3.8
+3.6
+3.4
+0 0.2 0.4 0.6 0.8 1
+x
+Li
+]V[
+egatlov
+EP
+a) Cathode
+0.8
+PE
+data
+PE
+fit 0.6
+0.4
+RMSE = 4 mV 0.2
+0
+0 0.2 0.4 0.6 0.8 1
+x
+Li
+]V[
+egatlov
+EN
+b) Anode
+NE
+data
+NE
+fit
+Figure1. Pseudo-OCVfittingresultsofa)PEhalf-cell
+andb)NEhalf-cell.
+RMSE = 3 mV
+Post-mortem experiments were conducted in order to validate, currentrateof2CcausedtheNEvoltagetodropbelow0Vshortly
+qualitatively, the degradation modes estimated using the diagnostic afterthestartofthechargingstep,untilthestartofthedischarging
+algorithm.Moreover,theanalysesshouldrevealwhetherthecellmod- step.Atnegativepotentials,metalliclithiumcanbeplatedontheNE
+ificationhadaneffectoncelldegradationbycomparingtheresultsof surface,creatingasafetyhazardifdendritesareformedwhichcould
+modifiedandunmodifiedcells. piercetheseparatorandleadtointernalshort-circuits.
+Nointernalshort-circuitswereobservedduringthecelltestsbutall
+cellsexposedtolow-temperaturecyclingfadedrapidly,asillustrated
+ResultsandDiscussion in Figure 4, which shows pseudo-OCV measurements recorded on
+OCV model parameter estimation results.—The results of the cells3,4,II,IIIandIVduringthefirstcharacterizationcycle(Figure
+initialpseudo-OCVfitsofthePEandNEhalf-cellsaredisplayedin 4a)andafter80cycles(Figure4b).Thecellslostaroundonethirdof
+Figure1.HighqualityfitswereachievedwithaRMSEof4mVfor theirinitialcapacityafter80cycles.Thespreadinmeasuredcapacities
+thePEand3mVfortheNE.EstimatedOCVmodelparametersofthe amongthecellsincreasedfromastandarddeviationof3.2mAhor
+PEandNEarelistedinTableIV.Theparameters(cid:2)x arefractions 0.4% of the mean at cycle 1 to 34.7 mAh or 6.9% of the mean at
+i
+ofthetotalnormalizedelectrodecapacityutilizedwithinthecelland cycle80.Notably,therewasnosignificantdifferenceincapacityfade
+parametersa aredimensionless. betweenthemodified(3-electrode)cellsandtheunmodifiedcellsat
+i
+The initial estimates of the OCV parameters for the PE and NE cycle 80, which is a good indication that the modification did not
+wereusedasinitialguessestofitthepseudo-OCVoftheelectrodes affectthecells’cyclelife.
+measuredonthe3-electrodecells.Thefittingresultsobtainedforcells
+1,2and3aredisplayedinFigure2.PEandcellvoltagesareplotted Estimation of degradation modes.—Based on the OCV model,
+onthelefty-axesandNEvoltagesontherighty-axis,againstdepth whoseparameterswereidentifiedinOCVmodelparameterestimation
+ofdischarge.TheRMSEofthefitsofelectrodeandcellOCVsare results section, the diagnostic algorithm was used to estimate the
+indicatedinthefigure.RMSEvaluesdonotexceed1.7mVforthe degradationmodesbyfittingthecells’pseudo-OCVmeasurementsof
+electrodefitsand2.4mVforthecellfitsofallcells. allrecordedcharacterizationcycles.Onlythepseudo-OCVofthefull-
+cellswasusedinthediagnosticalgorithmtoestimatethedegradation
+modes.Thefittingresultsobtainedforcells1,2and3aredisplayedin
+Electricalcelltestresults.—Electricalcelltestsconsistedoflow-
+Figure5.TheleftcolumnofFigure5showsthevoltagedataandfitting
+temperaturecyclingandfrequentlow-rate(pseudo-OCV)character-
+results of the cells, PEs and NEs for all recorded characterization
+izations.Figure3showstheelectrodeandcellvoltagesrecordedon
+cycles. Pseudo-OCV measurements of full-cells, PEs and NEs are
+three3-electrodecells(cell1,2and3)duringalow-temperaturecycle.
+illustratedwithbrokenlinesandfittedvoltageswithsolidlines.Cell
+PEandcellvoltagesareplottedonthelefty-axisandNEvoltageson
+and PE voltages are plotted against DoD on the left axes and NE
+therighty-axis,againsttime.
+voltages on the right axes. The right column of Figure 5 shows the
+Cell1wasexposedtoashorterCVchargingperiodthancells2
+correspondingfittingerrorsofthecells,PEsandNEs,plottedagainst
+and 3. From the voltage data in Figure 3 it is evident that the low
+DoD.
+temperature significantly affects the cells’ overpotentials, which is
+Highfittingaccuracieswereachievedforboththecellandelec-
+reflectedbyarapidincreaseinPEandcellvoltagesduringchargeand
+trodevoltageswithfittingerrorsnotexceeding20mVforaDoDof
+apronouncedvoltagedropofPEandcellvoltagesatthebeginningof
+lessthan90%foranycharacterizationcycle.MaximalRMSEvalues
+discharge.Moreover,thelowtemperatureandrelativelyhighcharging
+forallfitsofthecell,PEandNEvoltagesofcells1,2and3arelistedin
+TableVanddonotexceed16mVatanycharacterizationcycle.Low
+residualsandRMSEvaluesfortheelectrodevoltagefitsareindicators
+TableIV. OCVmodelparameters. thatthePEandNEvoltagesofallthreecellswereaccuratelymodeled
+bythediagnosticalgorithmthroughoutthetests.Thereisageneral
+PE NE trend of slightincreases in residuals with increasing cycle numbers
+forallcells,whichindicatesthatsomeminoreffectsofdegradationon
+Phase E P 0 E,i (cid:2)xPE,i aPE,i E N 0 E,i (cid:2)xNE,i aNE,i thecells’OCVsmaynotbecapturedbythethreedegradationmodes
+P1 4.418V 0.064 0.803 0.374V 0.063 0.187 LLI,LAM PE andLAM NE .
+P2 4.175V 0.266 0.298 0.225V 0.030 8.274 ThedegradationmodesLLI,LAM PE andLAM NE estimatedwith
+P3 3.967V 0.196 0.597 0.164V 0.327 0.933 thediagnosticalgorithmaredisplayedinFigure6.Degradationmodes
+P4 3.907V 0.151 4.674 0.135V 0.241 11.838 areplottedagainstcyclenumberforcell1(a),cell2(b)andcell3(c).
+P5 3.699V 0.323 0.295 0.096V 0.338 8.505 Measuredcapacitylossisalsodisplayed.Theaccuraciesofestimated
+--- PAGE 5 ---
+A2648 JournalofTheElectrochemicalSociety,164(12)A2644-A2653(2017)
+4.5
+4.1
+3.7
+3.3
+2.9
+2.5
+-20 0 20 40 60 80 100 120
+DoD [%]
+]V[
+egatlov
+lleC/EP
+1
+0.8
+0.6
+0.4
+0.2
+0
+]V[
+egatlov
+EN
+a) Cell 1
+RMSE = 1.6 mV
+PE Cell
+data
+Cell
+fit RMSE = 2.4 mV
+PE cell
+data
+PE
+fit
+NE
+data
+NE
+fit
+RMSE = 1.7 mV
+NE
+4.5
+4.1
+3.7
+3.3
+2.9
+2.5
+-20 0 20 40 60 80 100 120
+DoD [%]
+]V[
+egatlov
+lleC/EP
+1
+0.8
+0.6
+0.4
+0.2
+0
+]V[
+egatlov
+EN
+b) Cell 2
+RMSE = 1.7 mV
+PE Cell
+data
+Cell
+fit RMSE = 2 mV
+PE cell
+data
+PE
+fit
+NE
+data
+NE
+fit
+RMSE = 1 mV
+NE
+4.5
+4.1
+3.7
+3.3
+2.9
+2.5
+-20 0 20 40 60 80 100 120
+DoD [%]
+]V[
+egatlov
+lleC/EP
+1
+0.8
+0.6
+0.4
+0.2
+0
+]V[
+egatlov
+EN
+Figure2. Pseudo-OCVmeasurementsandfit
+resultsof3-electrodecellsa)cell1,b)cell2
+andc)cell3.
+c) Cell 3
+RMSE = 1.4 mV
+PE Cell
+data
+Cell
+fit RMSE = 1.7 mV
+PE cell
+data
+PE
+fit
+NE
+data
+NE
+fit
+RMSE = 1 mV
+NE
+4.4
+4.2
+4
+3.8
+3.6
+3.4
+3.2
+3
+2.8
+2.6
+2.4
+0 5 10 15 20 25 30 35 40 45 50
+Time [min]
+]V[
+egatlov
+lleC/EP
+1.8
+1.6
+1.4
+1.2
+1
+0.8
+0.6
+0.4
+0.2
+0
+-0.2
+]V[
+egatlov
+EN
+Cell 1
+Cell
+Cell 2
+Cell
+Cell 3 Cell
+Cell 1
+PE
+Cell 2 PE Figure3. Voltageof3-electrodecellsduring2C
+Cell 3 cycleat−10◦C.
+PE Cell 1
+NE
+Cell 2
+NE
+Cell 3
+NE
+--- PAGE 6 ---
+JournalofTheElectrochemicalSociety,164(12)A2644-A2653(2017) A2649
+4.4
+4.2
+4
+3.8
+3.6
+3.4
+3.2
+3
+2.8
+0 100 200 300 400 500 600 700 800
+Capacity [mAh]
+]V[
+egatloV
+4.4
+a) Cycle 1
+4.2
+4
+3.8
+3.6
+Cell 3 3.4
+Cell 4
+Cell II 3.2
+Cell III
+Cell IV 3
+2.8
+0 100 200 300 400 500 600 700 800
+Capacity [mAh]
+]V[
+egatloV
+b) Cycle 80
+Figure4. Pseudo-OCVmeasurementsof3-electrodecellsandunmodifiedcellsa)atcycle1andb)atcycle80.
+4.6
+4.4
+4.2
+4
+3.8
+3.6
+3.4
+3.2
+0 20 40 60 80 100
+DoD [%]
+]V[
+egatlov
+lleC/EP
+0.7
+0.6
+0.5
+0.4
+0.3
+0.2
+0.1
+0
+]V[
+egatlov
+EN
+100
+a) Cell 1
+0
+-100 Cycle 1-120
+0 20 40 60 80 100
+]Vm[
+rorrE
+Cell
+100
+0
+-100
+0 20 40 60 80 100
+]Vm[
+rorrE
+PE
+100
+0
+-100
+0 20 40 60 80 100
+DoD [%]
+]Vm[
+rorrE
+NE
+4.6
+4.4
+4.2
+4
+3.8
+3.6
+3.4
+3.2
+0 20 40 60 80 100
+DoD [%]
+]V[
+egatlov
+lleC/EP
+0.7
+0.6
+0.5
+0.4
+0.3
+0.2
+0.1
+0
+]V[
+egatlov
+EN
+100
+b) Cell 2
+0
+-100 Cycle 1-70
+0 20 40 60 80 100
+]Vm[
+rorrE
+Cell
+100
+0
+-100
+0 20 40 60 80 100
+]Vm[
+rorrE
+PE
+100
+0
+-100
+0 20 40 60 80 100
+DoD [%]
+]Vm[
+rorrE
+NE
+4.6
+4.4
+4.2
+4
+3.8
+3.6
+3.4
+3.2
+0 20 40 60 80 100
+DoD [%]
+]V[
+egatlov
+lleC/EP
+0.7
+0.6
+0.5
+0.4
+0.3
+0.2
+0.1
+0
+]V[
+egatlov
+EN
+100
+c) Cell 3
+0
+-100 Cycle 1-80
+0 20 40 60 80 100
+]Vm[
+rorrE
+Cell
+100
+0
+-100
+0 20 40 60 80 100
+]Vm[
+rorrE
+PE
+100
+0
+-100
+0 20 40 60 80 100
+DoD [%]
+]Vm[
+rorrE
+NE
+Cell Cell PE PE NE NE
+data fit data fit data fit
+Figure5. Pseudo-OCVfittingresultsa)cell1,b)cell2andc)cell3.
+--- PAGE 7 ---
+A2650 JournalofTheElectrochemicalSociety,164(12)A2644-A2653(2017)
+TableV. MaximalRMSEvaluesofallcharacterizationcycles.
+Cell PE NE
+[mV] [mV] [mV]
+Cell1 5 5 7
+Cell2 7 13 14
+Cell3 10 13 16
+LAM andLAM dependonthequalitiesofpseudo-OCVfitsof
+PE NE
+the PE and NE, respectively. LLI depends on the fitting quality of
+bothPEandNE.ErrorbarsfortheestimatedLAM andLAM are PE NE
+derivedfromtheRMSEontheestimated,normalizedcapacityofthe
+PEandNE,respectively.ErrorbarsfortheestimatedLLIarebased
+onthesumoftheRMSEontheestimated,normalizedcapacityofPE
+andNE.TheRMSEonestimatedcapacityiscalculatedby
+(cid:9)
+(cid:10)
+n (x(EOC)−xˆ (EˆOC))2
+RMSE = i=1 i i i i ·100% [19]
+x n
+foreachthePEandtheNEcapacity,wherex(EOC)isthemeasured,
+i i normalizedcapacity,xˆ (EˆOC)isthefitted,normalizedcapacityandn i i
+isthenumberofmeasurements.
+20
+15
+10
+5
+0
+0 20 40 60 80 100 120
+Cycle number
+]%[
+noitadargeD
+a) Cell 1
+LLI
+LAM
+PE
+LAM NE
+Cap. loss
+30
+20
+10
+0
+0 10 20 30 40 50 60 70
+Cycle number
+]%[
+noitadargeD
+b) Cell 2
+LLI
+LAM PE
+LAM NE
+Cap. loss
+40
+30
+20
+10
+0
+0 10 20 30 40 50 60 70 80
+Cycle number
+]%[
+noitadargeD
+HighfittingaccuracieswereachievedforPEvoltagesofallcells
+with uncertainties on LAM (expressed by error bars) not exceed-
+PE
+ing ±2%. Uncertainties on LAM are higher at up to ±4% and,
+NE
+consequently,uncertaintiesonLLIareupto±6%.Uncertaintiesof
+estimateddegradationmodesaregenerallyhighestforcell2.
+Theevolutionofdegradationmodesoverthecells’lifeshowsthat
+cyclingat−10◦CprimarilyaffectstheNE,asreflectedbyarapidrise
+inLAM .TheextendedCVchargingperiodsat−10◦C,experienced
+NE
+bycells2and3,causedgreaterratesofdegradationthanexhibitedby
+cell1.Bycycle80,cell1hadlostroughly5%ofcapacityand3-4%
+ofactiveNEmaterial.Bycomparison,cell3hadlost30%ofcapacity
+bycycle80andthesameamountofactiveNEmaterial.Bytheendof
+tests(cycle120),cell1sustained∼5%LAM and∼10%ofLAM .
+PE NE
+Cells2and3hadlostcloseto10%ofactivePEmaterial,aswellas
+∼15%and∼30%ofLAM ,respectively,bytheendoftests(cycle
+NE
+70).Cells2and3showedverysimilarmodesofdegradationupuntil
+cycle60.TheonsetofLAM didnotoccurbeforecycle40forboth
+PE
+cells.Thehigherfrequencyofcharacterizationcyclesrecordedoncell
+2didnotcausemajordifferencesindegradationcomparedtocell3
+formostofthecells’cyclelife.
+Thisanalysisshowsthatthepresenteddiagnosticalgorithmcanbe
+usedtoaccuratelydetectLAM ,LAM andLLI,asconfirmedby NE PE theOCVmeasurementsrecordedonthe3-electrodecells.Cyclingthe
+cellsat−10◦Cand2CwasexpectedtoprimarilyaffecttheNEdue
+to the deposition and subsequent partial stripping of lithium on the
+graphite particles, which is likely to occur under these conditions.7
+NegativeNEpotentialsandmetalliclithiumdepositsongraphitepar-
+ticles may have caused the formation of surface films, which block
+activeNEsites,resultinginaaneffectivelossofactiveNEmaterial.
+HighratesofLAM inturnincreasethelikelihoodoffurtherlithium NE
+plating,whichcouldbedetectedusingthepresentedmethod.
+SEMandEDXresults.—Post-mortemanalysesbymeansofSEM
+and EDX were conducted in order to provide further experimental
+validationofthedegradationmodesestimatedinEstimationofdegra-
+dation modes section. SEM images were recorded on NE and PE
+samplesofthepristinecell0,whichhadnotbeencycled(Figures7a
+and7b),ofcell4after80cycles (Figures7cand7d)andofcellII
+after80cycles(Figures7eand7f).ComparingtheimagesinFigure
+7allows fora qualitative comparisonof themorphology ofthe NE
+surface (left column) and the PE surface (right column). The most
+significantdifferencescanbeobservedbetweentheNEsurfaceofthe
+pristine cell and the cycled cells. While the graphite surface of the
+pristinecellinFigure7aappearslargelysmooth,thesurfacesofthe
+cycledcellsinFigures7cand7earecoveredinmossydeposits.EDX
+analyseswereconductedinordertorevealthecompositionofthese
+deposits.ThereisnodiscernibledifferencebetweentheNEsurfaces
+ofthe3-electrodecell4andtheunmodifiedcellII.
+IncontrasttotheNE,nosignificantdifferencescanbeobserved
+betweenthePEsurfacesofthepristineandthecycledcells(Figures7b,
+7dand7f).Thesefindingsareinlinewiththeestimateddegradation
+modes; the NEs were expected to be more heavily affected by the
+low-temperaturecyclingproceduresthanthePEs.
+EDXspectrawererecordedonNEandPEsamplesofthepristine
+c) Cell 3
+cell0,the3-electrodecell1andtheunmodifiedcellIafter120cycles,
+LLI and on samples of the 3-electrode cell 4 and the unmodified cell II
+LAM after80cycles.Figure8showsthecolor-coded,layeredimagesofNE
+PE samples(leftcolumn)andPEsamples(rightcolumn)ofthepristine
+LAM NE cell0(Figures8aand8b),the3-electrodecell4(Figures8cand8d)
+Cap. loss
+andtheunmodifiedcellII(Figures8eand8f).
+TheEDXcolormapofthepristineNEsampleofcell0inFigure
+8a shows a surface mainly consisting of pure carbon, illustrated in
+red.Itshouldbepointedoutthatthepristinecellwaspurchasedas
+acommercialproduct,whichwouldhaveundergonethetypicalSEI
+formationprocedure,consistingofanumberofformationcycles.The
+SEIismostlikelytoothintobedetectedbyEDX.TheNEsurfacesof
+cell4andcellIIinFigures8cand8eappeartobepartiallycoatedwith
+Figure6. Capacitylossandestimateddegradationmodesofa)cell1,b)cell oxygen-richdeposits,illustratedincyan.ThesurfacefilmontheNEs
+2andc)cell3. appearstobediscontinuous–someuncoatedgraphiteisstillvisible,
+--- PAGE 8 ---
+JournalofTheElectrochemicalSociety,164(12)A2644-A2653(2017) A2651
+Figure7. SEMimagesofNE(leftcolumn)andPE(rightcolumn)ofpristinecell0(a,b),cell4after80cycles(c,d)andcellIIafter80cycles(e,f).Surface
+filmsonthecycledNEsappearasmossydepositsinc)ande).
+illustratedinredinFigures8cand8e,whereasthesurfacefilmhas theformationofsurfacefilms.Anotherpossibleoriginofthesurface
+ayellow/orangecolor.Thethicknessofthesurfacefilmcouldnotbe filmscouldbefrommetalliclithiumirreversiblydepositedontheNEs
+measuredwiththeappliedmethods.Measuringthethicknesswould duringlow-temperaturecharging.ThetransferoftheNEsamplesinair
+requireastudyofthecrosssectionoftheNEelectrodes. mayhavesubsequentlyoxidizedthemetalliclithium,contributingto
+TheweightpercentagesoftheelementsdetectedontheNEsamples thesurfacefilmsobservedontheNEs.Thesurfacedepositsobserved
+ofthepristineandcycledcellsarelistedinTableVI.Thequantitative ontheNEofthecycledcellsareunlikelytobetypicalSEI,sincea
+resultsforthepristineNErevealthatnooxygenwasdetected.Incase SEIwasalreadypresentonthepristinecellandcouldnotbedetected
+of the cycled cells, however, significant amounts of oxygen, on the byEDX.Similarweightpercentagesofcarbonandoxygenfoundon
+orderof25wt%,werefoundonallcycledNE.Moreover,thefraction theNEsofthe3-electrodecellsandoftheunmodifiedcellssuggest
+offluorinedecreasedfromroughly11%detectedonthepristineNE, thattheNEofbothcellsexperiencedthesamemodeofdegradation.
+to 5–7% on the cycled NEs. Fluorine forms part of the electrolyte TheEDXcolormapsofthePEssampleofcell0(pristine),cell4
+inmostcommercialcells.Itiswelldocumentedintheliteraturethat andcellIIareshowninFigures8b,8dand8f,respectively.Unlikein
+electrolytesolventsandadditivesarereducedatthegraphitesurfaceto thecaseoftheNEs,therearenoobviousdifferencesintheEDXcolor
+formcarbonates.29,30InthisstudytheNEpotentialofthetestsubjects mapsbetweenthePEsampleofthepristinecellandthesamplesof
+wasfrequentlypushedbelowzero,whichlikelyledtodepositionof thecycledcells.
+metalliclithiumonthegraphitesurface.Nomicroscopicalevidence Thequantitative results,listedinterms ofwt%inTableVII,do
+ofmetalliclithiumonthegraphitesurfacecouldbeobservedbecause not show any significant differences in PE composition either. The
+lithiumistoolighttobedetectedwithstandardSEMorEDXmethods. resultsobtainedfromthediagnosticalgorithmindicatesmallamounts
+NegativeNEpotentialsmayalsohaveacceleratedtherateofsolvent of LAM . These losses of active material could be due to particle
+PE
+and/oradditivereductionattheNE,whichmayhavecontributedto cracking resulting from thermal cycling. However, no cracks in the
+--- PAGE 9 ---
+A2652 JournalofTheElectrochemicalSociety,164(12)A2644-A2653(2017)
+Figure8. LayeredEDXimagesofNE(leftcolumn)andPE(rightcolumn);a),b)cell0(pristine),c),d)cell4ande),f)cellII.SurfacefilmsonthecycledNEs
+appearinorange/yellowinc)ande).
+electrodematerialwereobservedbywayofthepresentedSEManal- ofsurfacefilms,toothintodetectwithEDX,couldalsoaccountfor
+ysis,whichindicatesthatsuchcrackswouldeitherbetoosmalltobe LAM . Surface films on LCO and NCO materials can reportedly
+PE
+observedintherecordedmicrographsorthecracksmayhaveoccurred consistofcarbonatesaswellaspolymersandpolycarbonates31 and
+betweenparticles,whichwouldbedifficulttoidentifybyanoptical mayblockactivesitesonthePEmaterial.
+analysis of SEM micrographs. Another possible reason for LAM Overall,theSEMandEDXresultsrevealedaclearchangeinsur-
+PE
+couldbeelectricalcontactlossbetweenparticlesofactivematerial, facemorphologyandcompositionoftheNEsofthecycledcells.These
+active material and carbon particles or between active material and findingssupporttheresultsobtainedfromthediagnosticalgorithm,
+current collector. Contact loss between the active material and the whichidentifiedLAM astheprimarysourceofdegradationinthe
+NE
+currentcollectorwouldrequirethestudyofthecrosssectionofthe low-temperature tests. No physical reason for the loss of active PE
+electrodesheets,whichwasnotpossibleinthiswork.Theformation
+TableVII. Weight%ofcobalt,nickel,carbon,oxygenandfluorine
+TableVI. Weight%ofcarbon,oxygen,fluorineandsulfurinNEs. inPEs.
+CellID C O F S CellID Co Ni C O F
+Cell0 88.3% 0.0% 10.9% 0.5% Cell0 19.4% 11.4% 41.0% 20.4% 6.9%
+Cell1 67.5% 25.8% 5.2% 1.1% Cell1 23.1% 10.6% 38.3% 21.1% 6.2%
+CellI 68.2% 25.3% 4.9% 1.1% CellI 21.4% 15.3% 37.0% 21.0% 4.6%
+Cell4 65.0% 26.6% 6.7% 1.2% Cell4 23.5% 16.4% 33.1% 21.0% 5.3%
+CellII 66.8% 24.9% 7.0% 0.8% CellII 19.0% 13.5% 40.1% 20.4% 6.9%
+--- PAGE 10 ---
+JournalofTheElectrochemicalSociety,164(12)A2644-A2653(2017) A2653
+materialwasfoundusingSEMandEDX.Therewasnodiscernible 8. S.U.Kim,P.Albertus,D.Cook,C.W.Monroe,andJ.Christensen,Thermoelectro-
+difference in degradation between the 3-electrode cells and the un- chemicalsimulationsofperformanceandabusein50-Ahautomotivecells,Journal
+modified cells, suggesting that the modification does not affect the ofPowerSources268(2014)625.
+9. S.Tippmann,D.Walper,L.Balboa,B.Spier,andW.Bessler,Low-Temperature
+cells’performanceandcyclelife.
+ChargingofLithium-ionCellsPartI:ElectrochemicalModelingandExperimental
+InvestigationofDegradationBehavior,JournalofPowerSources,252,305(2014).
+10. J.Remmlinger,S.Tippmann,M.Buchholz,andK.Dietmayer,Low-temperature
+Conclusions chargingoflithium-ioncellsPartII:Modelreductionandapplication,Journalof
+PowerSources,254,268(2014).
+3-electrode cells and unmodified cells were exposed to extreme
+11. T.Waldmann,M.Wilka,M.Kasper,M.Fleischhammer,andM.Wohlfahrt-Mehrens,
+cycling conditions with charge and discharge rates of 2 C and an TemperaturedependentagingmechanismsinLithium-ionbatteries–APost-Mortem
+ambienttemperatureof−10◦C.TheharshconditionspushedtheNE stud,JournalofPowerSources,262,129(2014).
+potential below 0 V for every charging step. This favored lithium 12. M.Petzl,M.Kasper,andM.A.Danzer,Lithiumplatinginacommerciallithium-ion
+battery–Alow-temperatureagingstudy,JournalofPowerSources,275,799(2015).
+platingonthegraphiteNEsandrapidratesofNEdegradationwere
+13. K.Jalkanen,J.Karppinen,L.Skogstro¨m,T.Laurila,M.Nisula,andK.Vuorilehto,
+expected.ThediagnosticalgorithmintroducedinRef.26wasapplied CycleagingofcommercialNMC/graphitepouchcellsatdifferenttemperatures,
+to estimate the degradation modes in the tested cells by fitting the AppliedEnergy,154,160(2015).
+cells’measuredpseudo-OCVs. 14. A.Marongiu,N.Nlandi,Y.Rong,andD.U.Sauer,On-boardcapacityestimation
+oflithiumironphosphatebatteriesbymeansofhalf-cellcurves,JournalofPower
+Theuseofthe3-electrodecellsallowed,forthefirsttime,tovali-
+Sources,324,158(2016).
+datedegradationdiagnosticsoncommercialpouchcellsbycomparing 15. J.Jaguemont,L.Boulon,P.Venet,Y.Dube´,andA.Sari,Lithium-IonBatteryAging
+themodeledandmeasuredelectrodevoltages.Smalldifferencesbe- ExperimentsatSubzeroTemperaturesandModelDevelopmentforCapacityFade
+tweenthemodeledandmeasuredelectrodevoltagesindicatethatthe Estimation,IEEETransactionsonVehicularTechnology,65,4328(2016).
+16. D. Ansea´n, M. Dubarry, A. Devie, B.Y. Liaw, V.M. Garc´ıa, J.C. Viera, and
+diagnosticalgorithmaccuratelycapturestheeffectsofdegradationin
+M.Gonza´lez,Operandolithiumplatingquantificationandearlydetectionofacom-
+thetestedcells.LAM NE wasidentifiedasthepredominantdegradation mercialLiFePO4cellcycledunderdynamicdrivingschedule,JournalofPower
+mode,whichwasexpected,giventhattheNEwasfrequentlydriven Sources,356,36(2017).
+tonegativevoltages,increasingthelikelihoodofmetalliclithiumde- 17. L.E.Downie,L.J.Krause,J.C.Burns,L.D.Jensen,V.L.Chevrier,andJ.R.Dahn,
+InSituDetectionofLithiumPlatingonGraphiteElectrodesbyElectrochemical
+positionandincreasedsurfacefilmformation.SEMandEDXresults
+Calorimetry,JournalofTheElectrochemicalSociety,160(4),588(2013).
+supportthisfindingbyrevealingoxygen-richdepositsontheNEsof 18. S.Alavi,M.Samadi,andM.Saif,PlatingMechanismDetectioninLithium-ion
+thecycledcells. batteries,byusingaparticle-filteringbasedestimationtechnique,AmericanControl
+Thecomparisonofelectricaltestresultsandpost-mortemresults Conference,4356(2013).
+19. B.BitzerandA.Gruhle,Anewmethodfordetectinglithiumplatingbymeasuring
+of the 3-electrode cells and the unmodified cells demonstrate that
+thecellthickness,JournalofPowerSources,262,297(2014).
+the insertion of the reference electrode into the pouch cells did not 20. C.Birkenmaier,B.Bitzer,M.Harzheim,A.Hintennach,andT.Schleid,Lithium
+noticeablyalterthedegradationofthemodifiedcells. PlatingonGraphiteNegativeElectrodes:InnovativeQualitativeandQuantitative
+Thefindingspresentedinthisworkconfirmthatitispossibleto Investigation Methods, Journal of The Electrochemical Society, 162(14), A2646
+(2015).
+identifypotentialsafetyhazards,intheformofrapidandexcessive
+21. C.Uhlmann,J.Illig,M.Ender,R.Schuster,andE.Ivers-Tiffe´e,Insitudetectionof
+NEdegradation,usingtheproposeddiagnosticalgorithm. lithiummetalplatingongraphiteinexperimentalcells,JournalofPowerSources,
+279,428(2015).
+22. J.C.Burns,D.A.Stevens,andJ.R.Dahn,In-SituDetectionofLithiumPlating
+UsingHighPrecisionCoulometry,JournaloftheElectrochemicalSociety,162(6),
+Acknowledgments
+A959(2015).
+ThisworkwasfundedbytheEPSRCandJaguarLandRover. 23. S. Schindler, M. Bauer, M. Petzl, and M.A. Danzer, Voltage relaxation and
+impedancespectroscopyasin-operandomethodsforthedetectionoflithiumplating
+ongraphiticanodesincommerciallithium-ioncells,JournalofPowerSources,304,
+170(2016).
+References 24. S.S.Zhang,K.Xu,andT.R.Jow,StudyofthechargingprocessofaLiCoO2-based
+Li-ionbattery,JournalofPowerSources,160,1349(2006).
+1. I.Bloom,B.Cole,J.Sohn,S.Jones,E.Polzin,V.Battaglia,G.Henriksen,C.Motloch, 25. S.Tippmann,D.Walper,L.Balboa,B.Spier,andW.G.Bessler,Low-Temperature
+R.Richardson,T.Unkelhaeuser,D.Ingersoll,andH.Case,Anacceleratedcalen- ChargingofLithium-ionCellsPartI:ElectrochemicalModelingandExperimental
+dar and cycle life study of Li-ion cells, Journal of Power Sources, 101(2), 238 InvestigationofDegradationBehavior,JournalofPowerSources,252,305(2013).
+(2001). 26. C.R.Birkl,M.R.Roberts,E.Mcturk,P.G.Bruce,andD.A.Howey,Degradation
+2. S.S.ChoiandH.S.Lim,Factorsthataffectcycle-lifeandpossibledegradation DiagnosticsforLithiumIonCells,JournalofPowerSources,341,373(2017).
+mechanismsofaLi-ioncellbasedonLiCoO2,JournalofPowerSources,111,130 27. C.R.Birkl,E.McTurk,M.R.Roberts,P.G.Bruce,andD.A.Howey,AParametric
+(2002). OpenCircuitVoltageModelforLithiumIonBatteries,JournalofTheElectrochem-
+3. J.Vetter,P.Nova´k,M.Wagner,C.Veit,K.-C.Mo¨ller,J.Besenhard,M.Winter, icalSociety,162(12),A2271(2015).
+M. Wohlfahrt-Mehrens, C. Vogler, and A. Hammouche, Ageing mechanisms in 28. E.McTurk,C.R.Birkl,M.R.Roberts,D.A.Howey,andP.G.Bruce,Minimally
+lithium-ionbatteries,JournalofPowerSources,147(1-2),269(2005). InvasiveInsertionofReferenceElectrodesintoCommercialLithium-IonPouchCells,
+4. P.Arora,M.Doyle,andR.E.White,MathematicalModelingoftheLithiumDepo- ECSElectrochemistryLetters,4(12),A145(2015).
+sitionOverchargeReactioninLithium-IonBatteriesUsingCarbon-BasedNegative 29. D.Aurbach,B.Markovsky,I.Weissman,E.Levi,andY.Ein-Eli,Onthecorrelation
+Electrodes,JournalofTheElectrochemicalSociety,146(10),3533(1999). betweensurfacechemistryandperformanceofgraphitenegativeelectrodesforLi
+5. C.MonroeandJ.Newman,DendriteGrowthinLithium/PolymerSystems,Journal ionbatteries,ElectrochimicaActa,45(1-2),67(1999).
+ofTheElectrochemicalSociety,150(10),A1377(2003). 30. Y.Wang,S.Nakamura,M.Ue,andP.B.Balbuena,StudiesToUnderstandSurface
+6. S.Santhanagopalan,P.Ramadass,andJ.Z.Zhang,Analysisofinternalshort-circuit ChemistryonCarbonAnodesforLithium-IonBatteries:TheoreticalReductionMech-
+inalithiumioncell,JournalofPowerSources,194(1),550(2009). anismsofEthyleneCarbonate,JournaloftheAmericanChemicalSociety,123(47),
+7. M.PetzlandM.A.Danzer,Nondestructivedetection,characterization,andquan- 11708(2001).
+tificationoflithiumplatingincommerciallithium-ionbatteries,JournalofPower 31. K.Edstro¨m,T.Gustafsson,andJ.Thomas,Thecathodeelectrolyteinterfaceinthe
+Sources,254,80(2014). Li-ionbattery,ElectrochimicaActa,50(2-3),397(2004).

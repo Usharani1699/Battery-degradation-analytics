@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>04 EV Fleet Data</title>
+  
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #1E293B;
+    background: #F8FBFF;
+    padding: 0;
+  }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 40px 32px 60px; background: #fff; }
+  h1 { font-size: 2em; color: #1B4F72; border-bottom: 3px solid #0096B7; padding-bottom: 10px; margin: 32px 0 16px; }
+  h2 { font-size: 1.45em; color: #025E8C; margin: 28px 0 10px; padding-left: 10px; border-left: 4px solid #0096B7; }
+  h3 { font-size: 1.15em; color: #0096B7; margin: 20px 0 8px; }
+  p  { margin: 8px 0; }
+  ul, ol { margin: 8px 0 8px 28px; }
+  li { margin: 4px 0; }
+  code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    background: #EBF5FB;
+    color: #025E8C;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 0.92em;
+  }
+  pre {
+    background: #1E293B;
+    color: #A8D8EA;
+    padding: 16px 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 14px 0;
+    font-size: 0.9em;
+    line-height: 1.55;
+  }
+  pre code { background: none; color: inherit; padding: 0; }
+  hr { border: none; border-top: 1px solid #E2E8F0; margin: 24px 0; }
+  blockquote {
+    border-left: 4px solid #0096B7;
+    background: #EBF5FB;
+    padding: 10px 16px;
+    margin: 14px 0;
+    color: #025E8C;
+    border-radius: 0 6px 6px 0;
+    font-style: italic;
+  }
+  a { color: #0096B7; }
+  a:hover { color: #E85D5D; }
+  .table-wrap { overflow-x: auto; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.93em; }
+  th { background: #1B4F72; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { border: 1px solid #D1E8F5; padding: 7px 12px; }
+  tr:nth-child(even) td { background: #F0F7FF; }
+  strong { color: #1B4F72; }
+  .nav { background: #1B4F72; padding: 16px 32px; position: sticky; top: 0; z-index: 100; }
+  .nav a { color: #A8D8EA; text-decoration: none; margin-right: 20px; font-size: 13px; font-weight: 500; }
+  .nav a:hover { color: #fff; }
+</style>
+</head>
+<body>
+  <div class="nav"><a href="00_README.html">README</a><a href="01_Literature_Review.html">Literature Review</a><a href="02_Dataset_Analysis.html">Datasets</a><a href="03_NMC_Chemistry.html">NMC Chemistry</a><a href="04_EV_Fleet_Data.html">Fleet Data</a><a href="05_Research_Methodology.html">Methodology</a></div>
+  <div class="page-wrap">
+    <h1>EV Fleet Data — Delivery Truck Duty Cycles</h1>
+<h2>EG7030 Dissertation — Week 4 Detailed Notes</h2>
+<br>
+<hr>
+<br>
+<h2>Fleet DNA Dataset</h2>
+<br>
+<h3>Source</h3>
+<ul><li><strong>Full Name</strong>: Fleet DNA — Commercial Fleet Duty Cycle Data</li>
+<li><strong>Organisation</strong>: National Renewable Energy Laboratory (NREL), US Department of Energy</li>
+<li><strong>Website</strong>: https://www.nrel.gov/transportation/fleetdna.html</li>
+<li><strong>Dataset portal</strong>: https://www.nrel.gov/transportation/fleettest-clean-cities.html</li>
+<li><strong>Your local file</strong>: <code>C:\Users\pure ev\Music\Term 3\data_for_fleet_dna_delivery_trucks.csv</code></li></ul>
+<h3>What Fleet DNA Is</h3>
+<p>Fleet DNA is a publicly available database of real-world vehicle duty cycle data collected from commercial fleets across the United States. Data was collected using onboard GPS loggers and vehicle data recorders installed in actual fleet vehicles during regular operations.</p>
+<br>
+<h3>What's in the Delivery Trucks CSV</h3>
+<br>
+<p>The <code>data_for_fleet_dna_delivery_trucks.csv</code> file contains data from commercial delivery truck operations. Based on standard NREL Fleet DNA data structure, it typically includes:</p>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Column</th><th>Description</th><th>Unit</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th><code>vehicle_id</code></th><th>Unique vehicle identifier</th><th>—</th></tr>
+<tr><td><code>trip_id</code></td><td>Individual trip identifier</td><td>—</td></tr>
+<tr><td><code>date</code></td><td>Date of operation</td><td>YYYY-MM-DD</td></tr>
+<tr><td><code>time</code></td><td>Time of recording</td><td>HH:MM:SS</td></tr>
+<tr><td><code>speed</code></td><td>Vehicle speed</td><td>mph (or km/h)</td></tr>
+<tr><td><code>distance</code></td><td>Cumulative trip distance</td><td>miles</td></tr>
+<tr><td><code>idle_time</code></td><td>Time spent at 0 mph</td><td>seconds</td></tr>
+<tr><td><code>trip_duration</code></td><td>Total trip time</td><td>minutes</td></tr>
+<tr><td><code>max_speed</code></td><td>Maximum speed in trip</td><td>mph</td></tr>
+<tr><td><code>avg_speed</code></td><td>Average speed</td><td>mph</td></tr>
+<tr><td><code>positive_accel</code></td><td>Positive acceleration segments</td><td>—</td></tr>
+<tr><td><code>decel</code></td><td>Deceleration events</td><td>—</td></tr>
+<p></table></div></p>
+<br>
+<h3>Why This Data Matters for Your Dissertation</h3>
+<br>
+<p><strong>Connection to Battery Degradation:</strong></p>
+<br>
+<p>Delivery trucks follow routes with characteristic stop-go patterns:</p>
+<ul><li>Frequent stops at delivery addresses (urban pattern)</li>
+<li>Acceleration from standstill → high C-rate demand on battery</li>
+<li>Extended idle periods at loading docks</li>
+<li>Potentially multiple short trips per day (micro-cycling)</li></ul>
+<p>Paper D1 (Mulpuri et al. 2025) showed that <strong>urban stop-go patterns cause the fastest battery degradation</strong> — and delivery truck routes are the archetypal urban stop-go duty cycle.</p>
+<br>
+<hr>
+<br>
+<h2>Duty Cycle Metrics You Will Compute</h2>
+<br>
+<p>From the Fleet DNA data, you will calculate these metrics for each trip or vehicle:</p>
+<br>
+<h3>1. Kinetic Intensity (KI)</h3>
+<pre><code>KI = (1/d) × Σ(|a_i|) for all acceleration/deceleration events
+<p>where d = total distance, a_i = acceleration at time step i</p>
+<p></code></pre></p>
+<ul><li>Units: m/s² per km</li>
+<li><strong>High KI</strong> = aggressive driving, frequent stop-go = high battery stress</li>
+<li>Delivery trucks typically have KI of 0.3–0.8 m/s²/km vs. highway trucks at 0.1–0.2</li></ul>
+<h3>2. Relative Positive Acceleration (RPA)</h3>
+<pre><code>RPA = Σ(v_i × a_i) / d   for all time steps where a_i &gt; 0
+<p>where v_i = speed at step i, a_i = acceleration at step i, d = distance</p>
+<p></code></pre></p>
+<ul><li>Units: m/s² (dimensionless when normalised)</li>
+<li>Measures the energy demanded during acceleration relative to total distance</li>
+<li>Higher RPA = more aggressive acceleration cycles = higher C-rate demand on battery</li></ul>
+<h3>3. Positive Kinetic Energy (PKE)</h3>
+<pre><code>PKE = (1/d) × Σ(0.5 × (v_i² - v_{i-1}²)) for all time steps where v_i &gt; v_{i-1}
+<p></code></pre></p>
+<ul><li>Units: m²/s² per km (or J/kg/km)</li>
+<li>Measures kinetic energy gained per unit distance</li>
+<li>Directly proportional to electrical energy consumed for acceleration</li></ul>
+<h3>4. Fleet Severity Index (FSI) — Your Novel Contribution</h3>
+<pre><code>FSI = w₁ × KI_normalised + w₂ × RPA_normalised + w₃ × temperature_factor
+<p>+ w₄ × charging_rate_factor</p>
+<p></code></pre></p>
+<p>Where weights (w₁, w₂, w₃, w₄) are derived from the ML model's SHAP values to reflect actual degradation impact of each factor.</p>
+<br>
+<p>FSI = 0 → extremely gentle operation (highway, constant speed, moderate temperature)</p>
+<p>FSI = 1 → maximum severity (urban stop-go, high temperature, fast charging)</p>
+<br>
+<hr>
+<br>
+<h2>Connection Between Fleet DNA and Lab Datasets</h2>
+<br>
+<h3>Pattern Matching</h3>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Fleet DNA Pattern</th><th>CALCE Equivalent</th><th>Notes</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th>Delivery urban stop-go</th><th>DST (Dynamic Stress Test)</th><th>DST simulates urban duty cycling with variable current</th></tr>
+<tr><td>Mixed urban-highway</td><td>FUDS (Federal Urban Driving Schedule)</td><td>FUDS captures mixed driving patterns</td></tr>
+<tr><td>Highway delivery (less common)</td><td>US06 (Highway profile)</td><td>High sustained current</td></tr>
+<p></table></div></p>
+<br>
+<p><strong>This is a critical connection for your dissertation</strong>: You can argue that:</p>
+<ol><li>Fleet DNA delivery trucks follow patterns equivalent to CALCE's DST profile</li>
+<li>CALCE NMC cells aged under DST show X% faster degradation than CC aging</li>
+<li>Therefore Fleet DNA delivery truck batteries will show similar acceleration in degradation</li></ol>
+<h3>Bridge Argument (For Chapter 2 Literature Review)</h3>
+<br>
+<blockquote><em>"Real-world delivery fleet duty cycles, characterised by high KI (0.4–0.8 m/s²/km) and frequent micro-cycling, correspond closely to laboratory dynamic test profiles such as the DST (Dynamic Stress Test) in the CALCE dataset. Mulpuri et al. (2025) demonstrated that urban stop-go patterns cause up to 2× faster NMC-811 capacity fade compared to constant-current aging. This laboratory-validated relationship enables the application of CALCE NMC degradation data to predict capacity fade in real-world delivery fleet batteries characterised by their Fleet DNA duty cycles."</em></blockquote>
+<br>
+<hr>
+<br>
+<h2>Related Literature on EV Fleet Battery Management</h2>
+<br>
+<h3>1. Mulpuri et al. (2025) — RSC Advances</h3>
+<p><strong>Direct relevance</strong>: Shows that urban delivery-type driving patterns cause fastest degradation. Provides quantitative relationship between duty cycle severity and capacity fade rate in NMC-811 batteries.</p>
+<br>
+<p><strong>Key finding for fleets</strong>: "Pattern 1 (urban stop-go) led to 47% faster capacity fade after 500 equivalent full cycles compared to Pattern 3 (highway cruising)"</p>
+<br>
+<h3>2. Severson et al. (2019) — Nature Energy</h3>
+<p><strong>Indirect relevance</strong>: Shows that the charging protocol in the first 100 cycles predicts total battery lifetime with <10% error. For fleet operators, this means: measuring how batteries respond to the first few weeks of fleet operation can predict when replacement will be needed — enabling proactive maintenance planning.</p>
+<br>
+<p><strong>Key finding for fleets</strong>: "A machine learning model using data from cycles 1–100 predicted remaining cycle life with mean absolute percentage error of 9.1%"</p>
+<br>
+<h3>3. UK Zero Emission Vehicle Mandate (2024)</h3>
+<ul><li><strong>Policy reference</strong>: UK Government, "Zero Emission Vehicle Mandate and amendments to the plug-in vehicle grant" (2024)</li>
+<li><strong>Relevance</strong>: 80% of new car and van sales must be ZEV by 2030. Commercial delivery fleets are included in the mandate. Battery health management is critical for fleet cost-effectiveness.</li>
+<li><strong>Link</strong>: https://www.gov.uk/government/consultations/zero-emission-vehicle-zev-mandate-and-co2-emissions-regulation-for-new-cars-and-vans</li></ul>
+<h3>4. Faraday Battery Challenge (UK Government / UKRI)</h3>
+<ul><li><strong>Organisation</strong>: Innovate UK / UKRI — UK's national battery R&D initiative</li>
+<li><strong>Relevance</strong>: The Faraday Battery Challenge has specifically identified <strong>fleet duty cycle characterisation</strong> as a critical knowledge gap in battery management for commercial EVs</li>
+<li><strong>Funding</strong>: £541M invested in battery research including fleet applications</li>
+<li><strong>Link</strong>: https://www.faraday.ac.uk/</li></ul>
+<h3>5. Additional Recommended Papers for Fleet Battery Research</h3>
+<br>
+<p><strong>Martinez-Laserna et al. (2018)</strong> — "Battery second life: Hype, hope or reality?" — Renewable and Sustainable Energy Reviews</p>
+<ul><li>DOI: https://doi.org/10.1016/j.rser.2018.04.035</li>
+<li>Relevance: Fleet battery life → second-life applications when SoH drops below 70–80%</li></ul>
+<p><strong>Hu et al. (2020)</strong> — "Battery lifetime prognostics" — Joule</p>
+<ul><li>DOI: https://doi.org/10.1016/j.joule.2020.11.014</li>
+<li>Relevance: Comprehensive review of battery prognostics methods including fleet applications</li></ul>
+<p><strong>Suri & Onori (2016)</strong> — "A control-oriented cycle-life model for hybrid electric vehicle lithium-ion batteries"</p>
+<ul><li>Relevance: Duty cycle → degradation modelling for fleet management</li></ul>
+<hr>
+<br>
+<h2>Your Analysis Plan for Fleet DNA Data</h2>
+<br>
+<h3>Step 1: Preview the Data</h3>
+<pre><code>import pandas as pd
+<p>df = pd.read_csv(r"C:\Users\pure ev\Music\Term 3\data_for_fleet_dna_delivery_trucks.csv")</p>
+<p>print(df.head())</p>
+<p>print(df.shape)</p>
+<p>print(df.columns.tolist())</p>
+<p>print(df.dtypes)</p>
+<p></code></pre></p>
+<br>
+<h3>Step 2: Compute Duty Cycle Metrics Per Trip</h3>
+<pre><code>&lt;h1&gt;Group by vehicle_id and trip_id&lt;/h1&gt;
+<p>for (vid, tid), trip in df.groupby(['vehicle_id', 'trip_id']):</p>
+<p>speed = trip['speed'].values  # mph or km/h</p>
+<p>time = trip['time_s'].values  # seconds</p>
+<br>
+<p># Convert speed to m/s</p>
+<p>v = speed * 0.44704  # mph to m/s</p>
+<p>dt = np.diff(time)</p>
+<br>
+<p># Acceleration</p>
+<p>a = np.diff(v) / dt</p>
+<br>
+<p># Distance (metres)</p>
+<p>d = np.sum(v[:-1] * dt)</p>
+<br>
+<p># KI</p>
+<p>ki = np.sum(np.abs(a)) / (d / 1000)  # per km</p>
+<br>
+<p># RPA</p>
+<p>pos_mask = a &gt; 0</p>
+<p>rpa = np.sum(v[:-1][pos_mask] * a[pos_mask]) / (d / 1000)</p>
+<br>
+<p># PKE</p>
+<p>dv2 = np.diff(v**2)</p>
+<p>pke = np.sum(0.5 * dv2[dv2 &gt; 0]) / (d / 1000)</p>
+<br>
+<p>results.append({'vehicle_id': vid, 'trip_id': tid, 'KI': ki, 'RPA': rpa, 'PKE': pke})</p>
+<p></code></pre></p>
+<br>
+<h3>Step 3: FSI Prototype Score</h3>
+<pre><code>&lt;h1&gt;Normalise each metric 0-1&lt;/h1&gt;
+<p>ki_norm = (ki - ki_min) / (ki_max - ki_min)</p>
+<p>rpa_norm = (rpa - rpa_min) / (rpa_max - rpa_min)</p>
+<br>
+<p>&lt;h1&gt;Equal-weight FSI as starting point (weights will be learned from SHAP later)&lt;/h1&gt;</p>
+<p>fsi = 0.4 &lt;em&gt; ki_norm + 0.4 &lt;/em&gt; rpa_norm + 0.2 * idle_fraction</p>
+<br>
+<p>&lt;h1&gt;Rank routes by severity&lt;/h1&gt;</p>
+<p>severity_ranking = results.sort_values('fsi', ascending=False)</p>
+<p></code></pre></p>
+<br>
+<h3>Step 4: Connect to CALCE Degradation Data</h3>
+<pre><code>&lt;h1&gt;Map FSI score to predicted capacity fade rate&lt;/h1&gt;
+<p>&lt;h1&gt;Using the relationship from Mulpuri et al. (2025)&lt;/h1&gt;</p>
+<p>&lt;h1&gt;High FSI → faster degradation (approaching urban Pattern 1 rates)&lt;/h1&gt;</p>
+<p>&lt;h1&gt;Low FSI → slower degradation (approaching highway Pattern 3 rates)&lt;/h1&gt;</p>
+<br>
+<p>capacity_fade_rate = base_rate + (mulpuri_ratio - 1) &lt;em&gt; base_rate &lt;/em&gt; fsi</p>
+<p></code></pre></p>
+<br>
+  </div>
+</body>
+</html>

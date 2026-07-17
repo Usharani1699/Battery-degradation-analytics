@@ -1,0 +1,37 @@
+Column_Name,Type,Unit,Formula,Typical_Range,Notes,Present_In
+Source,string,—,Hardcoded per dataset,"CALCE, External","Training vs validation flag — CALCE=training, External=held-out test",All CSVs
+Dataset,string,—,Hardcoded per dataset,"CALCE_CS2, NASA_RW, Oxford_LFP, BLAST_NMC811, Severson_2019",Specific dataset and batch name,All CSVs
+ID,string,—,Cell identifier string,"CALCE_CS2_35, Severson_b1c0",Unique per physical cell,All CSVs
+Cycle,integer,count,Cycle number from dataset,1 – 2000,Sequential charge-discharge cycle index,All CSVs
+Chemistry,string,—,Electrode material type,"LiCoO2, LFP, NMC811, NMC622, NCA",Affects FSI calibration constants,All CSVs
+Profile,string,—,Duty cycle label,"CC_lab, urban_fleet, highway_fleet, MultiStep_FastCharge",Current profile type — CC=constant current (lab),All CSVs
+Charge_Policy,string,—,Protocol string from Severson paper,"3.6C(80%), 8C(25%)-3.6C",Severson dataset only; encodes C-rate steps,Severson only
+FSI,float,dimensionless,"FSI = 0.30×KI + 0.25×(DoD_%/100) + 0.25×T_stress_norm + 0.20×C_peak_norm",0.05 – 2.5,"Primary composite stress feature. Higher = more stress. Weights: KI(0.30) DoD(0.25) T(0.25) Cpeak(0.20)",All CSVs
+KI,float,dimensionless,"KI = std(|I|) / mean(|I|) — computed over all current samples in a cycle",0.00 – 1.20,"MOST IMPORTANT feature (SHAP rank 1). 0=constant current lab; 0.60-0.81=real EV fleet; 0.0-0.44=Severson fast charge",All CSVs
+DoD_%,float,%,"DoD_% = (Q_discharge / Q_nominal) × 100",70 – 100,Percentage form; Q_nominal=2.0Ah for CALCE LiCoO2 / 1.1Ah for Severson LFP / varies,All CSVs
+T_avg_C,float,°C,mean(temperature_samples) per cycle,10 – 50,Average temperature across all timesteps in a cycle,All CSVs
+T_stress_norm,float,dimensionless,"T_stress_norm = |T_avg_C − 25| / 25  [ref temp = 25°C]",0.0 – 1.0,"LIMITATION: symmetric — treats 10°C and 40°C identically (both = 0.60). Future work: asymmetric function",All CSVs
+C_peak_norm,float,C-rate,"C_peak_norm = max(|I|) / I_nominal_1C  where I_nominal_1C = Q_nominal(Ah)",0.5 – 8.0,Peak charge or discharge current normalised to 1C rate,All CSVs
+DCSS,float,A,"DCSS = std(I_charge)  (std of charging-phase current only)",0.0 – 5.0,"Dynamic Current Stress Signature. 0 for CC; higher for variable-rate charging. Secondary feature.",All CSVs
+RBF,float,A,"RBF = mean(|I_charge|)  (mean of charging-phase current magnitude)",0.5 – 10.0,"Regenerative Braking Factor — proxy for average charge intensity. Secondary feature.",All CSVs
+CVI,float,V,"CVI = std(V)  (standard deviation of voltage samples in cycle)",0.01 – 0.5,"Current-Voltage Interaction — voltage variability proxy. Secondary feature.",All CSVs
+SoH_%,float,%,"SoH_% = (Q_discharge[cycle_n] / Q_discharge[initial]) × 100   where initial = median of cycles 3-10",60 – 100,"TARGET VARIABLE for regression. End-of-life defined at SoH=80%.",All CSVs
+Q_Ah,float,Ah,Measured discharge capacity per cycle,0.5 – 2.5,Raw capacity before SoH normalisation,All CSVs
+Cycle_Life,integer,count,Total cycles until SoH falls below 80%,200 – 2000,From Severson published data or computed from trajectory,Severson + some CALCE
+Health_Label,string,—,"if SoH≥90: Healthy; elif SoH≥80: Degraded; else: End_of_Life","Healthy, Degraded, End_of_Life",3-class TARGET for classification model (Random Forest),All CSVs
+FORMULA_NOTES,,,,,,"See below"
+,,,,,,
+FSI_WEIGHT_DERIVATION,,,,,,
+"Weight","Value","Rationale","SHAP Rank","Literature Support","",""
+KI,0.30,Highest SHAP importance across all datasets; distinguishes CC lab (0) from real fleet (0.60+),1,Wang 2020 / Attia 2020 current stress studies,,
+DoD,0.25,Equal to T_norm; well-established in degradation literature,3,Millner 2010 / Plett 2015,,
+T_stress_norm,0.25,Literature-grounded; symmetric limitation noted,2,Arrhenius degradation models,,
+C_peak_norm,0.20,Lowest independent contribution when KI already captures variability,4,Ecker 2012 fast-charge studies,,
+,,,,,,
+DATASET_PROVENANCE,,,,,,
+CALCE_FSI_Features.csv,LiCoO2,CC lab cycling CALCE dataset,"Source: eng.umd.edu/~kaur/CALCE.html","Cycles ~1000","Training source for XGBoost model",
+NASA_FSI_Features.csv,LiCoO2,NASA PCoE RW (randomised walk current),"Source: ti.arc.nasa.gov/tech/dash/groups/pcoe/prognostic-data-repository/","Cycles ~800","Cross-dataset validation — same chemistry different profile",
+Oxford_FSI_Features.csv,LFP,CC lab (Oxford degradation study),"Source: ora.ox.ac.uk/objects/uuid:03ba4b01","Cycles ~740","Cross-chemistry validation",
+BLAST_FSI_Features.csv,"NMC811/NMC622/LFP/NCA","NREL BLAST-Lite physics simulation","Source: NREL BLAST-Lite Python package","1932 checkpoints","Cross-chemistry + cross-profile simulation validation",
+Severson_FSI_Features.csv,LFP,"Multi-step fast-charging 23 protocols","Source: Severson et al. Nature Energy 2019 / data.matr.io","3146 records 49 cells","Protocol-level ranking validation; KI from published C-rate protocols",
+Linked_Lab_Fleet_Degradation.csv,Multiple,Master training + fleet prediction file,"Concatenation of CALCE + NASA + Oxford FSI features + Fleet DNA KI context","9031+ records","PRIMARY TRAINING FILE for XGBoost and Random Forest models",

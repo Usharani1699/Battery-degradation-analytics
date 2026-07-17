@@ -1,0 +1,2048 @@
+
+--- PAGE 1 ---
+RSC Advances
+PAPER
+Beyond drive cycles: mapping the intricacies of
+electric vehicle battery health in diverse
+Citethis:RSCAdv.,2025,15,30980
+environments and driving conditions
+Sai Krishna Mulpuri, a Bikash Sah *b and Praveen Kumara
+As electric two-wheelers become increasingly prevalent in emerging markets, understanding the real-
+world degradation of their batteries is crucial for ensuring reliability, longevity, and cost-effectiveness.
+Traditional battery aging studies are heavily based on standard drive cycles that do not capture the
+variability introduced by diverse user behaviors, regional conditions, and charging habits. This study
+proposesacomprehensiveandadaptableframeworkforevaluatingtheend-of-life(EOL)ofEVbatteries
+in realistic usage scenarios. The methodology incorporates key metrics of the drive cycle, including
+acceleration patterns, rest periods, charging frequency, and rates, in multiple daily driving scenarios,
+three distinct geographic regions, and varying climatic conditions. By linking these operational
+parameterstoelectrochemicaldegradationphenomena,thisworkrevealsthecriticalinfluenceofuser-
+specific behavior on capacity fade. The insights generated are not only scientifically grounded but also
+practically relevant to stakeholders across the EV ecosystem. For cell and vehicle OEMs, the findings
+Received19thJune2025 support region-specific cell design and lifecycle prediction; for EV users, the study offers a clearer
+Accepted19thAugust2025
+understanding of how personal usage affects battery health. Ultimately, this work bridges the gap
+DOI:10.1039/d5ra04379d
+between lab-scale testing and real-world degradation, paving the way for smarter battery design,
+rsc.li/rsc-advances personalizedusagestrategies,andsustainableEVadoption.
+1 Introduction applications and promise greater sustainability and material
+diversityforfutureelectricvehicles.
+1.1 Contextandmotivation
+DistinctEVsmayexhibitvaryingEOLperiodsforthebattery
+In recent times, there has been a concerning trend of battery packs,even when neighborsuse similarmodels. Thisdiscrep-
+issues in electric vehicles (EVs), with batteries requiring
+ancyarisesfromtheinuentialroleofpersonalusagepatterns
+replacement even before reaching their expected end-of-life inthedegradationofEVbatteries.Anotherpertinentaspectfor
+(EOL) capacity fade of 20%.1,2 This poses not only an opera- vehicle owners is the diversity in charging behavior. Unlike
+tional issue, but also a considerable cost-related burden since internal combustion engines (ICEs), where the range is inde-
+the battery unit constitutes 35–45% of the overall pendent of fuel rell frequency, EVs face pronounced battery
+manufacturing cost of an EV.3 Lithium-ion batteries, which longevityissues.Despitesimilardrivingbehaviorsandregional
+dominate the EV market due to their high energy density and and climatic factors for EVs and ICEs, the critical factor of
+cyclelife,remaintheprimarytechnologyfortheseapplications. charging a vehicle differs. Consequently, vehicle owners must
+Researchers continue to face challenges in enhancing battery understandthattheEOLoftheirvehicle'sbatterypackdepends
+performance, including improving cycle life, thermal stability, on personal usage patterns, the frequency of recharging, and
+andsafetyunderdiversereal-worldconditions.Effortsarealso the rates atwhich they recharge. Traditionally, original equip-
+directed at developing advanced cathode and anode materials ment manufacturers (OEMs) primarily assess battery aging
+toboostenergydensityandreducedegradation.Moreover,the based onstandard driving proles provided bymanufacturers
+limitedavailabilityandincreasingcostoflithium4,5havedriven orrecognizeddrivecyclesnationwide(e.g.,WorldwideHarmo-
+interest in alternative chemistries such as sodium ion nized Light Vehicle Test Cycle (WLTC),9 Urban Dynamometer
+batteries,6solidoxidefuelcells,7andthermalbatteries,8which Driving Schedule (UDDS),10 New European Driving Cycle
+offer diversity in energy storage solutions for similar (NEDC),11 Indian Driving Cycle (IDC)12,13). However, investi-
+gating driving style and regional variations is crucial in deter-
+miningthebest-andworst-casescenariosspecictoacountry
+aDepartmentofElectronicsandElectricalEngineering,IndianInstituteofTechnology
+or region. Our work emphasizes the need for this generic
+Guwahati,Assam,781039,India.E-mail:m.sai@iitg.ac.in
+framework, highlightingthedisparity inEOLperiodsbetween
+bChairofInterconnectedAutomationSystems,UniversityofSiegen,Hölderlinstrasse3,
+a standardized drive cycle (WLTC) and regional drive cycles
+BuildingA,Siegen,57076,Germany.E-mail:Bikash.Sah@uni-siegen.de
+30980 | RSCAdv.,2025,15,30980–31004 ©2025TheAuthor(s).PublishedbytheRoyalSocietyofChemistry
+.MP
+15:12:3
+6202/32/6
+no
+dedaolnwoD
+.5202
+tsuguA
+92
+no
+dehsilbuP
+.elcitrA
+sseccA
+nepO
+.ecneciL
+detropnU
+0.3
+noitubirttA
+snommoC
+evitaerC
+a
+rednu
+desnecil
+si
+elcitra
+sihT
+View Article Online
+View Journal | View Issue
+--- PAGE 2 ---
+Paper RSCAdvances
+(Pattern-1, Pattern-2, Pattern-3). Building on this analysis, we signicantly impact the battery aging and must be explored.
+propose a generic framework for conducting such studies, While some studies have highlighted that harsher or more
+consideringreal-timedrivingbehaviours. aggressivedrivingbehaviors (higherKI,PKE, RPAvalues)lead
+The accelerated capacity fade and decline in battery to increased battery fading,16,18,19,25,33 it is important to differ-
+discharge performance in an EV are characterized by two entiatebetweendrivingdistanceandduration.Incaseswhere
+factors:thedrivingstyleoftheEVuserandregionalvariations driving distance remains constant, higher energy exchange
+in topography and demographics. The driving style of an EV (measured in watt-hours) results in greater battery fading. On
+userisreectedinthenatureofthedrivecycle(e.g.,harsh,mild, the other hand, when driving duration is held constant, drive
+gentle). It is measured by drive cycle metrics such as kinetic cyclesfeaturinghigherKIvaluesareassociatedwithincreased
+intensity(KI), relativepositiveacceleration (RPA), andpositive batterydegradation.However,thesestatementsholdonlywhen
+kineticenergy(PKE).14Italsoincludesthefrequencyofvehicle wesolelyconsiderthedrivingpatternandoverlookthesigni-
+chargingandtheratesatwhichtheuserrechargesthevehicle. cance of rest periods and charge durations. A daily cycle
+Secondly,regionalvariationsencompassdiversetopographical encompasses more than just driving; it also involves interme-
+and demographical conditions due to altitude, latitude, and diaterestperiods15,33when thevehicle is parked andcharging
+road prole differences. These variations give rise to distinct periods. Ignoring these essential aspects will lead to an
+drivingpatterns,impactingaccelerationlevels,torquerequire- incompleteunderstandingofbatteryaginganddegradation.It
+ments,andgradients,particularlyinhillyareas.Moreover,the is essential to consider all the operations an EV undergoes in
+variations in climatic conditions while driving also play a typical day, including rest16,18,34 and charge periods, to gain
+a crucial role in impacting battery degradation. This work a deeper insight into the overall battery performance and
+endeavors to present a meticulous analysis to uncover the degradationovertime.
+underlying reasons behind the accelerated capacity fade and The duration of the rest period within a daily cycle is
+discharge performance deterioration in batteries, thereby inversely related to the amount of energy discharged. Speci-
+highlightingthenecessityofincorporatingthetwofactorsinto cally,higherdischargeenergiesresultinlongerchargingtimes,
+agingstudies. reducingtheavailablerestperiodwithinaday,andviceversafor
+lower discharge energies. This relationship introduces the
+concept of calendar aging, wherein the rest period plays
+1.2 Literaturereview asignicantroleintheoveralldegradationofthebatteryover
+Thestudiesreportedtodateremainfocusedonevaluatingbattery time. Similarly, the impact of charge periods on driving
+aging based on standard driving proles provided by manufac- behaviorandbatteryperformanceiscritical.Differentcharging
+turersor nationwide followeddrivecycles.15–18 Relying solely on scenarios with varying charge rates must be studied to under-
+onestandarddrivingpatterntogeneralizebatteryfadingforan standhowchargingaffectsbatteryperformance.Table1offers
+entire country is unreasonable,19–23 especially for countries with acomprehensiveoverviewoftheresearchconductedbyvarious
+large land areas and diverse topography and demography. groups on battery aging studies due to driving behaviour and
+Instead,itiscrucialtodeterminebatteryfadingbasedonregional theassociatedfactorsanddegradationelementsconsideredin
+drive cycles that consider the specic geographic locations and their study. Despite existing studies simulating battery fading
+roadproles.24Whilesomestudiesdoconsiderdifferentregional behavior based on driving conditions, charge rates, and
+drivecycles,25,26theydonotfullyaccountfortheenvironmental charging scenarios,33 a deeper understanding of cell-level
+conditionsuniquetoeachregion.Forinstance,tropicalandcold degradation associated with fading is oen lacking. Most
+countries experience varying climates throughout the year. existing studies lack a comprehensive investigation into SEI
+Temperature plays a pivotal role in battery performance and layer growth, lithium plating, particle cracking, and the
+degradation.Atlowertemperatures,theelectrochemicalreaction complex interplay between calendar and cycling aging, high-
+rateswithinthebatteryslowdown,resultinginareduceddepth lighting the need for deeper exploration of these critical
+of discharge. Conversely, operating the battery at higher degradation mechanisms. Understanding how degradation
+temperatures accelerates the degradation rate as the growth of occurs during the driving, rest, and charging phases is also
+the solid electrolyte interphase (SEI) layer increases, leading to essential.
+electrolyte decomposition.27 Furthermore, overheating of the To bridge these gaps and shed light on the complex inter-
+battery core causes electrochemical damage,28,29 resulting in play between driving patterns and battery performance, our
+thermal instability eventually leading to thermal runaway,30,31 study delves into a meticulous examination of regional and
+necessitatingefficientthermalmanagementandcoolingsystems standard drive cycles. By meticulously generating diverse
+todissipateheatandmitigatethesedetrimentaleffects.32There- regionaldailydrivecyclesfromdifferentgeographicalregions
+fore,itisessentialtoconsiderdailytemperaturesthroughoutthe having varied climatic conditions, we aim to unravel the
+year or the specic period of interest when analyzing capacity intricate relationship between driving patterns and battery
+fade. Such considerations are critical to assessing battery degradationmechanisms.Further,theinterplayofrestperiods
+performance and degradation under real-world driving condi- andchargedurationsonbatterydegradationisdeterminedby
+tionsaccurately. performingthedesignofexperimentsinvolvingvaryingcharge
+Drive cycle metrics such as KI, RPA, and PKE and energy rates and frequencies involving rest periods. Through this
+exchange at the battery while driving, charging, and resting rigorous and systematic approach, we present a deeper
+©2025TheAuthor(s).PublishedbytheRoyalSocietyofChemistry RSCAdv.,2025,15,30980–31004 | 30981
+.MP
+15:12:3
+6202/32/6
+no
+dedaolnwoD
+.5202
+tsuguA
+92
+no
+dehsilbuP
+.elcitrA
+sseccA
+nepO
+.ecneciL
+detropnU
+0.3
+noitubirttA
+snommoC
+evitaerC
+a
+rednu
+desnecil
+si
+elcitra
+sihT
+View Article Online
+--- PAGE 3 ---
+RSCAdvances Paper
+Table1 Overviewofexistingstudiesonbatteryagingduetodrivingbehavior–factorsconsidered/investigated
+Standarddriving Regionaldriving Differentdaily Differentclimatic Impactofchargerates Entireday Restperiodconsidered
+patterns patterns scenarios conditions oncapacityfade analysis indailyanalysis Reference
+Yes Yes Yes Yes Yes Yes Yes 33
+Yes Yes No No No No No 25
+Yes No Yes Yes No Yes Yes 15
+Yes No No No No Yes Yes 16
+Yes No No No No Yes No 17
+Yes No No Yes Yes Yes Yes 18
+Yes No No No No No No 19
+Yes No No No No No No 20
+Yes No No No No No No 21
+Yes No No No No No No 22
+Yes No No Yes No No No 23
+Yes Yes No No No No No 26
+understanding of the degradation mechanisms affecting 2 Methodology
+batteries, therebyproviding valuable guidancefordeveloping
+strategiestoenhancebatteryperformanceandlongevityunder Toestimatetheimpactofdrivingbehaviors,regionalvariations,
+real-worlddrivingconditions. daily scenarios, and climatic conditions on battery capacity
+fade, this paper assumes different driving behaviors, three
+regional variations, two man-made driving scenarios on week-
+1.3 Contributionsofthiswork
+days, and three temperature zones. It should be noted that
+This study makes targeted and practical contributions to
+additional behaviors, regions, scenarios, and climatic zones
+advancingbatterylifespanpredictionandcustomizationacross
+couldbedevelopedtorepresenttheoperatingconditionsofEVs
+the electric mobility ecosystem, impacting cell manufacturers, in specic regions, and similar analyzes can be performed. A
+vehicleOEMs,andendusers. thorough understanding of the underlying phenomena and
+1. For cell manufacturers: we introduce a novel framework
+electrochemical processes is essential to accurately relate the
+that links the parameters of real-world usage to the loss of impactofdifferentparametersoncellcapacityfade.
+capacity,allowingthepreciseadjustmentofthecompositionof
+electrodesandelectrolytesaccordingtoregionaldemands.This
+2.1 Needforreal-worlddrivingcycles
+setsthegroundworkforthedesignofgeographicallyoptimized
+next-generationbatterycells. Real-world driving cycles play a pivotal role in accurately
+2.ForvehicleOEMs:theworkoffersactionableinsightsinto assessing battery performance for driving behaviors. Unlike
+how diverse driving styles and climatic proles accelerate or standardizeddrivecycles,whichofferalimitedrepresentation
+decelerate battery degradation. These insights enable data- of regional driving behaviors, real-world conditions exhibit
+driven decisions for warranty planning, battery pack size, and signicantvariationsbasedontrafficpatterns,roadconditions,
+inventorycontrol,whileanchoringcatalogvaluesinvalidated, charging patterns, and driving habits. These dynamic factors,
+usage-specicdegradationtrends. such as sudden start-stops, frequent accelerations, and decel-
+3. For EV users: the study explains why two identical EVs erations in response to traffic conditions, demand diverse
+driven in different ways, or even similarly but charged differ- power outputs from the battery, rendering the current varia-
+ently,canreachendoflife(EOL)atdramaticallydifferenttimes. tionsfarfromconstant.Standarddrivingcyclesfailtocapture
+By revealing how charging frequency and rates, daily drive these intricate dynamics, leading to an underestimation of
+routines, and environmental conditions interplay in shaping capacityfadecomparedtoreal-worldscenarios.Theabsenceof
+battery aging, this work equips users with the knowledge to accurate representation in standard cycles overlooks the true
+extendbatterylifethroughinformedbehavioraladjustments. degradationprocess.
+Technically,thisworkisamongthersttosimulatebattery 2.1.1 Drivecyclemetricsandtheirsignicance.Toquantify
+degradation by combining three regional contexts, multiple thecharacteristicsofthedynamicsinadrivingcycle,drivecycle
+climaticconditions,weekdaybehavioralvariations,anddistinct metricsserveasessentialtools.Thesemetricscomprehensively
+driving behaviors, providing a scalable model for EOL predic- assess driving patterns by capturing information on velocity,
+tion.Themodularityoftheframeworkallowseasyextensionto distance covered, acceleration, and more. Key parameters
+other geographies or usage patterns, making it adaptable for amongthesestandarddrivecyclemetricsareKI,RPA,andPKE.
+global applications. By integrating diverse driving behaviors, These metrics play a crucial role in understanding the harsh-
+climaticconditions,andelectrochemicalanalysis,thisresearch ness or gentleness of a driving cycle, shedding light on how
+bridges a critical gap between laboratory aging tests and real- vehiclespeeductuatesandtheenergyinvolvedthroughoutthe
+world battery degradation, setting a new benchmark for how driving process. Kinetic intensity (KI) is a crucial drive cycle
+EVbatteryagingshouldbestudied,understood,andmitigated. metric that sheds light on the dynamic behavior of vehicles
+30982 | RSCAdv.,2025,15,30980–31004 ©2025TheAuthor(s).PublishedbytheRoyalSocietyofChemistry
+.MP
+15:12:3
+6202/32/6
+no
+dedaolnwoD
+.5202
+tsuguA
+92
+no
+dehsilbuP
+.elcitrA
+sseccA
+nepO
+.ecneciL
+detropnU
+0.3
+noitubirttA
+snommoC
+evitaerC
+a
+rednu
+desnecil
+si
+elcitra
+sihT
+View Article Online
+--- PAGE 4 ---
+Paper RSCAdvances
+duringtheiroperationalcycles.Itquantiestheoverallchanges numerator contains the summation of only the positive accel-
+inkineticenergyandservesasatime-averagedmeasureofthe eration terms. High RPA values indicate frequent and signi-
+intensity of vehicle dynamics. Comprising two essential cantpositiveaccelerationsduringthedrivecycle,whichimplies
+metrics,KIistheratioofcharacteristicacceleration(a )tothe a more aggressive driving style with frequent speed changes,
+C
+squareoftheaerodynamicspeed(v 2),asshowninthe indicating more stop-and-go traffic conditions. Lower RPA
+aerodynamic
+eqn(1).14Therstmetric,characteristicacceleration,measures values indicatea smoother,moreconsistentdrivingstyle with
+the inertial work required to accelerate or li the vehicle per lessfrequentpositiveaccelerations.RPAisparticularlyusefulin
+unitmassanddistanceoverthecycle(eqn(2)).Itcapturesthe assessingthedynamicsofurbandriving,wheretrafficconges-
+positive part of specic kinetic and potential energy per tionandfrequentstopscanbeobserved.
+distance associated with the vehicle's movement. The second Pv
+metric,thesquareoftheaerodynamicspeed,gaugestheratioof 2
+iðv iþ1(cid:2)v i(cid:2)1Þ
+positive
+RPA¼ i P (4)
+the overall average cubic speed to the average speed (eqn (3)). vDt i
+This element directly accounts for the inuence of aero- i
+dynamicsonvehicleperformance.
+KI¼ aC (1) Positive kinetic energy (PKE) isa metric that quanties the
+vaerodynamic 2 positive kinetic energy added to the vehicle during the drive
+(cid:2) (cid:3) cycle,normalizedbythetotaldistancetraveled.Thecalculation
+P
+i
+v iþ1 2
+2
+(cid:2)v i 2 þgðh iþ1(cid:2)h i(cid:2)1Þ
+positive
+o
+ti
+f
+ve
+th
+d
+is
+iff
+m
+e
+e
+re
+tr
+n
+ic
+ce
+i
+s
+nv
+i
+o
+n
+lv
+v
+e
+e
+s
+h
+c
+i
+o
+c
+m
+le
+p
+s
+u
+p
+t
+e
+in
+e
+g
+ds
+th
+b
+e
+e
+r
+t
+a
+w
+t
+e
+io
+en
+of
+c
+t
+o
+h
+n
+e
+se
+su
+cu
+m
+tiv
+o
+e
+fp
+d
+o
+a
+s
+t
+i
+a
+-
+aC¼
+S
+(2)
+points,whichsigniesinstancesofindividualpositiveacceler-
+ð ation,typically measuredatregulartimeintervals, tothe total
+1 T
+v3dt distance covered during the given period (eqn (5)).14 Here
+vaerodynamic 2¼
+T
+1
+ð0
+T
+‘v
+initial
+’and‘vnal ’aretheinitialand nalspeeds,respectively,
+vdt during the individual positive acceleration instances, and this
+T 0 (3) summation is divided by the total distance travelled, ‘S’.High P P
+v i;iþ1 3$Dt i;iþ1 v i;iþ1 3$Dt i;iþ1 PKE values indicate that the vehicle undergoes signicant
+y Pi ¼ i kineticenergychanges,experiencingfrequentdecelerations.A
+v i;iþ1 $Dt i;iþ1 S drivecyclewithhighPKEvaluesoenreectsadrivingpattern
+i withmanyspeedchanges,suchascitydrivingorhillyterrain.
+where‘v i ’isthevehiclespeedatithinstant,‘g’istheaccelera- Lower PKE values suggest a steadier, more consistent driving
+tionduetogravity,‘h’istheelevation,‘Dt’isthesuccessivetime
+stylewithfewerspeedchanges.
+interval between two points, ‘T’ is the total time spent for P(cid:4) (cid:5)
+driving, and ‘S’ is the total distance travelled. KI is highly PKE¼ vfinal 2(cid:2)vinitial 2 (5)
+S
+valuable for assessing the intensity of driving conditions and
+evaluating the energy demands on vehicles. In particular,
+higher KI values indicate aggressive driving behavior, charac- 2.1.2 Choice of regions, driving behaviours and their
+terizedbyrapidandfrequentspeedchanges.Conversely,lower signicance.Havinghighlightedtheneedforreal-worlddriving
+KI values suggest a smoother and more consistent driving cyclesandtheirassociatedmetrics,thesubsequentsubsection
+behavior,involvingfewervariationsinkineticenergy.Moreover, discusses the process of choosing diverse drive cycle regions,
+KI enables a quantitative characterization and comparison of characterized by different metrics indicating distinct driving
+different drive cycles, such as urban, highway, or specic test patterns and behaviors. This can effectively capture critical
+cycles, allowing for a comprehensive understanding of their factors such as sudden start stops, frequent accelerations and
+varyinglevelsofintensityandaggressiveness.Byevaluatingthe decelerations, and varying power demands from the battery
+energy basis using the characteristic acceleration and aero- duringdriving.
+dynamicspeedmetrics,KIprovidesaholisticrepresentationof To comprehensively assess battery capacity fade behavior,
+thedutycycle'simpactonroadloads. a case study in three distinct regions in India is performed:
+Relative positive acceleration (RPA) measures the positive Eastern India – Panskura, West Bengal, Northern India –
+acceleration experienced by the vehicle during the drive cycle, Kapashera, New Delhi, and Southern India – Hyderabad,
+normalized by the average speed during the travel. It is calcu- Telangana.OurteamatE-MobilityLab,IITGuwahati,gathered
+lated by taking the speed differences between consecutive extensivedata,coveringover150kmofdrivingineachregion
+instantsatregularintervals,typicallyeverysecond,andltering over two weeks, capturing diverse traffic and geographical
+outvehiclespeedchangesontimescaleslessthantwoseconds. conditions. The collected data was meticulously analyzed to
+The result measures specic power averaged by time, consid- generate corresponding real-world driving cycles, following
+eringonlypositiveaccelerationinstances(eqn(4)).14Here,‘v’is a detailed process outlined in ref. 35. A standard drive cycle,
+i
+the vehicle speed corresponding to ith data point, ‘Dt’ is the WLTC-class2, was also included for comparative analysis with
+successive time interval between two data points, and the thediversedrivingproles.9TheWLTCisaglobalstandardtest
+©2025TheAuthor(s).PublishedbytheRoyalSocietyofChemistry RSCAdv.,2025,15,30980–31004 | 30983
+.MP
+15:12:3
+6202/32/6
+no
+dedaolnwoD
+.5202
+tsuguA
+92
+no
+dehsilbuP
+.elcitrA
+sseccA
+nepO
+.ecneciL
+detropnU
+0.3
+noitubirttA
+snommoC
+evitaerC
+a
+rednu
+desnecil
+si
+elcitra
+sihT
+View Article Online
+--- PAGE 5 ---
+RSCAdvances Paper
+cycle adopted by many countries, including China, Japan, the based on the distinct driving patterns. For this study, the
+UnitedStates,India,andtheEuropeanUnion,amongothers.36 LGM50 21700 cylindrical cell with a nominal voltage of 3.6 V
+In this study, the four driving patterns observed in Panskura, and a nominal capacity of 5 Ah was chosen. The detailed
+New Delhi, Hyderabad, and WLTC, as shown in Fig. 1a, are processofextractingbatterypowerfromvehiclespeedandtime
+referred to as Pattern-1, Pattern-2, Pattern-3, and Pattern-S, prolesisoutlinedinref.35.Thepowerdemandsforthefour
+respectively,infurtherdiscussions. drivingprolesarepresentedinFig.1b.
+The key parameters, such as average speed and maximum Furthermore, Fig. 2a illustrates the probability density
+speedforallconsidereddrivingpatterns,werederivedfromthe functions (PDFs) for C-rates associated with four distinct
+vehicle speed vs. time data (Fig. 1a). The critical drive cycle driving patterns for a single trip, offering a clear visual repre-
+metricswerecalculatedusingempiricalrelationsfromeqn(1), sentation of the variations in driving styles and the corre-
+(4), and (5). These statistical outcomes are described in the sponding demands they place on a vehicle's battery system.
+Table 2 demonstrates that all three real-world driving proles Here,theC-rateisthemeasureoftherateatwhichabatteryis
+exhibit higher KI, PKE, and RPA values compared to the stan- charged/discharged with respect to its capacity. For instance,
+darddrivingprole,WLTC-class2.Thesendingshighlightthe a 1C rate corresponds to a full charge or discharge in 1 hour.
+signicantdiscrepanciesbetweenstandarddrivingprolesand Eachpatternpresentsauniquedistributionthatcharacterizes
+actualdrivingconditions,emphasizingtheneedforreal-world the frequency and intensity ofthe power requirements during
+driving cycles to accurately estimate battery capacity. The asingledrivingtrip.
+power demanded from the battery output was determined Pattern-1,denotedbytheblackcurve,hasaPDFthatpeaksat
+lowerC-rates,alongwithakineticintensityvalueof0.0023m
+−1,
+indicating a driving style with moderate energy demands,
+reective of a cautious and steady driving style maintaining
+consistentspeedsandavoidingsuddenaccelerations. Similarly,
+Pattern-S,depictedbythegreencurve,alsohasthelowestkinetic
+intensityvalue of 0.0010 m −1, with itspeak sharply centeredat
+the lowest range of C-rates. This distribution represents
+a conservative driving pattern, resembling a controlled testing
+scenariolikeastandarddrivecycleinalaboratorysetting,closer
+toaneco-drivingstyle.ThedrivingstyleassociatedwithPattern-S
+isgentleonthebattery,potentiallyresultinginminimalwearand
+thelongestpossiblebatterylife.
+Onthecontrary,Pattern-2,illustratedbytheredcurve,shows
+aPDFwithahigherspreadofC-ratesandfurtherhasthekinetic
+intensity of 0.0039 m −1. The broader distribution and shi
+towards higher C-rates imply a more dynamic and varied
+driving style. This pattern is indicative of a driving style expe-
+riencing more frequent stop-and-go conditions or having
+a tendency to accelerate more aggressively. Such a driving
+pattern could result in increased power demands. Likewise,
+Pattern-3, represented by the blue curve, also has the highest
+kinetic intensity value of 0.0046 m
+−1,
+with its PDF extending
+further into the higher C-rate region. This suggests an even
+more aggressive driving style than Pattern-2, characterized by
+frequent hard accelerations and high-power demands. This
+driving behavior may lead to faster battery consumption and
+couldnecessitatemorefrequentchargingintervals.
+These ndings highlight the substantial variation in power
+demands across different driving cycles, emphasizing the
+signicance of capturing such real-world dynamics in battery
+performance assessments. The diversity in driving behaviors
+inuences how the battery discharges, which is crucial for
+designingbatteriesandbatterymanagementsystemsthatcater
+tovarioususecases.37
+Fig.1 (a)Vehiclespeed(inkmph)vs.time(inseconds)driveprofiles 2.2 Differentclimaticconditions
+for four driving patterns, including three regional patterns and one
+standardpattern.(b)Batteryoutputpower(inW)vs.time(s)profiles Thissectiondiscussesthemethodologyemployedtoinvestigate
+correspondingtothedriveprofiles. the effect of temperature on battery capacity fade in everyday
+30984 | RSCAdv.,2025,15,30980–31004 ©2025TheAuthor(s).PublishedbytheRoyalSocietyofChemistry
+.MP
+15:12:3
+6202/32/6
+no
+dedaolnwoD
+.5202
+tsuguA
+92
+no
+dehsilbuP
+.elcitrA
+sseccA
+nepO
+.ecneciL
+detropnU
+0.3
+noitubirttA
+snommoC
+evitaerC
+a
+rednu
+desnecil
+si
+elcitra
+sihT
+View Article Online
+--- PAGE 6 ---
+Paper RSCAdvances
+Table2 Inclusivecriticaldrivecyclemetrics,averagespeed,andmaximumspeedinformationforallconsidereddrivingpatternsinthestudy
+Pattern KI(1/m) PKE(m/s2) RPA(m/s2) Maximumspeed(kmph) Averagespeed(kmph)
+Pattern-1 0.0023 0.41 0.018 66.47 28.70
+Pattern-2 0.0039 0.67 0.057 55.42 23.56
+Pattern-3 0.0046 0.81 0.083 51.13 23.66
+Pattern-S 0.0010 0.29 0.010 74.70 24.51
+distinct temperature zones, Eastern India – Kolkata (Zone-A),
+Northern India – Delhi (Zone-B), and Western India – Rajas-
+than(Zone-C),wereselectedbasedontheirdiversetemperature
+variationsthroughouttheyear,aimingtoassesshowdifferent
+temperatureprolesimpactbatteryperformance.
+Hourlytemperaturedatafortheseregionsfortheentireyear
+2022 were collected.41 These regions were chosen for their
+signicant temperature spreads and extreme conditions expe-
+rienced during the year (Fig. 2b). Churu experiences extreme
+temperatures ranging from 1.8 °C (extreme low) to 47.2 °C
+(extremehigh),followedbyDelhiwithextremetemperaturesof
+5.6 °C (extreme low) and 45.4 °C (extreme high), both posing
+considerable challenges for battery performance. Kolkata, on
+the other hand, depicts a more moderate temperature prole
+with extreme temperatures ranging from 12 °C to 41 °C. The
+impactofthesediversetemperatureprolesonbatteryperfor-
+mance is further discussed and analyzed in subsequent
+sections, aiming to provide valuable insights into battery
+behaviorundervaryingtemperatureconditions.
+2.3 Dailyscenarios
+In this section, we address the signicance of considering
+a typical daily cycle to accurately estimate an EV battery's
+performance.Acomprehensiveanalysisrequiresaccountingfor
+an EV's various stages during the day, encompassing driving,
+resting,andchargingperiods.Accordingly,twodistinctscenarios
+are considered: Daily Scenario-1 (DS-1), representing a typical
+work cycle, where the EV experiences morning driving, rests
+during the day while parked, evening driving returning from
+work,andchargesathometillreachingfullcapacity;andDaily
+Scenario-2 (DS-2), simulating driving to work, charging at work
+untilfullcapacity,restinguntilevening,drivingbackfromwork
+tohome,andthenchargingathomeuntilreachingfullcapacity.
+Fig. 2 (a) Normal probability density function (pdf) distribution of
+differentC-ratesacrossfourdrivingpatterns.(b)Temperatureprofiles Thechargingmethodemployedinthisstudyfollowsthestandard
+ofthreeclimaticzonesacrossIndiafortheyear2022alongsidetheir Constant Current Constant Voltage (CCCV) protocol, renowned
+respectiveextremetemperaturelimits. foritsenergy-efficientapproachtocharging.42,43
+These scenarios aim to capture the dynamics of single-day
+charging and twice-a-day charging conditions as shown in
+driving scenarios for EVs, considering driving conditions, Fig.3a.ForachosenPattern-1,correspondingStateofCharge
+battery technology, and temperature as critical factors.26,38,39 (SOC)andterminalvoltageprolevariationsinadayforafully
+Temperaturesignicantlyinuencesbatterylife,withhighand charged battery subjected to the two scenarios DS-1 and DS-2
+low temperatures adversely affecting performance.40 To areillustratedinFig.3b.Furthermore,withinthesescenarios,
+comprehensively understand temperature effects, subjecting we explore the impact of multiple charge rates during the
+the battery to a constant temperature would provide limited charging stages to assess their inuence on battery perfor-
+insights, as real-world ambient temperatures are dynamic. mance. By varying charge rates, we gain insights into how
+Thus, this study adopts an approach involving hourly temper- differentchargingspeedsaffectbatterybehaviorunderdifferent
+ature variations to capture the impact realistically. Three scenarios.
+©2025TheAuthor(s).PublishedbytheRoyalSocietyofChemistry RSCAdv.,2025,15,30980–31004 | 30985
+.MP
+15:12:3
+6202/32/6
+no
+dedaolnwoD
+.5202
+tsuguA
+92
+no
+dehsilbuP
+.elcitrA
+sseccA
+nepO
+.ecneciL
+detropnU
+0.3
+noitubirttA
+snommoC
+evitaerC
+a
+rednu
+desnecil
+si
+elcitra
+sihT
+View Article Online
+--- PAGE 7 ---
+RSCAdvances Paper
+year daily cycle simulation or the capacity fade to 20% of its
+original capacity. Consequently, an EV would travel approxi-
+mately65700kmin3yearsifthe20%fadehasnotyetoccurred.
+However, real-world driving cycles may yield different life
+expectancies compared to manufacturer-specied values since
+theyoentestbatterypacksusingstandarddrivingproles,less
+kinetic-intensive than real-world proles. Additionally, they do
+notconsidertheentiredailycyclewithvaryingchargeratesand
+temperature proles. As discussed, the two designed scenarios
+encompassdrivingcycleswithaccompanyingrestandcharging
+stages.Inthisstudy,thefourselecteddrivingpatterns(Pattern-1,
+Pattern-2,Pattern-3,Pattern-S)aresimulatedwithchargeratesof
+0.1C (slow charging), 0.5C (moderate charging), and 1C (fast
+charging). Each daily cycle generated is subjected to the EOL
+simulationcriteria.Furthermore,thedesignedsetoftestcases,
+obtained through the combination of driving patterns and
+charge rates for both scenarios, is subjected to three chosen
+temperature zones (Zone-A, Zone-B, Zone-C) until the EOL
+simulation. In Scenario 2, the two charging stages in a day
+undergodifferentcombinationsofthechosenchargerates(0.1C,
+0.5C,and1C).ThetotalsimulationcasesdesignedforDS-1and
+DS-2areillustratedinFig.4aandb,respectively.Thesimulation-
+based experiments performed in this work are carried out on
+open-source battery modelling soware, Python Battery Mathe-
+matical Modelling (PyBaMM).47 PyBaMM facilitates continuum
+model simulation with advanced electrochemical models like
+DFN, SPM, and SPMe. It also integrates submodels for degra-
+dationmechanismslikeSEIgrowth,lithiumplating,andparticle
+cracking. PyBaMM's capability to couple these mechanisms
+enableseffectiveobservationofvariousdegradationpatternsand
+electrochemicalbehaviors.48–50
+3 Background synthesis and
+Fig.3 (a)Twodailyscenariosillustrateallthepossiblephasesinan methodology formulation
+EV'sdailycycle.(b)Stateofcharge(SOC)andterminalvoltageprofiles
+varydailyforthetwodailyscenarios. 3.1 Mathematicalmodellingofelectrochemicalmodelof
+cell
+To capture various electrochemical phenomena within a cell,
+mathematical models are utilized to replace time-consuming
+2.4 Designofexperiments real-time experiments. Moreover, for designing efficient
+Theinvestigationintotheintricaterelationshipbetweencharge battery management systems, mathematical models are vital.
+rates and periods, driving patterns, and resting periods is of Theelectrochemicalmodels(EM)andequivalentcircuitmodels
+utmost importance to accurately assess battery capacity fade. (ECM)arethemostcommonlyusedmodelsfordevelopingthe
+This section is dedicated to presenting our meticulously mathematical model of the cell. ECMs are developed using
+designed experiments in this paper, aimed at unraveling the resistors, capacitors, and voltage sources to form a circuit
+complexities associated with EV driving behaviors and their network,providingasimplisticframeworkformodelingbattery
+impactonbatteryperformance. behavior.51–53 However, they come with inherent limitations.
+Typically,thelifecycleofanEVbatterypackismeasuredin ECMsoenfailtocapturethenuancedcomplexitiesofbattery
+terms of years or kilometers driven. In this work, we consider performanceduetotheiroversimpliednature,renderingthem
+adailydrivingdistanceof60km,alongwithchargingandrest unable to precisely replicate the intricate electrochemical
+periods within a day, subjecting the battery to an end-of-life processesoccurringwithinthecell.
+(EOL) simulation. For two-wheelers, manufacturers typically In contrast, electrochemical models offer a more compre-
+providea3yearEOLperiod.44–46BatteryEOLisdenedwhenthe hensiveapproach.ModelssuchasDoyle-FullerNewman(DFN)54
+capacityreaches80%ofitsnominalcapacity.1,2Therefore,inthis and Single Particle Model with Electrolyte (SPMe)55 utilize
+study,weadopttheEOLcriteriaastheearlieroccurrenceofa3 asophisticatedsetofcouplednonlineardifferentialequationsto
+describetheintricatephenomenasuchasdiffusionofsolutesin
+30986 | RSCAdv.,2025,15,30980–31004 ©2025TheAuthor(s).PublishedbytheRoyalSocietyofChemistry
+.MP
+15:12:3
+6202/32/6
+no
+dedaolnwoD
+.5202
+tsuguA
+92
+no
+dehsilbuP
+.elcitrA
+sseccA
+nepO
+.ecneciL
+detropnU
+0.3
+noitubirttA
+snommoC
+evitaerC
+a
+rednu
+desnecil
+si
+elcitra
+sihT
+View Article Online
+--- PAGE 8 ---
+Paper RSCAdvances
+Fig.4 Comprehensivesimulationcasesweredesigned,exploringtheinfluenceofdrivingpatterns,chargerates,andclimaticconditionsin(a)
+dailyscenario-1and(b)dailyscenario-2.
+electrode material, chemical reaction rates, electrode transport independent partial differential equations (PDEs) (eqn
+properties,capacityfadeandcelldegradationwithinthebattery (6a)–(6c)).55Theboundaryconditionsandtheinitialconditions
+cell.Byincorporatingdetailedinsightsintoelectrodeandinter- forthesethreegoverningequationsaredenedfromeqn(6d)to
+facialmicrostructures,alongwithfundamentalelectrochemical (6j). The subscripts “n”, “s”, and “p” represent variables asso-
+principles,thesemodelscanaccuratelydepictthebehaviorofthe ciated with the negative electrode, separator, and positive
+battery under various operating conditions. Despite their electrode, respectively. In addition, the subscripts “e” and “s”
+computational complexity and memory requirements, electro- are appended to indicate electrolyte variables and solid-phase
+chemicalmodelsstandoutfortheirabilitytoprovideaprecise variables, respectively. The terminal voltage (eqn (6k)–(6r)) is
+representationofbatterybehavior,makingthemindispensable determined by solving these equations and can be calculated
+toolsforunderstandingandoptimizingbatteryperformancein using a simple and easily understandable algebraic expres-
+practical applications. The Doyle-Fuller Newman (DFN) model, sion.55 These equations form the basis of the Single Particle
+a standard continuum mathematical model for lithium-ion Modelwithelectrolyte(SPMe)utilizedinthisstudy(Table3).
+batteries, is renowned but computationally intensive due toits Governingequations
+complexnonlinearpartialdifferentialequations.Toaddressthis !
+c a h re al e le m n p g l e o , y s e i d m , p ye le t r th m e o y d o e  ls en lik la e c t k h a e c S c i u n r g a l c e y P in ar v ti o c l l t e ag M e o p d r e e l d ( i S c P ti M on ) C k v v c0 s t ;k ¼(cid:2) r 1 k 2 v v r k r k 2 v v c r 0 s k ;k ;k˛fn;pg; (6a)
+withoutcorrectionterms.Consequently,thisstudyoptedforthe 8
+S
+ac
+in
+cu
+gl
+r
+e
+ac
+P
+y
+ar
+c
+t
+o
+ic
+m
+le
+p
+M
+ar
+o
+e
+d
+d
+e
+t
+l
+o
+w
+t
+i
+h
+th
+e
+e
+b
+le
+a
+c
+s
+t
+i
+r
+c
+o
+S
+ly
+P
+t
+M
+e(
+.
+S
+T
+P
+h
+M
+is
+e)
+s
+d
+e
+u
+ct
+e
+io
+to
+n
+i
+o
+ts
+u
+e
+tl
+n
+in
+h
+e
+a
+s
+nc
+th
+ed
+e vc1 vN1
+>>>>>><L I
+n
+; k¼n;
+f
+m
+u
+o
+n
+d
+d
+e
+a
+l
+m
+.
+e
+F
+n
+o
+t
+r
+al
+in
+m
+-d
+o
+e
+d
+p
+e
+t
+l
+h
+ing
+de
+a
+r
+n
+iv
+d
+at
+g
+io
+o
+n
+ve
+s
+rn
+a
+i
+n
+n
+d
+g e
+e
+q
+q
+u
+u
+a
+a
+t
+t
+i
+i
+o
+o
+n
+n
+s
+s,
+o
+r
+f
+e
+t
+a
+h
+d
+e
+er
+S
+s
+PM
+are
+e C e3 k g e v e t ;k ¼(cid:2)g e vx e;kþ >>>>>>: 0
+(cid:2)
+;
+I
+; k
+k
+¼
+¼
+p
+s;
+;
+k˛fn;s;pg; (6b)
+directedtoref.55. Lp
+The concentration of lithium in the positive and negative
+particles,aswellasthelithiumionconcentrationinthethree
+regions of the electrolyte, are governed by three linearly
+©2025TheAuthor(s).PublishedbytheRoyalSocietyofChemistry RSCAdv.,2025,15,30980–31004 | 30987
+.MP
+15:12:3
+6202/32/6
+no
+dedaolnwoD
+.5202
+tsuguA
+92
+no
+dehsilbuP
+.elcitrA
+sseccA
+nepO
+.ecneciL
+detropnU
+0.3
+noitubirttA
+snommoC
+evitaerC
+a
+rednu
+desnecil
+si
+elcitra
+sihT
+View Article Online
+--- PAGE 9 ---
+RSCAdvances Paper
+Table3 SymbolsusedinthemodellingoftheSPMemodel ð (cid:7) (cid:8) (cid:7) (cid:8) (cid:7) (cid:8)
+1 Ln g 1=2 1=2 1=2
+Symbol Parameter
+j
+0;n
+¼
+Ln 0 C r
+n
+;n
+c0
+s;n
+1(cid:2)c0
+s;n
+1þC ec1
+e;n
+dx; (6o)
+ð (cid:7) (cid:8) (cid:7) (cid:8) (cid:7) (cid:8)
+L L L n s N S P e o e p s g i a a t r i t a v iv e to e e r e le t le h c c t ic r tr o k o d n d e e e s t s h th ic ic k k n n e e s s s s j 0;p ¼ L 1 p 1 1 (cid:2)Lp C g r p ;p c0 s;p 1=2 1(cid:2)c0 s;p 1=2 1þC ec1 e;p 1=2 dx; (6p)
+p
+R Radiusof−veactivematerialparticles !
+n
+R f
+j
+p R E
+C
+l a
+u
+e d
+r
+c
+r
+i t
+e
+u r
+n
+i s c
+t
+o p
+d
+f o
+e
++ t
+n
+v e
+s
+e n
+it
+t a
+i
+i
+e
+a ct
+s
+ls ivematerialparticles DFelec¼(cid:2) bkek I eð1Þ 3 L 3 n b
+n
+þ L 3b
+s
+s þ 3 L 3 p b
+p
+; (6q)
+c Lithiumconcentrations (cid:2) (cid:3)
+N
+x
+M
+M
+o
+ic
+l
+r
+a
+o
+r
+s
+
+co
+u
+p
+xe
+ic
+s
+spatialvariable
+DFsolid ¼(cid:2)
+3
+I L
+sp
+p þ L
+sn
+n : (6r)
+r Macroscopicspatialvariable
+3.1.1 Electrode parameters. The modeling equations for
+8
+the electrode properties (eqn (7) and (8)) utilized in this work
+vc1
+>>>>>>>>><
+g
+t
+x
+þ
+e
+t
+I
+þ
+L
+I
+n
+; k¼n;
+c
+a
+u
+re
+rv
+p
+es
+re
+U
+se
+(cid:3)
+n
+ðc
+te
+*
+s
+Þ
+d
+w
+in
+ere
+th
+i
+i
+n
+s
+it
+s
+i
+u
+al
+b
+ly
+se
+m
+ct
+e
+io
+a
+n
+su
+.4
+r
+9
+ed
+Th
+b
+e
+y
+o
+C
+p
+h
+e
+e
+n
+n
+-c
+e
+i
+t
+rc
+a
+u
+l.
+i
+5
+t
+6
+p
+a
+o
+t
+t
+2
+e
+5
+nt
+°
+i
+C
+al
+.
+N
+e
+1
+;k
+¼(cid:2)3b
+k
+Deð1Þ
+vx
+e;kþ
+>>>>>>>>>:
+ð
+g
+1
+e
+(cid:2)
+;
+xÞtþI
+;
+k
+k
+¼
+¼
+s
+p
+;
+;
+k˛fn;s;pg: (6c)
+h
+T
+se
+h
+y
+t
+s
+e
+u
+te
+p
+m
+re
+e
+f
+s
+o
+a
+i
+r
+s
+s
+u
+b
+i
+r
+n
+o
+e
+t
+m
+t
+h
+h
+e
+e
+e
+n
+l
+g
+t
+e
+s
+r
+c
+a
+w
+t
+p
+r
+e
+o
+h
+r
+d
+i
+e
+t
+e
+e
+c
+s
+o
+.
++
+n
+C
+S
+d
+h
+i
+u
+O
+e
+c
+n
+x
+te
+n
+e
+d
+e
+t
+g
+u
+a
+a
+s
+l
+t
+i
+.
+i
+n
+v
+o
+g
+e
+b
+a
+e
+s
+l
+e
+t
+e
+h
+r
+c
+v
+r
+t
+e
+e
+r
+d
+e
+o
+-
+d
+e
+c
+e
+l
+o
+e
+.
+n
+c
+T
+t
+s
+r
+h
+i
+o
+d
+e
+d
+e
+o
+e
+ra
+t
+c
+h
+b
+e
+e
+l
+l
+e
+r
+l
+g e Lp electrode parameters are taken from Chen et al. and they are
+presentedinTable4.
+Thetemperature-dependentparameterssolid-statediffusion
+Boundaryconditions
+(cid:6)
+coefficients D
+(cid:3)
+ðc*
+a
+;TÞ and effective conductivity k±(T) are
+vc0 s;k (cid:6) (cid:6) (cid:6) ¼0; (6d) assumedtohaveArrheniustempe (cid:2) raturedepende (cid:3) nce: vr
+8
+k rk¼0 D
+(cid:3)
+ðTÞ¼D
+(cid:3)
+ðTmeasÞexp
+R
+E
+T
+D
+m
+(cid:3)
+eas
+(cid:2) E
+R
+D
+T
+(cid:3) (7)
+(cid:2) a C k g k k v v c r 0 s k ;k
+(cid:6)
+(cid:6) (cid:6) (cid:6) rk¼1 ¼
+>>><
+>>>: L (cid:2)
+I
+n I
+;
+; k
+k
+¼
+¼
+p
+n
+;
+;
+k˛fn;pg; (6e) k (cid:3) ðTÞ¼k (cid:3) ðTmeasÞexp
+(cid:2)
+R E T k m (cid:3) eas (cid:2) E R k T (cid:3)
+(cid:3)
+; (8)
+Lp
+whereE D±andE k±areactivationenergiesandT
+meas
+is298.15K
+(25°C).
+N1 e,nj x=0 =0,N1 e,pj x=1 =0, (6f) 3.1.2 Electrolyte parameters. Thissubsectionpresentsthe
+modeling equations utilized in this work for the electrolyte
+c1 e,nj x=Ln =c1 e,sj x=Ln ,N1 e,nj x=Ln =N1 e,sj x=Ln , (6g) properties (eqn (9)–(13)).49 The effective conductivity k eff(c
+e
+,T)
+c1 e,sj x=1−Lp =c1 e,pj x=1−Lp ,N1 e,sj x=1−Lp =N1 e,pj x=1−Lp . (6h)
+a
+vo
+n
+l
+d
+um
+d
+e
+iff
+fr
+u
+a
+s
+c
+i
+t
+o
+i
+n
+on
+c
+3
+o
+a
+e
+r
+ffi
+e
+c
+re
+ie
+la
+n
+t
+t
+ed
+D
+t e o
+ff(
+t
+c
+h e e
+,T
+c
+)
+or
+o
+r
+f
+esp
+el
+o
+e
+n
+c
+d
+tr
+i
+o
+n
+l
+g
+yt
+v
+e
+al
+o
+u
+c
+e
+c
+s
+u
+k
+p
+(c
+y
+e
+i
+,
+n
+T
+g
+)
+andD (c ,T)inpureelectrolyteby
+Initialconditions e e
+c0 s,k (r k ,0)=c k,0 ,k˛{n,p}, (6i) keff (ce ,T)=3 e 1.5k(ce ,T)andDeff (ce ,T)=3e 1.5De (ce ,T). (9)
+c1 e,k (x,0)=0,k˛{n,s,p}. (6j)
+dep
+B
+e
+o
+n
+t
+d
+h
+en
+k
+c
+(c
+e
+e
+:
+,T) and D e (c e ,T) have an Arrhenius temperature
+(cid:2) (cid:3)
+Terminalvoltage E E
+kðce ;TÞ¼kðce ;TmeasÞexp k (cid:2) k (10)
+V ¼Ueqþh rþh cþDFelecþDFsolid ; (6k) RTmeas RT
+(cid:2) (cid:3)
+where (cid:7) (cid:8)(cid:6) (cid:7) (cid:8)(cid:6) Deðce ;TÞ¼Deðce ;TmeasÞexp E k (cid:2) E k ; (11)
+(cid:6) (cid:6) RTmeas RT
+Ueq¼Up c0
+s;p
+(cid:6) (cid:2)Un c0
+s;n
+(cid:6) ; (6l)
+rp¼1 rn¼1 where E is the activation energy for both k and D , T is
+k e meas
+! ! 298.15K,k(c ,T )isacubicpolynomial56
+e meas
+I I
+h r ¼(cid:2)2sinh(cid:2)1 j
+0;p
+Lp (cid:2)2sinh(cid:2)1 j
+0;n
+Ln ; (6m) k(ce ,Tmeas )=1.297×10−10ce 3−7.94×10−5ce 1.5
+(cid:7) (cid:8)
++3.329×10−3ce
+(12)
+h c ¼2C eð1(cid:2)tþÞ c1 e;p (cid:2)c1 e;n ; (6n) andD (c ,T)isaquadraticpolynomial56
+e e
+30988 | RSCAdv.,2025,15,30980–31004 ©2025TheAuthor(s).PublishedbytheRoyalSocietyofChemistry
+.MP
+15:12:3
+6202/32/6
+no
+dedaolnwoD
+.5202
+tsuguA
+92 no dehsilbuP
+.elcitrA
+sseccA
+nepO
+.ecneciL
+detropnU
+0.3
+noitubirttA
+snommoC
+evitaerC
+a rednu
+desnecil
+si
+elcitra
+sihT
+View Article Online
+--- PAGE 10 ---
+Paper RSCAdvances
+Table4 Electrodeparametersusedinthiswork49
+Symbol Denition −Electrode +Electrode
+A Totalplanarelectrodearea,m2 0.1027 0.1027
+a Surfaceareatovolumeratio,m−1 3.84×105 3.82×105
+(cid:3)
+c MaximumLi+concentration,molm−3 33133 63104
+m(cid:3)
+c InitialLi+concentration,molm−3 29866 17038
+0(cid:3)
+D Li+diffusioncoefficientat25°C,m2s−1 3.3×10−14 4×10−15
+(cid:3)
+E ActivationenergyforLi+diffusion,Jmol−1 30300(ref.57) 25000(ref.58)
+D(cid:3)
+E Activationenergyforrateconstant,Jmol−1 35000 17800
+k(cid:3)
+k (De)intercalationrateconstantat25°C,ms−1 2.12×10−10 1.12×10−9
+(cid:3)
+r Electrodeparticleradius,m 5.86×10−6 5.22×10−6
+(cid:3)
+d Electrodethickness,m 8.52×10−5 7.56×10−5
+(cid:3)
+3 Electrolytevolumefraction 0.25 0.335
+e
+3 Activematerialvolumefraction 0.75 0.665
+a
+s Electrodeconductivity,Sm−1 215 0.18 (cid:3)
+Table5 Otherparametersusedinthemodel.AllvaluestakenfromChenetal.56
+Symbol Denition Value
+c EquilibriumLi+concentrationinelectrolyte,molm−3 1000
+eq
+Ek Activationenergyforelectrolyteconductivity,Jmol−1 17100(ref.57)
+F Faraday'sconstant,Cmol−1 96485
+Q Nominalcapacity,mAh 5000
+nom
+R Universalgasconstant,JK−1mol−1 8.314
+t+ Li+transferencenumber 0.2594
+V Uppercutoffvoltage,V 4.2
+max V Lowercutoffvoltage,V 2.5
+min
+d Separatorthickness,m 1.2×10−5
+s
+3 Separatorporosity 0.47
+e
+De (ce ,Tmeas )=8.794×10−17ce 2−3.972×10−13ce acrossvaryingclimatesandchargingscenarios.Understanding
++4.862×10−10. (13) the critical interactions between diverse degradation mecha-
+nisms during daily driving cycles is crucial for exploring the
+TheremainingparametersaretakenfromChenetal.56and impactofeachphaseofatypicaldayonbatteryhealth.Inthis
+listedinTable5. work, the three primary degradation modes – loss of lithium
+inventory(LLI)andlossofactivematerial(LAM)inthepositive
+3.2 Cell-leveldegradationmechanismsandtheir and negative electrodes50 – and their interplay under different
+interactionsinreal-worldconditions operationalconditionsarediscussed.
+The overall LLI experienced by a cell, resulting in reduced
+The research into the physics of battery degradation has
+signicantlyincreasedastheconcerntowardscyclelife,battery
+cyclablelithium,arisesfromsignicantsidereactions,SEIlayer
+growth,andlithiumplating,andanadditional,negligibleside
+performance, and safety has become the main concern. A
+reactioninvolvesthelossoflithiumtotheelectrolyte.47,48,62The
+comprehensive exploration of lithium-ion battery degradation
+development of the SEI layer immobilizes Li+ ions, causing
+wasconductedin2005,delvingintoagingmechanismsoccur-
+impedancechangesduetoporeblockage,ultimatelyleadingto
+ring at both the cell's anode and cathode electrodes59.34,42,60
+LLI.63 Lithium plating involves the deposition of lithium ions
+investigatedvariousdegradationmodesspanningthebattery's
+entire life-cycle and elucidated the cause-and-effect relation- ontotheanodesurface,formingathinlayeroflithiummetal.
+Thislithiumplatingcreates“deadlithium”byreactingresidual
+ships governing these degradation mechanisms. Further-
+lithium with the electrolyte. This interaction forms a high-
+more,61 focused on degradation mechanisms frequently
+impedancelm,resultinginirreversiblelithiumloss.64–66
+encountered during high-rate charging. Critical interactions
+(cid:2) (cid:3)
+t
+b
+i
+e
+o
+t
+n
+w
+a
+e
+l
+e
+c
+n
+on
+di
+d
+ff
+it
+e
+i
+r
+o
+e
+n
+n
+s
+t
+,
+d
+w
+e
+i
+g
+th
+ra
+i
+d
+n
+a
+s
+ti
+a
+o
+f
+n
+ety
+pr
+t
+o
+h
+c
+r
+e
+e
+s
+s
+s
+h
+e
+o
+s
+ld
+u
+s
+nd
+d
+e
+e
+r
+n
+n
+e
+o
+d
+rm
+b
+a
+y
+l
+m
+op
+a
+e
+n
+r
+u
+a-
+-
+LLI¼ 1(cid:2)
+m
+m
+in
+L
+it
+i
+ial
+(cid:4)100
+Li
+d
+fa
+i
+c
+v
+t
+e
+u
+rs
+re
+e
+rs
+d
+,
+e
+w
+g
+e
+ra
+re
+da
+e
+t
+x
+i
+a
+o
+m
+n
+i
+m
+ne
+e
+d
+c
+.
+h
+48
+a
+A
+ni
+n
+sm
+ot
+s
+ab
+a
+l
+t
+ee
+th
+ff
+e
+or
+n
+t
+e
+t
+g
+o
+a
+d
+ti
+i
+v
+r
+e
+ec
+e
+tl
+l
+y
+ec
+c
+t
+o
+r
+r
+o
+r
+d
+e
+e
+lat
+i
+e
+s ¼(cid:2)
+1 ð tdmLidt(cid:4)100 (14)
+madeby.49
+mi
+L
+n
+i
+itial
+0
+dt
+However, these studies did not specically investigate 3600
+degradation patterns and behaviors exhibited by lithium-ion mLi¼ ðq(cid:2)C(cid:2)þqþCþÞ (15)
+F
+batteries when subjected to real-world driving conditions
+©2025TheAuthor(s).PublishedbytheRoyalSocietyofChemistry RSCAdv.,2025,15,30980–31004 | 30989
+.MP
+15:12:3
+6202/32/6
+no
+dedaolnwoD
+.5202
+tsuguA
+92
+no
+dehsilbuP
+.elcitrA
+sseccA
+nepO
+.ecneciL
+detropnU
+0.3
+noitubirttA
+snommoC
+evitaerC
+a
+rednu
+desnecil
+si
+elcitra
+sihT
+View Article Online
+--- PAGE 11 ---
+RSCAdvances Paper
+Eqn(14),50denestheoverallLLIwithinacell,wherem is Table6 LGM5021700cylindricalcellparametersandspecifications
+Li
+the total moles of usable lithium in the negative and positive providedbythemanufacturer
+electrode particles, and q− and q+ are the scaled volume-
+Macroscalegeometry
+averaged particle concentrations of negative and positive elec-
+trodesrespectively.C − andC+representthechargecapacityof Negativecurrentcollectorthickness 1.20×10−5 [m]
+thenegativeandpositiveelectrode,respectively. Negativeelectrodethickness 8.52×10−5 [m]
+Due to stresses in the electrode material, Li-ion batteries Separatorthickness 1.20×10−5 [m]
+Positiveelectrodethickness 7.56×10−5 [m]
+experience mechanical damage, leading toLAM.49 Thiscauses Positivecurrentcollectorthickness 1.60×10−5 [m]
+the electrodes to lose their capacity, reducing the available Electrodeheight 6.50×10−2 [m]
+material for electrochemical interactions.48,50The stress in the Electrodewidth 1.58 [m]
+respectiveelectrodesleadstoparticlefractureorcracking.The Cellcoolingsurfacearea 5.31×10−3 [m2]
+criticalmodelingequationsforLAMduetoparticlecrackingare Cellvolume 2.42×10−5 [m3]
+discussedintheSISection.
+Currentcollectorproperties
+!
+LAMe ¼ 1(cid:2)
+Ce
+(cid:4)100 Negativecurrentcollector 58411000 [Sm−1]
+ðCeÞ inital conductivity
+ð (16) Positivecurrentcollectorconductivity 36914000 [Sm−1]
+1 tdCe
+¼(cid:2) dt(cid:4)100
+ðCeÞ inital 0 dt Density
+Negativecurrentcollectordensity 8960 [kgm−3]
+Eqn(16),50denestheLAMwithinacell,wheretheelectrode Positivecurrentcollectordensity 2700 [kgm−3]
+chargecapacity,Ce,isdenedas
+Specicheatcapacity
+Ce ¼ 3eAcL 3 e 6 ð 0 ce 0 Þ max F (17) Negativecurrentcollector-specic 385 [Jkg−1K−1]
+heatcapacity
+Here, 3e is the electrode active material volume fraction, the Positivecurrentcollectorspecicheat 897 [Jkg−1K−1]
+changesthatwillcausechangesintheelectrodecapacity.A and capacity
+c
+Le are the surface area of the current collector and electrode
+Thermalconductivity
+thickness,respectively,effectivelyrepresentingthetotalelectrode
+volume,andcedenestheelectrodemolarconcentration. Negativecurrentcollectorthermal 401 [Wm−1K−1]
+Along with the investigation into overall capacity fade, our conductivity
+Positivecurrentcollectorthermal 237 [Wm−1K−1]
+focusalsocentersoncomprehendingtheunderlyingphysicsof
+conductivity
+degradationprocessesindiverseoperatingconditionsinvolving
+various daily scenarios and driving patterns across different
+climaticconditions.Acomprehensivediscussionofthedesign
+of experiments, encompassing key conditions and parameters anda drivecycle testspanning7days isconducted forone of
+studiedinthiswork,ispresentedinthefollowingsection. the selected drive cycles, encompassing the entire designed
+dailycyclepattern.
+3.3 Calibrationoftheelectrochemicalcellmodel The parameters related to the electrode and cell thermody-
+namics, kinematics, and transport properties utilized in this
+Inthisstudy,anelectrochemicalmodelisemployedtosimulate
+work are determined from electrochemical tests performed by
+the behavior ofthe LGM5021700 cylindricalcell. The LGM50
+Chenetal.56onextractedelectrodematerials.Utilizingathree-
+cell contains a graphite-based negative electrode with a 10%
+electrodecongurationwithalithiummetalreferenceelectrode
+SiO massfractionandapositiveelectrodemadeofNMC-811.It
+x allows for determining individual electrode potentials, cell
+utilizesCelgard2325astheseparator,atri-layerpolypropylene/
+stoichiometry,andlithiumcontentinthepositiveandnegative
+polyethylene/polypropylene/polyolen membrane. The electro-
+lyte consists of a 1 mol dm
+−3
+LiPF solution in a mixture of
+electrodes. The cell's open circuit voltage (OCV) is also deter-
+6 minedbasedondataobtainedfromgalvanostaticintermittent
+ethylene carbonate (EC) and ethyl methyl carbonate (EMC) in
+titration technique (GITT) experiments. The current work
+a3:7volumeratio.Themodel'sparametersareacquiredfrom
+employs the physical properties of the cell components,
+a comprehensive set of experimental tests conducted by Chen
+includingelectrodes,separators,andcurrentcollectors,which
+et al.56 and Nyman et al.67 These published results extensively
+are characterized through direct measurements aer cell tear-
+characterize the cell's physical, chemical, and electrochemical
+down performed by Chen et al.56 Ion beam milling combined
+properties using various experimental techniques. The key
+with scanning electron microscopy is used to investigate the
+parameters and specications of the LGM50 21700 cell are
+porestructuresofthepositiveandnegativeelectrodesandthe
+presented in the Table 6.56 To further validate the electro-
+separator, providing crucial information regarding particle
+chemical model, experiments areconducted onanLGM50 21
+shapes, densities, packing density, and the distribution of
+700 cylindrical cell in a climate-controlled chamber, using
+conductivecarbonandbinderdomains(CBD).
+amanufacturer-speciedcyclelifetestingmethodfor50cycles,
+30990 | RSCAdv.,2025,15,30980–31004 ©2025TheAuthor(s).PublishedbytheRoyalSocietyofChemistry
+.MP
+15:12:3
+6202/32/6
+no
+dedaolnwoD
+.5202
+tsuguA
+92
+no
+dehsilbuP
+.elcitrA
+sseccA
+nepO
+.ecneciL
+detropnU
+0.3
+noitubirttA
+snommoC
+evitaerC
+a
+rednu
+desnecil
+si
+elcitra
+sihT
+View Article Online
+--- PAGE 12 ---
+Paper RSCAdvances
+Furthermore, the chemical and material properties of the 4.Lithiumplatingonthegraphiteanodesurfaceisasignif-
+cell components utilized in this work are analyzed by Chen icant degradation phenomenon among various aging mecha-
+etal.,56withtheelementalcompositionofSiO andgraphitein nisms. The lithium deposited can be both reversible and
+x
+the negative electrode and NMC composition in the positive irreversible.62Somelithiumisdepositedonthegraphitesurface
+electrode determined using energy-dispersive X-ray spectros- during intercalation through electrical contact. Following
+copy (EDS) and inductively coupled plasma optical emission a charge transfer reaction with the electrolyte, this deposited
+spectroscopy (ICP-OES), respectively. Parameters relevant to lithium will eventually re-integrate into the anode, a process
+masstransportphenomenaintheelectrolyteusedinthiswork referred to as lithium-stripping.69,70 The remaining portion of
+arederivedfromexperimentsbyNymanetal.67tocharacterize lithium reacts with the electrolyte to form a high-impedance
+mass transport using various electrochemical methods. Deter- lm, termed “dead lithium”.65,71 This loss of lithium is irre-
+miningionicconductivity,diffusivity,transportnumber,diffu- versible. Our current research assumes that lithium plating is
+sioncoefficient,andthermodynamicfactorofthesaltprovides predominantlyreversible,alongwithdeadlithiumcontributing
+essentialdataforthesimulation. to the irreversible portion, causing capacity fade and
+By utilizing such comprehensive experimental data,56,67 the accountingforthelossoflithiumduetolithiumplating.72
+simulation results inthis work are substantiated, allowing for 5. In this study, a lumped thermal model is considered for
+accelerated cyclic testing experiments while maintaining the simulatingthetemperatureeffectsofthebatterycell,assuming
+validity of the outcomes. This approach saves time and a uniform temperature distribution throughout the cell. The
+resources,particularlysincephysicallyconductinglongcycling model calculates the volume-averaged cell temperature based
+experiments involving thousands of cycles can be impractical onthebalancebetweenheatgenerationwithinthecellandheat
+andresource-intensive. dissipation to the environment. The differential equation gov-
+erningthetemperatureevolutionincorporatesheatgeneration
+from electrochemical reactions and ohmic losses, as well as
+3.4 Assumptions a cooling coefficient that accounts for the cell's geometry and
+In order to simplify our models and expedite computational coolingconditions.73
+processes, we have introduced certain foundational assump-
+tions.Theseassumptionshavebeencarefullyselectedtoensure 4 Results
+that they do not compromise the integrity of our results. We
+haveoutlinedtheseweightedassumptionsbelow:
+This section presents the outcomes of the investigation con-
+1. One complex interaction, i.e., between SEI layer growth cerning the effects of various parameters, including driving
+andparticlecracking,whichshowcasesthecomplexinterplayof
+behavior,dailyscenarios,climaticconditions,andchargerates,
+chemical and mechanical degradation leading to SEI layer
+onbatterydegradation.Fig.5depictsthemethodologyadopted
+growth on the crack, is not considered in this work. However, for developing a holistic framework to assess the end-of-life
+individually SEI layer growth and particle fatigue happening
+(EOL) of an EV battery, illustrating the key factors and
+togetheraremodelled,buttheSEIlayer'sdevelopmentonfresh
+processes considered in this analysis. The analysis explores
+cracks is not considered to avoid complexity. The reader is
+capacityfadefrombothchemicalandmechanicaldegradation
+advisedtorefertoref.49tounderstandthemodelingofSEIon
+perspectives, categorizing the capacity fade due to SEI layer
+cracksindetail.
+growth and lithium plating as chemical degradation, contrib-
+2.Wehaveassumedthatthelossoflithiumintheelectrolyte
+uting to Loss of Lithium Inventory (LLI) and the mechanical
+is negligible, and the electrolyte remains stable as electro-
+degradationcontributedbythefractureofparticleswithinthe
+chemical processes are anticipated to take place primarily
+electrodesduetotensilestress,accountingfortheLossofActive
+withinthepositiveandnegativeelectrodes.68Thetotallithium
+Material (LAM) in both the negative (LAMne) and positive
+concentrationintheelectrolyterepresentslessthan2%ofthe
+(LAMpe) electrodes. The other pivotal parameters remain
+overalllithiumcontentwithinacell.47Therefore,neglectingthe constanttodiscernthespeciceffectsofeachanalyzedfactorin
+loss of lithium in the electrolyte does not signicantly impact
+the subsections, allowing for the presentation of focused
+theoutcomeofouranalysis.
+results. Across the results presented in this section, the cycle
+3. A key focus of our research involves the phenomenon of
+numberreferstoadailycyclethatincludesdischarge,charge,
+SEIlayergrowth,whichwedescribeusingthesolvent-diffusion
+andrestinstancesspanning24hours,representingonefullday.
+mechanism. Most SEI models found in existing literature are
+Each cycle number corresponds to a single daily cycle. This
+based on the work of Safari et al.63 According to this body of studyemployssimulationsontheexperimentallyveriedmodel
+work,theSEIreactioncanbemodeledusingeitherthediffusion
+of the LG M50 cell to gain insights into battery performance
+ofsolventmoleculestowardsthegraphitesurfacethroughthe
+underdiverseoperationalconditions.
+existing SEI (referred to as the diffusion-solvent model) or
+solvent reduction kinetics at the graphite surface. Empirical
+evidencesuggeststhatthediffusion-limitedmodelalignsbetter 4.1 Impactofdrivingbehavioronbatteryaging
+with experimental data.49 Consequently, we have chosen to The inuence of driving behavior on battery degradation is
+employ solvent-diffusion-limited SEI growth modeling in our dissectedthroughacomprehensiveanalysisofdistinctdriving
+study. patterns: Pattern-1, Pattern-2, Pattern-3, and the standard
+©2025TheAuthor(s).PublishedbytheRoyalSocietyofChemistry RSCAdv.,2025,15,30980–31004 | 30991
+.MP
+15:12:3
+6202/32/6
+no
+dedaolnwoD
+.5202
+tsuguA
+92
+no
+dehsilbuP
+.elcitrA
+sseccA
+nepO
+.ecneciL
+detropnU
+0.3
+noitubirttA
+snommoC
+evitaerC
+a
+rednu
+desnecil
+si
+elcitra
+sihT
+View Article Online

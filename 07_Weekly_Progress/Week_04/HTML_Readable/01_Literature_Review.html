@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>01 Literature Review</title>
+  
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #1E293B;
+    background: #F8FBFF;
+    padding: 0;
+  }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 40px 32px 60px; background: #fff; }
+  h1 { font-size: 2em; color: #1B4F72; border-bottom: 3px solid #0096B7; padding-bottom: 10px; margin: 32px 0 16px; }
+  h2 { font-size: 1.45em; color: #025E8C; margin: 28px 0 10px; padding-left: 10px; border-left: 4px solid #0096B7; }
+  h3 { font-size: 1.15em; color: #0096B7; margin: 20px 0 8px; }
+  p  { margin: 8px 0; }
+  ul, ol { margin: 8px 0 8px 28px; }
+  li { margin: 4px 0; }
+  code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    background: #EBF5FB;
+    color: #025E8C;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 0.92em;
+  }
+  pre {
+    background: #1E293B;
+    color: #A8D8EA;
+    padding: 16px 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 14px 0;
+    font-size: 0.9em;
+    line-height: 1.55;
+  }
+  pre code { background: none; color: inherit; padding: 0; }
+  hr { border: none; border-top: 1px solid #E2E8F0; margin: 24px 0; }
+  blockquote {
+    border-left: 4px solid #0096B7;
+    background: #EBF5FB;
+    padding: 10px 16px;
+    margin: 14px 0;
+    color: #025E8C;
+    border-radius: 0 6px 6px 0;
+    font-style: italic;
+  }
+  a { color: #0096B7; }
+  a:hover { color: #E85D5D; }
+  .table-wrap { overflow-x: auto; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.93em; }
+  th { background: #1B4F72; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { border: 1px solid #D1E8F5; padding: 7px 12px; }
+  tr:nth-child(even) td { background: #F0F7FF; }
+  strong { color: #1B4F72; }
+  .nav { background: #1B4F72; padding: 16px 32px; position: sticky; top: 0; z-index: 100; }
+  .nav a { color: #A8D8EA; text-decoration: none; margin-right: 20px; font-size: 13px; font-weight: 500; }
+  .nav a:hover { color: #fff; }
+</style>
+</head>
+<body>
+  <div class="nav"><a href="00_README.html">README</a><a href="01_Literature_Review.html">Literature Review</a><a href="02_Dataset_Analysis.html">Datasets</a><a href="03_NMC_Chemistry.html">NMC Chemistry</a><a href="04_EV_Fleet_Data.html">Fleet Data</a><a href="05_Research_Methodology.html">Methodology</a></div>
+  <div class="page-wrap">
+    <h1>Literature Review — 5 Key Papers</h1>
+<h2>EG7030 Dissertation — Week 4 Detailed Notes</h2>
+<br>
+<hr>
+<br>
+<h2>Paper 1 (MOST RELEVANT — from uploaded PDF)</h2>
+<br>
+<h3>Citation</h3>
+<p>Mulpuri, S., Sah, B., & Kumar, A. (2025). <strong>Beyond drive cycles: mapping the intricacies of electric vehicle battery health in diverse environments and driving conditions.</strong> <em>RSC Advances</em>, 15, 30980–31004.</p>
+<br>
+<ul><li><strong>DOI</strong>: https://doi.org/10.1039/d5ra04379d</li>
+<li><strong>Journal</strong>: RSC Advances (Royal Society of Chemistry) — open access</li>
+<li><strong>Impact Factor</strong>: ~4.0</li>
+<li><strong>File</strong>: D1_RA-015-D5RA04379D.pdf (in your Research papers folder)</li></ul>
+<h3>What This Paper Is About</h3>
+<p>This paper studies how real-world driving conditions affect lithium-ion battery degradation in electric vehicles. The authors used an NMC-811 LGM50 21700 cylindrical cell (5 Ah capacity, made by LG) and applied the <strong>Single Particle Model with Electrolyte (SPMe)</strong> — an electrochemical model — to simulate battery aging under three different Indian regional driving patterns.</p>
+<br>
+<h3>Battery Cell Used</h3>
+<ul><li><strong>Cell</strong>: LGM50 21700 cylindrical lithium-ion cell</li>
+<li><strong>Chemistry</strong>: NMC-811 (LiNi₀.₈Mn₀.₁Co₀.₁O₂ positive electrode / graphite negative electrode)</li>
+<li><strong>Capacity</strong>: 5 Ah</li>
+<li><strong>Manufacturer</strong>: LG Energy Solution</li></ul>
+<h3>Three Driving Patterns Studied</h3>
+<ol><li><strong>Pattern 1 — Urban stop-go</strong> (city driving): Frequent acceleration and braking, short distances, high idle time. Causes the FASTEST battery degradation due to micro-cycling and high average C-rates.</li>
+<li><strong>Pattern 2 — Mixed urban-highway</strong>: Moderate speed variation. Intermediate degradation rate.</li>
+<li><strong>Pattern 3 — Highway cruising</strong>: Sustained high speed with fewer acceleration events. Slowest degradation rate.</li></ol>
+<h3>Degradation Mechanisms Identified</h3>
+<ul><li><strong>SEI (Solid Electrolyte Interphase) layer growth</strong>: Forms on the negative electrode (graphite) surface during cycling. Consumes lithium and increases internal resistance. Accelerated by high temperature and high C-rate.</li>
+<li><strong>Lithium plating</strong>: Occurs when charging rate exceeds lithium intercalation capacity. Deposits metallic lithium on graphite surface. Risk is highest during fast charging or low temperatures.</li>
+<li><strong>Particle cracking</strong>: Mechanical fracture of electrode particles due to repeated expansion/contraction. Creates new surface area → more SEI → accelerated capacity loss. Worse under high C-rate cycling.</li></ul>
+<h3>Drive Cycle Metrics Used</h3>
+<ul><li><strong>KI (Kinetic Intensity)</strong>: Measures how aggressively the vehicle accelerates and decelerates. Higher KI = higher battery stress.</li>
+<li><strong>RPA (Relative Positive Acceleration)</strong>: Ratio of positive acceleration work to total distance. Indicates how much energy is used for acceleration vs. constant speed.</li>
+<li><strong>PKE (Positive Kinetic Energy)</strong>: Total kinetic energy gained per unit distance. Related to C-rate demand on the battery.</li></ul>
+<h3>Key Findings</h3>
+<ul><li>Urban driving (Pattern 1) caused capacity fade ~2× faster than highway driving (Pattern 3)</li>
+<li>High C-rate + elevated temperature (above 35°C in Indian urban environments) compounds degradation multiplicatively</li>
+<li>Lithium plating was identified as the primary degradation mode under high-rate urban charging</li>
+<li>SPMe model successfully captured the non-linear nature of capacity fade under variable duty cycles</li></ul>
+<h3>Relevance to Your Dissertation (Why This Paper Matters)</h3>
+<ol><li><strong>Core thesis validation</strong>: Directly proves that duty cycle characteristics determine degradation rate — the central argument of your dissertation.</li>
+<li><strong>Chemistry alignment</strong>: Uses NMC-811, which you are also using (CALCE INR 18650-20R is NMC).</li>
+<li><strong>Model alignment</strong>: Uses SPMe which is implemented in PyBaMM — your Stage 6 simulation tool.</li>
+<li><strong>Fleet Severity Index (FSI) concept</strong>: The pattern-based degradation difference supports the idea of scoring fleet routes by severity.</li>
+<li><strong>Metric adoption</strong>: KI, RPA, PKE are the drive cycle features you will extract from the Fleet DNA dataset.</li></ol>
+<hr>
+<br>
+<h2>Paper 2 (RELEVANT — from uploaded PDF)</h2>
+<br>
+<h3>Citation</h3>
+<p>Si, X., Matsuda, K., et al. (2025). <strong>Capacity Estimation and Knee Point Prediction Using Electrochemical Impedance Spectroscopy for Lithium Metal Battery Degradation via Machine Learning.</strong> <em>Advanced Science</em>, 12, 2502336.</p>
+<br>
+<ul><li><strong>DOI</strong>: https://doi.org/10.1002/advs.202502336</li>
+<li><strong>Journal</strong>: Advanced Science (Wiley) — high impact, open access</li>
+<li><strong>Impact Factor</strong>: ~15.1</li>
+<li><strong>File</strong>: D2_ADVS-12-2502336.pdf (in your Research papers folder)</li></ul>
+<h3>What This Paper Is About</h3>
+<p>This paper uses <strong>Electrochemical Impedance Spectroscopy (EIS)</strong> measurements as input features to a machine learning model (XGBoost) to predict battery capacity and detect the "knee point" — the inflection point in the capacity-fade curve where degradation suddenly accelerates. SHAP (SHapley Additive exPlanations) is used to explain which EIS features drive the predictions.</p>
+<br>
+<h3>Battery Cell Used</h3>
+<ul><li><strong>Chemistry</strong>: LiNi₀.₈Mn₀.₁Co₀.₁O₂ positive electrode (NMC-811)</li>
+<li><strong>Type</strong>: Lithium metal battery (LMB) configuration</li></ul>
+<h3>What is EIS?</h3>
+<p>Electrochemical Impedance Spectroscopy measures how a battery responds to small AC signals at different frequencies. It produces a Nyquist plot showing:</p>
+<ul><li><strong>Zreal</strong> (resistance in ohms — real part): Related to ohmic resistance and SEI layer thickness</li>
+<li><strong>Zimag</strong> (imaginary part): Related to charge transfer resistance and double-layer capacitance</li>
+<li><strong>Frequency sweep</strong>: From 0.01 Hz to 100,000 Hz reveals different internal processes</li></ul>
+<p>The NASA PCoE dataset includes EIS measurements — making this paper methodology directly applicable to your NASA data.</p>
+<br>
+<h3>Machine Learning Approach</h3>
+<ul><li><strong>Model</strong>: XGBoost (extreme gradient boosting)</li>
+<li><strong>Features</strong>: EIS parameters at multiple frequencies (Zreal, Zimag, |Z|, phase angle)</li>
+<li><strong>Targets</strong>: Capacity estimation + knee point location</li>
+<li><strong>Explainability</strong>: SHAP values show which EIS frequencies correlate most strongly with capacity loss</li></ul>
+<h3>What is the Knee Point?</h3>
+<p>The capacity-cycle curve typically shows:</p>
+<ol><li>Initial stable region (gradual, linear fade)</li>
+<li><strong>Knee point</strong>: Sudden acceleration in capacity loss</li>
+<li>Rapid degradation region → End of Life (EoL)</li></ol>
+<p>Detecting the knee point early = actionable warning for fleet operators (typically at 70–80% SoH = time to replace in EV fleets).</p>
+<br>
+<h3>Key Findings</h3>
+<ul><li>EIS features measured at medium frequencies (1–100 Hz) are most predictive of capacity</li>
+<li>XGBoost outperforms linear models for knee point prediction</li>
+<li>SHAP reveals that Zreal at ~10 Hz is the dominant degradation indicator</li>
+<li>Capacity can be estimated with high accuracy (R²>0.95) purely from impedance measurements — no need to run full charge-discharge cycles</li></ul>
+<h3>Relevance to Your Dissertation</h3>
+<ol><li><strong>XGBoost is one of your planned ML models</strong> — this paper validates its use for battery degradation</li>
+<li><strong>SHAP framework</strong>: You are adopting SHAP for explainability in Stage 5 of your methodology</li>
+<li><strong>EIS data</strong>: NASA PCoE dataset has impedance measurements — enables direct comparison</li>
+<li><strong>Knee point</strong>: Maps to the SoH threshold (70–80%) used for EV fleet replacement decisions</li>
+<li><strong>NMC-811</strong>: Same chemistry as your selected cell — confirms generalisability</li></ol>
+<hr>
+<br>
+<h2>Paper 3 (RELEVANT — from uploaded PDF)</h2>
+<br>
+<h3>Citation</h3>
+<p>İnan, A., et al. (2025). <strong>Descriptive proximity-based modeling for accurate and explainable battery state-of-charge estimation.</strong> <em>Journal of Energy Storage</em>, 136, 118150.</p>
+<br>
+<ul><li><strong>DOI</strong>: https://doi.org/10.1016/j.est.2025.118150</li>
+<li><strong>Journal</strong>: Journal of Energy Storage (Elsevier)</li>
+<li><strong>Impact Factor</strong>: ~9.4</li>
+<li><strong>File</strong>: 1-s2.0-S2352152X25028634-main.pdf (in your Research papers folder)</li></ul>
+<h3>What This Paper Is About</h3>
+<p>This paper proposes a hybrid method combining <strong>DBSCAN clustering</strong> (an unsupervised ML algorithm) with <strong>LightGBM</strong> (a gradient boosting tree model) to estimate battery State of Charge (SoC) accurately and explainably. SHAP is used to identify which battery features are most important for SoC prediction.</p>
+<br>
+<h3>What is DBSCAN?</h3>
+<p>DBSCAN (Density-Based Spatial Clustering of Applications with Noise) is an unsupervised algorithm that:</p>
+<ul><li>Groups data points that are close together in feature space</li>
+<li>Labels outliers as noise</li>
+<li>In this paper: groups battery data by similar charging/discharging behaviour patterns</li>
+<li>Allows training separate LightGBM models for each cluster = better accuracy</li></ul>
+<h3>What is LightGBM?</h3>
+<p>LightGBM (Light Gradient Boosting Machine) is a gradient boosting framework developed by Microsoft. Key advantages:</p>
+<ul><li>Much faster than XGBoost for large datasets</li>
+<li>Handles categorical features natively</li>
+<li>Leaf-wise tree growth (better accuracy than level-wise)</li>
+<li>Ideal for tabular battery data (V, I, T, capacity, cycle count)</li></ul>
+<h3>Model Performance</h3>
+<ul><li><strong>R² ≈ 1.00</strong> (essentially perfect fit)</li>
+<li><strong>RMSE ≈ 0.13%</strong> SoC estimation error (extremely accurate)</li>
+<li>Outperforms LSTM and SVM on dynamic drive cycle data</li></ul>
+<h3>Input Features Used</h3>
+<ul><li>Voltage (V)</li>
+<li>Current (A)</li>
+<li>Capacity (Ah)</li>
+<li>Energy (Wh)</li>
+<li>Cycle count</li>
+<li>Temperature (°C)</li></ul>
+<p>These are exactly the features available in the CALCE and NASA datasets.</p>
+<br>
+<h3>Relevance to Your Dissertation</h3>
+<ol><li><strong>LightGBM is a core model</strong> in your planned ML ensemble (alongside XGBoost, Random Forest, LSTM)</li>
+<li><strong>SHAP for explainability</strong>: The same SHAP framework you are adopting in Stage 5</li>
+<li><strong>Feature alignment</strong>: The 6 features (V, I, capacity, energy, cycles, T) are all present in CALCE/NASA/Oxford</li>
+<li><strong>DBSCAN for clustering</strong>: Can be applied to cluster fleet duty cycle patterns in your Fleet DNA dataset</li>
+<li><strong>SoC estimation</strong>: Direct application to your dissertation's SoC modelling objective</li></ol>
+<hr>
+<br>
+<h2>Paper 4 (FOUNDATIONAL — from literature knowledge)</h2>
+<br>
+<h3>Citation</h3>
+<p>Severson, K. A., Attia, P. M., Jin, N., et al. (2019). <strong>Data-driven prediction of battery cycle life before capacity degradation.</strong> <em>Nature Energy</em>, 4, 383–391.</p>
+<br>
+<ul><li><strong>DOI</strong>: https://doi.org/10.1038/s41560-019-0356-8</li>
+<li><strong>Journal</strong>: Nature Energy (Nature Publishing Group)</li>
+<li><strong>Impact Factor</strong>: ~60+ (one of the highest in the field)</li>
+<li><strong>Dataset</strong>: Publicly available at https://data.matr.io/1/</li></ul>
+<h3>What This Paper Is About</h3>
+<p>This landmark 2019 paper from Stanford, MIT, and Toyota Research Institute demonstrated that machine learning can predict a battery's <strong>total cycle life</strong> using only data from the <strong>first 100 cycles</strong> — long before any significant capacity degradation has occurred.</p>
+<br>
+<h3>What Was Done</h3>
+<ul><li><strong>124 LFP (LiFePO₄) cells</strong> (A123 Systems, 1.1 Ah) were cycled under varied fast-charging protocols until end of life</li>
+<li>End of life = 80% of nominal capacity (same as SoH = 80%)</li>
+<li><strong>Features</strong>: Differences in discharge voltage curve between cycles 10 and 100, variance of discharge capacity over first 100 cycles, minimum, mean, skewness, etc.</li>
+<li><strong>Models</strong>: Elastic Net regression + Random Forest — tested on held-out cells</li>
+<li><strong>Result</strong>: Predicted cycle life within 9.1% error on unseen test cells</li></ul>
+<h3>Why This Paper is Foundational</h3>
+<ol><li><strong>Established ML viability</strong>: First high-quality demonstration that ML can predict battery lifetime before degradation is visible</li>
+<li><strong>Feature engineering approach</strong>: Shows that derived features (differences, variances) from charge/discharge curves outperform raw measurements</li>
+<li><strong>Public dataset</strong>: The 124-cell dataset is publicly available and used as a benchmark by many subsequent papers</li>
+<li><strong>Benchmark comparison</strong>: Your dissertation results should be compared against this Severson 2019 baseline</li></ol>
+<h3>Connection to Your Work</h3>
+<ul><li><strong>Chemistry difference</strong>: They used LFP; you are using NMC — NMC has more complex degradation, which is a research gap your dissertation addresses</li>
+<li><strong>Duty cycle gap</strong>: Their cells were charged under different CC protocols but not real EV drive cycles — your work extends this to fleet duty cycles</li>
+<li><strong>FSI concept</strong>: Their finding that charging protocol determines lifetime supports the Fleet Severity Index concept</li></ul>
+<hr>
+<br>
+<h2>Paper 5 (METHODOLOGY — from literature knowledge)</h2>
+<br>
+<h3>Citation</h3>
+<p>Sulzer, V., Marquis, S. G., Timms, R., Hasan, M., & Chapman, S. J. (2021). <strong>Python Battery Mathematical Modelling (PyBaMM).</strong> <em>Journal of Open Research Software</em>, 9(1), 14.</p>
+<br>
+<ul><li><strong>DOI</strong>: https://doi.org/10.5334/jors.309</li>
+<li><strong>Journal</strong>: Journal of Open Research Software (Ubiquity Press)</li>
+<li><strong>GitHub</strong>: https://github.com/pybamm-team/PyBaMM</li>
+<li><strong>Documentation</strong>: https://pybamm.readthedocs.io/</li>
+<li><strong>Developed at</strong>: University of Oxford Mathematical Institute</li></ul>
+<h3>What PyBaMM Is</h3>
+<p>PyBaMM is an open-source Python library for electrochemical battery modelling. It implements physically-grounded models that simulate battery internal chemistry mathematically. This is different from data-driven ML — PyBaMM is <strong>physics-based simulation</strong>.</p>
+<br>
+<h3>Models Implemented in PyBaMM</h3>
+<div class="table-wrap"><table>
+<tr><th>Model</th><th>Full Name</th><th>Complexity</th><th>Use Case</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th>SPM</th><th>Single Particle Model</th><th>Low</th><th>Fast screening</th></tr>
+<tr><td>SPMe</td><td>SPM with electrolyte</td><td>Medium</td><td>Realistic simulation</td></tr>
+<tr><td>DFN</td><td>Doyle-Fuller-Newman</td><td>High</td><td>Research-grade accuracy</td></tr>
+<tr><td>MPM</td><td>Many Particle Model</td><td>High</td><td>Electrode heterogeneity</td></tr>
+<p></table></div></p>
+<br>
+<h3>Degradation Submodels (Relevant to Your Dissertation)</h3>
+<ul><li><strong>SEI growth</strong>: Models the electrochemical reactions that form the SEI layer; outputs capacity loss and resistance increase per cycle</li>
+<li><strong>Particle cracking</strong>: Models mechanical fracture from diffusion-induced stress; outputs new surface area exposed to electrolyte</li>
+<li><strong>Lithium plating</strong>: Models the conditions under which lithium deposits as metal instead of intercalating; outputs irreversible capacity loss</li></ul>
+<h3>Why This Directly Applies to Your Dissertation</h3>
+<p>The dissertation brief (Stage 6 of your methodology) explicitly states:</p>
+<blockquote>"Validation using PyBaMM simulation framework (SPMe model)"</blockquote>
+<br>
+<p>This means you will:</p>
+<ol><li>Load NMC-811 parameters into PyBaMM</li>
+<li>Simulate capacity fade under Fleet DNA duty cycle stress profiles</li>
+<li>Compare PyBaMM simulation results against real CALCE/Oxford NMC data</li>
+<li>Use the comparison to validate your ML model predictions</li></ol>
+<h3>Getting Started with PyBaMM</h3>
+<pre><code>pip install pybamm
+<p>import pybamm</p>
+<br>
+<p>model = pybamm.lithium_ion.SPMe()</p>
+<p>geometry = model.default_geometry</p>
+<p>param = pybamm.ParameterValues("Chen2020")  # NMC-811 LGM50 cell parameters</p>
+<p>&lt;h1&gt;These are the EXACT parameters for the LGM50 21700 cell from Paper D1!&lt;/h1&gt;</p>
+<p></code></pre></p>
+<br>
+<p>The <code>Chen2020</code> parameter set in PyBaMM is for the <strong>LGM50 NMC-811 cell</strong> — exactly the same cell used in Mulpuri et al. (2025, Paper D1). This means you have validated electrochemical parameters ready to use.</p>
+<br>
+<hr>
+<br>
+<h2>Summary Table — All 5 Papers</h2>
+<br>
+<div class="table-wrap"><table>
+<tr><th>#</th><th>Paper</th><th>Journal</th><th>Year</th><th>Chemistry</th><th>ML Method</th><th>Explainability</th><th>Relevance</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th>1</th><th>Mulpuri et al.</th><th>RSC Advances</th><th>2025</th><th>NMC-811</th><th>SPMe (physics)</th><th>Mechanistic</th><th>Highest — duty cycle degradation</th></tr>
+<tr><td>2</td><td>Si et al.</td><td>Advanced Science</td><td>2025</td><td>NMC-811</td><td>XGBoost</td><td>SHAP</td><td>High — EIS + ML for RUL</td></tr>
+<tr><td>3</td><td>İnan et al.</td><td>J. Energy Storage</td><td>2025</td><td>Li-ion</td><td>LightGBM + DBSCAN</td><td>SHAP</td><td>High — SoC estimation framework</td></tr>
+<tr><td>4</td><td>Severson et al.</td><td>Nature Energy</td><td>2019</td><td>LFP</td><td>Elastic Net + RF</td><td>None</td><td>Foundational — benchmark</td></tr>
+<tr><td>5</td><td>Sulzer et al.</td><td>J. Open Res. Sw.</td><td>2021</td><td>Universal</td><td>PyBaMM (physics)</td><td>Physics-based</td><td>Direct — dissertation Stage 6 tool</td></tr>
+<p></table></div></p>
+<br>
+<hr>
+<br>
+<h2>Additional Reading Recommendations for Week 5–6</h2>
+<br>
+<p>When you sit down to read more papers, prioritise these:</p>
+<br>
+<ol><li><strong>Chen et al. (2020)</strong> — "Development of Experimental Techniques for Parameterization of Multi-scale Lithium-ion Battery Models" — <em>J. Electrochem. Soc.</em> — Provides the NMC-811 LGM50 parameters used in PyBaMM</li></ol><ul><li>DOI: https://doi.org/10.1149/1945-7111/ab9050</li></ul>
+<ol><li><strong>Attia et al. (2022)</strong> — "Closed-loop optimization of fast-charging protocols for batteries with machine learning" — <em>Nature</em> — Extends Severson 2019 approach with active learning</li></ol><ul><li>DOI: https://doi.org/10.1038/s41586-020-1994-5</li></ul>
+<ol><li><strong>Stiaszny et al. (2014)</strong> — "Electrochemical characterization and post-mortem analysis of aged LiFePO4–Li[Ni0.5Co0.2Mn0.3]O2 lithium ion batteries" — Degradation mechanisms reference</li></ol><ul><li>Journal of Power Sources, DOI: 10.1016/j.jpowsour.2014.08.060</li></ul>
+<ol><li><strong>Ng et al. (2020)</strong> — "Predicting the State of Charge and Health of Batteries using Data-Driven Machine Learning" — <em>Nature Machine Intelligence</em></li></ol><ul><li>DOI: https://doi.org/10.1038/s42256-020-0156-7</li></ul>
+  </div>
+</body>
+</html>

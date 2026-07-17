@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>02 Dataset Analysis</title>
+  
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #1E293B;
+    background: #F8FBFF;
+    padding: 0;
+  }
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 40px 32px 60px; background: #fff; }
+  h1 { font-size: 2em; color: #1B4F72; border-bottom: 3px solid #0096B7; padding-bottom: 10px; margin: 32px 0 16px; }
+  h2 { font-size: 1.45em; color: #025E8C; margin: 28px 0 10px; padding-left: 10px; border-left: 4px solid #0096B7; }
+  h3 { font-size: 1.15em; color: #0096B7; margin: 20px 0 8px; }
+  p  { margin: 8px 0; }
+  ul, ol { margin: 8px 0 8px 28px; }
+  li { margin: 4px 0; }
+  code {
+    font-family: 'Consolas', 'Courier New', monospace;
+    background: #EBF5FB;
+    color: #025E8C;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 0.92em;
+  }
+  pre {
+    background: #1E293B;
+    color: #A8D8EA;
+    padding: 16px 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 14px 0;
+    font-size: 0.9em;
+    line-height: 1.55;
+  }
+  pre code { background: none; color: inherit; padding: 0; }
+  hr { border: none; border-top: 1px solid #E2E8F0; margin: 24px 0; }
+  blockquote {
+    border-left: 4px solid #0096B7;
+    background: #EBF5FB;
+    padding: 10px 16px;
+    margin: 14px 0;
+    color: #025E8C;
+    border-radius: 0 6px 6px 0;
+    font-style: italic;
+  }
+  a { color: #0096B7; }
+  a:hover { color: #E85D5D; }
+  .table-wrap { overflow-x: auto; margin: 16px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.93em; }
+  th { background: #1B4F72; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { border: 1px solid #D1E8F5; padding: 7px 12px; }
+  tr:nth-child(even) td { background: #F0F7FF; }
+  strong { color: #1B4F72; }
+  .nav { background: #1B4F72; padding: 16px 32px; position: sticky; top: 0; z-index: 100; }
+  .nav a { color: #A8D8EA; text-decoration: none; margin-right: 20px; font-size: 13px; font-weight: 500; }
+  .nav a:hover { color: #fff; }
+</style>
+</head>
+<body>
+  <div class="nav"><a href="00_README.html">README</a><a href="01_Literature_Review.html">Literature Review</a><a href="02_Dataset_Analysis.html">Datasets</a><a href="03_NMC_Chemistry.html">NMC Chemistry</a><a href="04_EV_Fleet_Data.html">Fleet Data</a><a href="05_Research_Methodology.html">Methodology</a></div>
+  <div class="page-wrap">
+    <h1>Dataset Analysis — NASA · CALCE · Oxford</h1>
+<h2>EG7030 Dissertation — Week 4 Detailed Notes</h2>
+<br>
+<hr>
+<br>
+<h2>1. NASA Prognostics Center of Excellence (PCoE) Battery Dataset</h2>
+<br>
+<h3>Source & Access</h3>
+<ul><li><strong>Organisation</strong>: NASA Ames Research Center — Prognostics Center of Excellence (PCoE)</li>
+<li><strong>Dataset page</strong>: https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/</li>
+<li><strong>Direct dataset</strong>: "Battery Data Set" (#5 in PCoE repository)</li>
+<li><strong>Local path</strong>: <code>C:\Users\pure ev\Music\Term 3\NASA Prognostics (PCoE) Battery Dataset\5. Battery Data Set\</code></li></ul>
+<h3>What's in the NASA Dataset?</h3>
+<br>
+<p><strong>Battery Cells Used:</strong></p>
+<div class="table-wrap"><table>
+<tr><th>Battery ID</th><th>Chemistry</th><th>Type</th><th>Notes</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th>B0005</th><th>LCO (LiCoO₂)</th><th>18650 cylindrical</th><th>2 Ah nominal</th></tr>
+<tr><td>B0006</td><td>LCO</td><td>18650 cylindrical</td><td>2 Ah nominal</td></tr>
+<tr><td>B0007</td><td>LCO</td><td>18650 cylindrical</td><td>2 Ah nominal</td></tr>
+<tr><td>B0018</td><td>LCO</td><td>18650 cylindrical</td><td>2 Ah nominal</td></tr>
+<p></table></div></p>
+<br>
+<p><strong>End-of-Life (EoL) Criterion</strong>: Capacity drops to 1.4 Ah (30% below 2 Ah nominal) = SoH = 70%</p>
+<br>
+<p><strong>Data Files</strong>: Stored as .mat (MATLAB) format, named <code>B0005.mat</code>, <code>B0006.mat</code>, etc.</p>
+<br>
+<h3>Three Types of Experiments Per Battery</h3>
+<br>
+<ol><li><strong>Charging</strong>: Constant Current (CC) at 1.5A until voltage reaches 4.2V, then Constant Voltage (CV) at 4.2V until current drops to 20mA</li>
+<li><strong>Discharging</strong>: Constant Current (CC) at 2A until voltage reaches 2.7V (B0005, B0007) or 2.5V (B0006, B0018)</li>
+<li><strong>Impedance (EIS)</strong>: Electrochemical Impedance Spectroscopy at 0.1Hz–5kHz at various states of charge</li></ol>
+<h3>Variables Recorded Per Cycle</h3>
+<div class="table-wrap"><table>
+<tr><th>Variable</th><th>Description</th><th>Unit</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th><code>Voltage_measured</code></th><th>Terminal voltage during operation</th><th>V</th></tr>
+<tr><td><code>Current_measured</code></td><td>Current during operation</td><td>A</td></tr>
+<tr><td><code>Temperature_measured</code></td><td>Case temperature</td><td>°C</td></tr>
+<tr><td><code>Current_charge</code></td><td>Charge current</td><td>A</td></tr>
+<tr><td><code>Voltage_charge</code></td><td>Charge voltage</td><td>V</td></tr>
+<tr><td><code>Time</code></td><td>Timestamp</td><td>s</td></tr>
+<tr><td><code>Capacity</code></td><td>Discharge capacity</td><td>Ah</td></tr>
+<p></table></div></p>
+<br>
+<h3>EIS Data Structure</h3>
+<p>Each EIS test contains:</p>
+<ul><li><code>Battery_impedance.Re</code> — Real part of impedance vs. frequency</li>
+<li><code>Battery_impedance.Rct</code> — Charge transfer resistance</li>
+<li><code>Battery_impedance.Frequency</code> — Frequency points (Hz)</li></ul>
+<p><strong>Why EIS Matters</strong>: Paper D2 (Si et al. 2025) uses EIS features (Zreal, Zimag at specific frequencies) as XGBoost features to predict capacity. The NASA dataset is the ONLY one of the three that includes EIS measurements — making it essential for replicating D2 methodology.</p>
+<br>
+<h3>How Many Cycles?</h3>
+<ul><li>B0005: ~167 cycles until EoL</li>
+<li>B0006: ~168 cycles until EoL</li>
+<li>B0007: ~168 cycles until EoL</li>
+<li>B0018: ~132 cycles until EoL</li></ul>
+<hr>
+<br>
+<h2>2. CALCE Battery Research Group Dataset</h2>
+<br>
+<h3>Source & Access</h3>
+<ul><li><strong>Organisation</strong>: Center for Advanced Life Cycle Engineering (CALCE), University of Maryland</li>
+<li><strong>Dataset page</strong>: https://calce.umd.edu/battery-data</li>
+<li><strong>Local path</strong>: <code>C:\Users\pure ev\Music\Term 3\CALCE Battery Dataset\</code></li></ul>
+<h3>What's in the CALCE Dataset?</h3>
+<br>
+<p>The CALCE dataset has <strong>multiple battery series</strong> with different chemistries:</p>
+<br>
+<p>#### CS2 Series (LCO — Lithium Cobalt Oxide)</p>
+<ul><li><strong>Cell</strong>: CS2 prismatic cells</li>
+<li><strong>Chemistry</strong>: LiCoO₂ (LCO) / graphite</li>
+<li><strong>Capacity</strong>: 1.1 Ah nominal</li>
+<li><strong>Local</strong>: <code>CS\</code> folder (zip files: CS2_33.zip, CS2_35.zip, etc.)</li>
+<li><strong>Experiments</strong>: Cycle aging under constant charge/discharge rates</li></ul>
+<p>#### CX2 Series (LCO)</p>
+<ul><li><strong>Cell</strong>: CX2 prismatic cells</li>
+<li><strong>Chemistry</strong>: LiCoO₂ (LCO)</li>
+<li><strong>Local</strong>: <code>CX\</code> folder</li>
+<li><strong>Experiments</strong>: Similar to CS2 series</li></ul>
+<p>#### A123 Battery (LFP — Lithium Iron Phosphate)</p>
+<ul><li><strong>Cell</strong>: ANR26650M1A cylindrical</li>
+<li><strong>Chemistry</strong>: LiFePO₄ (LFP) / graphite</li>
+<li><strong>Capacity</strong>: 2.3 Ah</li>
+<li><strong>Local</strong>: <code>A123 Battery\</code> folder</li>
+<li><strong>Experiments</strong>: Various charge rates</li></ul>
+<p>#### INR 18650-20R — THE NMC CELL (Most Important for Your Study)</p>
+<ul><li><strong>Cell</strong>: Samsung INR 18650-20R</li>
+<li><strong>Chemistry</strong>: NMC (Nickel Manganese Cobalt Oxide)</li>
+<li><strong>Capacity</strong>: 2.0 Ah nominal</li>
+<li><strong>Local</strong>: <code>INR 18650-20R Battery\</code> folder</li>
+<li><strong>Why Important</strong>: This is the <strong>NMC cell</strong> in the CALCE dataset — your selected chemistry</li></ul>
+<p>#### Pouch Cells</p>
+<ul><li><strong>Local</strong>: <code>Pouch Cells\</code> folder</li>
+<li>Various chemistries</li></ul>
+<p>#### Dynamic Test Profile</p>
+<ul><li><strong>Local</strong>: <code>Dynamic Test Profile\</code> folder</li>
+<li>Includes <strong>DST (Dynamic Stress Test)</strong>, <strong>FUDS (Federal Urban Driving Schedule)</strong>, <strong>US06</strong> profiles</li>
+<li>These dynamic profiles simulate real-world driving more closely than constant CC-CV tests</li></ul>
+<h3>Variables in CALCE CSV Files</h3>
+<div class="table-wrap"><table>
+<tr><th>Column</th><th>Description</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th>Cycle_Index</th><th>Cycle number</th></tr>
+<tr><td>Start_Time</td><td>Cycle start timestamp</td></tr>
+<tr><td>End_Time</td><td>Cycle end timestamp</td></tr>
+<tr><td>Start_Voltage</td><td>Voltage at cycle start (V)</td></tr>
+<tr><td>End_Voltage</td><td>Voltage at cycle end (V)</td></tr>
+<tr><td>Start_Current</td><td>Current at start (A)</td></tr>
+<tr><td>Charge_Capacity</td><td>Capacity charged (Ah)</td></tr>
+<tr><td>Discharge_Capacity</td><td>Capacity discharged (Ah)</td></tr>
+<tr><td>Charge_Energy</td><td>Energy charged (Wh)</td></tr>
+<tr><td>Discharge_Energy</td><td>Energy discharged (Wh)</td></tr>
+<p></table></div></p>
+<br>
+<h3>How to Access INR 18650-20R Data</h3>
+<p>The NMC cell data is in: <code>C:\Users\pure ev\Music\Term 3\CALCE Battery Dataset\INR 18650-20R Battery\</code></p>
+<br>
+<p>This should contain CSV or Excel files with cycle-by-cycle capacity data showing degradation from ~2.0 Ah down to ~1.4 Ah over hundreds of cycles.</p>
+<br>
+<hr>
+<br>
+<h2>3. Oxford Battery Degradation Dataset</h2>
+<br>
+<h3>Source & Access</h3>
+<ul><li><strong>Organisation</strong>: University of Oxford, Department of Engineering Science</li>
+<li><strong>Dataset paper</strong>: Birkl et al. (2017), "Degradation diagnostics for lithium ion cells"</li>
+<li><strong>Dataset DOI</strong>: https://doi.org/10.5287/ora-p22a6e67s</li>
+<li><strong>Local path</strong>: <code>C:\Users\pure ev\Music\Term 3\NASA Prognostics (PCoE) Battery Dataset\Oxford\</code></li></ul>
+<p><em>(Note: The Oxford dataset is stored inside the NASA folder in your local machine)</em></p>
+<br>
+<h3>What's in the Oxford Dataset?</h3>
+<br>
+<p><strong>Cell Families:</strong></p>
+<div class="table-wrap"><table>
+<tr><th>Series</th><th>Full Name</th><th>Chemistry</th><th>Format</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th>BMP</th><th>Battery Modelling Pouch</th><th>NMC-type pouch</th><th>.mat + .csv</th></tr>
+<tr><td>BMR</td><td>Battery Modelling Round</td><td>Similar NMC pouch</td><td>.mat + .csv</td></tr>
+<tr><td>SPM</td><td>Single Particle Model test</td><td>NMC pouch</td><td>.mat + .csv</td></tr>
+<p></table></div></p>
+<br>
+<p><strong>Key File</strong>: <code>Oxford_Battery_Degradation_Dataset_1.mat</code> — contains the main dataset</p>
+<br>
+<h3>Variables in Oxford Dataset</h3>
+<ul><li>Voltage (V)</li>
+<li>Current (A)</li>
+<li>Temperature (°C)</li>
+<li>Capacity (Ah)</li>
+<li>State of Health (SoH) — directly computed and stored</li>
+<li>State of Charge (SoC) — estimated and stored</li>
+<li>Cycle number</li></ul>
+<h3>How Oxford Data Was Collected</h3>
+<ul><li><strong>Check-up tests</strong>: Every 100 cycles, batteries were discharged at low C-rate (C/25) to measure true capacity</li>
+<li><strong>Aging cycles</strong>: High-rate cycling between check-ups</li>
+<li><strong>Temperature-controlled</strong>: Experiments done at 25°C (standard) and other temperatures</li></ul>
+<hr>
+<br>
+<h2>Common Points Across All Three Datasets</h2>
+<br>
+<div class="table-wrap"><table>
+<tr><th>Feature</th><th>NASA</th><th>CALCE</th><th>Oxford</th></tr>
+<p></table></div></p>
+<p>TABLE_SEP</p>
+<div class="table-wrap"><table>
+<tr><th>Voltage measurements</th><th>Yes</th><th>Yes</th><th>Yes</th></tr>
+<tr><td>Current measurements</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>Temperature measurements</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>Capacity per cycle</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>SoH derivable</td><td>Yes</td><td>Yes</td><td>Yes (direct)</td></tr>
+<tr><td>SoC derivable</td><td>Yes</td><td>Yes</td><td>Yes (direct)</td></tr>
+<tr><td>RUL calculable</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>EIS / Impedance data</td><td>Yes</td><td>No</td><td>No</td></tr>
+<tr><td>Dynamic drive profiles</td><td>No</td><td>Yes (DST/FUDS)</td><td>No</td></tr>
+<tr><td>NMC chemistry available</td><td>No (LCO only)</td><td>Yes (INR 18650-20R)</td><td>Yes (pouch cells)</td></tr>
+<tr><td>Multi-rate experiments</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>Temperature variation</td><td>Limited</td><td>Limited</td><td>Yes</td></tr>
+<p></table></div></p>
+<br>
+<h3>Three Key Common Points (For Presentation)</h3>
+<br>
+<p><strong>1. Core Measurement Variables (V, I, T, Capacity)</strong></p>
+<p>All three datasets record voltage, current, temperature, and capacity every cycle. These 4 variables are the input features for every ML model you will train.</p>
+<br>
+<p><strong>2. Capacity Fade as SoH Indicator</strong></p>
+<p>All three show gradual capacity fade from nominal to End-of-Life (70–80% of nominal). SoH = Q_current / Q_nominal (×100%). This is derivable from all three datasets identically.</p>
+<br>
+<p><strong>3. Controlled Cycling Protocols Enable Comparison</strong></p>
+<p>All use CC-CV (Constant Current – Constant Voltage) charging, which allows direct cross-dataset comparison of aging rates despite different chemistries.</p>
+<br>
+<hr>
+<br>
+<h2>Why These Datasets Work Together</h2>
+<br>
+<pre><code>NASA PCoE  ──┐
+<p>├──► Common Features ──► ML Training ──► SoH/RUL Model</p>
+<p>CALCE NMC  ──┤   (V, I, T, Capacity)   (NMC cells)    (Explainable via SHAP)</p>
+<p>│                                              │</p>
+<p>Oxford NMC ──┘                                              ▼</p>
+<p>Fleet Severity Index (FSI)</p>
+<p>Applied to Fleet DNA data</p>
+<p></code></pre></p>
+<br>
+<ul><li><strong>NASA</strong>: Provides EIS features for Paper D2 methodology replication</li>
+<li><strong>CALCE NMC + Oxford</strong>: Provide NMC-chemistry training data for ML models</li>
+<li><strong>CALCE Dynamic profiles</strong>: Provide duty-cycle-like data for bridging lab→fleet gap</li>
+<li><strong>Fleet DNA</strong>: Provides real-world EV fleet data to apply FSI concept</li></ul>
+<hr>
+<br>
+<h2>Data Preprocessing Plan (Stage 1–2 of Methodology)</h2>
+<br>
+<h3>Step 1: Extract Raw Data</h3>
+<pre><code>&lt;h1&gt;NASA - read MATLAB files&lt;/h1&gt;
+<p>import scipy.io</p>
+<p>data = scipy.io.loadmat('B0005.mat')</p>
+<br>
+<p>&lt;h1&gt;CALCE - read CSV&lt;/h1&gt;</p>
+<p>import pandas as pd</p>
+<p>calce = pd.read_csv('INR18650_20R_Cycle1.csv')</p>
+<br>
+<p>&lt;h1&gt;Oxford - read MATLAB&lt;/h1&gt;</p>
+<p>oxford = scipy.io.loadmat('Oxford_Battery_Degradation_Dataset_1.mat')</p>
+<p></code></pre></p>
+<br>
+<h3>Step 2: Compute SoH</h3>
+<pre><code>&lt;h1&gt;SoH formula&lt;/h1&gt;
+<p>Q_nominal = 2.0  # Ah for CALCE NMC cell</p>
+<p>soh = discharge_capacity / Q_nominal * 100  # As percentage</p>
+<p></code></pre></p>
+<br>
+<h3>Step 3: Feature Engineering</h3>
+<p>From each cycle, extract:</p>
+<ul><li>Mean discharge voltage</li>
+<li>Voltage variance</li>
+<li>Capacity (Ah)</li>
+<li>Energy (Wh)</li>
+<li>Temperature (mean, max, min)</li>
+<li>C-rate (current / capacity)</li>
+<li>Cycle number</li>
+<li>Delta-capacity (change from previous cycle)</li></ul>
+<h3>Step 4: SoC Estimation</h3>
+<pre><code>&lt;h1&gt;Coulomb counting for SoC&lt;/h1&gt;
+<p>dt = 1  # time step in seconds</p>
+<p>I = current_array  # discharge current</p>
+<p>Q_total = 2.0  # Ah</p>
+<p>soc = 1.0 - (np.cumsum(I * dt) / 3600) / Q_total</p>
+<p></code></pre></p>
+<br>
+  </div>
+</body>
+</html>

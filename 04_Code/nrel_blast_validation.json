@@ -1,0 +1,417 @@
+{
+  "blast_validation": {
+    "n_checkpoints": 1932,
+    "chemistries": [
+      "NMC811",
+      "NMC622",
+      "LFP",
+      "NCA"
+    ],
+    "profiles": [
+      "lab_cc",
+      "urban_fleet",
+      "highway_fleet",
+      "delivery_truck"
+    ],
+    "temperatures_C": [
+      10.0,
+      25.0,
+      40.0
+    ],
+    "overall_rmse": 20.439,
+    "overall_mae": 18.991,
+    "overall_r2": -5.9431,
+    "clf_accuracy": 12.58,
+    "per_condition": [
+      {
+        "chemistry": "NMC811",
+        "profile": "lab_cc",
+        "temperature_C": 10.0,
+        "n": 4,
+        "rmse": 20.953,
+        "r2": -2.2283
+      },
+      {
+        "chemistry": "NMC811",
+        "profile": "lab_cc",
+        "temperature_C": 25.0,
+        "n": 3,
+        "rmse": 17.353,
+        "r2": -0.9353
+      },
+      {
+        "chemistry": "NMC811",
+        "profile": "urban_fleet",
+        "temperature_C": 10.0,
+        "n": 4,
+        "rmse": 24.924,
+        "r2": -2.2284
+      },
+      {
+        "chemistry": "NMC811",
+        "profile": "urban_fleet",
+        "temperature_C": 25.0,
+        "n": 3,
+        "rmse": 19.886,
+        "r2": -1.0083
+      },
+      {
+        "chemistry": "NMC811",
+        "profile": "highway_fleet",
+        "temperature_C": 10.0,
+        "n": 4,
+        "rmse": 23.089,
+        "r2": -2.2283
+      },
+      {
+        "chemistry": "NMC811",
+        "profile": "highway_fleet",
+        "temperature_C": 25.0,
+        "n": 3,
+        "rmse": 18.715,
+        "r2": -0.9763
+      },
+      {
+        "chemistry": "NMC811",
+        "profile": "delivery_truck",
+        "temperature_C": 10.0,
+        "n": 4,
+        "rmse": 25.695,
+        "r2": -2.228
+      },
+      {
+        "chemistry": "NMC811",
+        "profile": "delivery_truck",
+        "temperature_C": 25.0,
+        "n": 3,
+        "rmse": 21.192,
+        "r2": -1.0408
+      },
+      {
+        "chemistry": "NMC622",
+        "profile": "lab_cc",
+        "temperature_C": 10.0,
+        "n": 62,
+        "rmse": 21.434,
+        "r2": -7.6364
+      },
+      {
+        "chemistry": "NMC622",
+        "profile": "lab_cc",
+        "temperature_C": 25.0,
+        "n": 14,
+        "rmse": 18.037,
+        "r2": -3.5464
+      },
+      {
+        "chemistry": "NMC622",
+        "profile": "lab_cc",
+        "temperature_C": 40.0,
+        "n": 4,
+        "rmse": 13.224,
+        "r2": -0.3405
+      },
+      {
+        "chemistry": "NMC622",
+        "profile": "urban_fleet",
+        "temperature_C": 10.0,
+        "n": 69,
+        "rmse": 21.441,
+        "r2": -7.6939
+      },
+      {
+        "chemistry": "NMC622",
+        "profile": "urban_fleet",
+        "temperature_C": 25.0,
+        "n": 16,
+        "rmse": 18.244,
+        "r2": -3.7526
+      },
+      {
+        "chemistry": "NMC622",
+        "profile": "urban_fleet",
+        "temperature_C": 40.0,
+        "n": 5,
+        "rmse": 14.398,
+        "r2": -0.5751
+      },
+      {
+        "chemistry": "NMC622",
+        "profile": "highway_fleet",
+        "temperature_C": 10.0,
+        "n": 65,
+        "rmse": 21.454,
+        "r2": -7.6616
+      },
+      {
+        "chemistry": "NMC622",
+        "profile": "highway_fleet",
+        "temperature_C": 25.0,
+        "n": 15,
+        "rmse": 18.255,
+        "r2": -3.6638
+      },
+      {
+        "chemistry": "NMC622",
+        "profile": "highway_fleet",
+        "temperature_C": 40.0,
+        "n": 5,
+        "rmse": 15.195,
+        "r2": -0.6299
+      },
+      {
+        "chemistry": "NMC622",
+        "profile": "delivery_truck",
+        "temperature_C": 10.0,
+        "n": 84,
+        "rmse": 21.32,
+        "r2": -7.7816
+      },
+      {
+        "chemistry": "NMC622",
+        "profile": "delivery_truck",
+        "temperature_C": 25.0,
+        "n": 19,
+        "rmse": 17.616,
+        "r2": -3.9159
+      },
+      {
+        "chemistry": "NMC622",
+        "profile": "delivery_truck",
+        "temperature_C": 40.0,
+        "n": 6,
+        "rmse": 13.715,
+        "r2": -0.6635
+      },
+      {
+        "chemistry": "LFP",
+        "profile": "lab_cc",
+        "temperature_C": 10.0,
+        "n": 361,
+        "rmse": 20.999,
+        "r2": -7.4287
+      },
+      {
+        "chemistry": "LFP",
+        "profile": "lab_cc",
+        "temperature_C": 25.0,
+        "n": 54,
+        "rmse": 17.323,
+        "r2": -4.3831
+      },
+      {
+        "chemistry": "LFP",
+        "profile": "lab_cc",
+        "temperature_C": 40.0,
+        "n": 10,
+        "rmse": 12.007,
+        "r2": -0.8095
+      },
+      {
+        "chemistry": "LFP",
+        "profile": "urban_fleet",
+        "temperature_C": 10.0,
+        "n": 324,
+        "rmse": 20.979,
+        "r2": -7.4252
+      },
+      {
+        "chemistry": "LFP",
+        "profile": "urban_fleet",
+        "temperature_C": 25.0,
+        "n": 49,
+        "rmse": 17.367,
+        "r2": -4.3498
+      },
+      {
+        "chemistry": "LFP",
+        "profile": "urban_fleet",
+        "temperature_C": 40.0,
+        "n": 10,
+        "rmse": 13.024,
+        "r2": -0.9244
+      },
+      {
+        "chemistry": "LFP",
+        "profile": "highway_fleet",
+        "temperature_C": 10.0,
+        "n": 344,
+        "rmse": 20.989,
+        "r2": -7.4277
+      },
+      {
+        "chemistry": "LFP",
+        "profile": "highway_fleet",
+        "temperature_C": 25.0,
+        "n": 52,
+        "rmse": 17.404,
+        "r2": -4.3782
+      },
+      {
+        "chemistry": "LFP",
+        "profile": "highway_fleet",
+        "temperature_C": 40.0,
+        "n": 10,
+        "rmse": 12.453,
+        "r2": -0.8601
+      },
+      {
+        "chemistry": "LFP",
+        "profile": "delivery_truck",
+        "temperature_C": 10.0,
+        "n": 190,
+        "rmse": 21.044,
+        "r2": -7.3926
+      },
+      {
+        "chemistry": "LFP",
+        "profile": "delivery_truck",
+        "temperature_C": 25.0,
+        "n": 30,
+        "rmse": 17.6,
+        "r2": -4.0976
+      },
+      {
+        "chemistry": "LFP",
+        "profile": "delivery_truck",
+        "temperature_C": 40.0,
+        "n": 6,
+        "rmse": 12.659,
+        "r2": -0.5497
+      },
+      {
+        "chemistry": "NCA",
+        "profile": "lab_cc",
+        "temperature_C": 10.0,
+        "n": 18,
+        "rmse": 21.854,
+        "r2": -6.0101
+      },
+      {
+        "chemistry": "NCA",
+        "profile": "lab_cc",
+        "temperature_C": 25.0,
+        "n": 7,
+        "rmse": 19.256,
+        "r2": -2.4344
+      },
+      {
+        "chemistry": "NCA",
+        "profile": "lab_cc",
+        "temperature_C": 40.0,
+        "n": 3,
+        "rmse": 14.276,
+        "r2": -0.218
+      },
+      {
+        "chemistry": "NCA",
+        "profile": "urban_fleet",
+        "temperature_C": 10.0,
+        "n": 14,
+        "rmse": 21.678,
+        "r2": -5.5152
+      },
+      {
+        "chemistry": "NCA",
+        "profile": "urban_fleet",
+        "temperature_C": 25.0,
+        "n": 6,
+        "rmse": 19.93,
+        "r2": -2.199
+      },
+      {
+        "chemistry": "NCA",
+        "profile": "urban_fleet",
+        "temperature_C": 40.0,
+        "n": 3,
+        "rmse": 16.592,
+        "r2": -0.3129
+      },
+      {
+        "chemistry": "NCA",
+        "profile": "highway_fleet",
+        "temperature_C": 10.0,
+        "n": 16,
+        "rmse": 21.862,
+        "r2": -5.7895
+      },
+      {
+        "chemistry": "NCA",
+        "profile": "highway_fleet",
+        "temperature_C": 25.0,
+        "n": 6,
+        "rmse": 18.583,
+        "r2": -2.1319
+      },
+      {
+        "chemistry": "NCA",
+        "profile": "highway_fleet",
+        "temperature_C": 40.0,
+        "n": 3,
+        "rmse": 15.393,
+        "r2": -0.2648
+      },
+      {
+        "chemistry": "NCA",
+        "profile": "delivery_truck",
+        "temperature_C": 10.0,
+        "n": 9,
+        "rmse": 21.379,
+        "r2": -4.4902
+      },
+      {
+        "chemistry": "NCA",
+        "profile": "delivery_truck",
+        "temperature_C": 25.0,
+        "n": 4,
+        "rmse": 19.073,
+        "r2": -1.4768
+      },
+      {
+        "chemistry": "NCA",
+        "profile": "delivery_truck",
+        "temperature_C": 40.0,
+        "n": 3,
+        "rmse": 21.718,
+        "r2": -0.4938
+      }
+    ]
+  },
+  "fleet_dna_ki": {
+    "Delivery Trucks": {
+      "n_trips": 553,
+      "ki_mean": 0.6037,
+      "ki_std": 0.0761,
+      "ki_median": 0.5978,
+      "ki_p25": 0.5525,
+      "ki_p75": 0.6447,
+      "ki_max": 0.8647
+    },
+    "Transit Buses": {
+      "n_trips": 472,
+      "ki_mean": 0.6314,
+      "ki_std": 0.0838,
+      "ki_median": 0.6156,
+      "ki_p25": 0.5616,
+      "ki_p75": 0.6971,
+      "ki_max": 0.8811
+    },
+    "Refuse Trucks": {
+      "n_trips": 387,
+      "ki_mean": 0.8132,
+      "ki_std": 0.1183,
+      "ki_median": 0.8224,
+      "ki_p25": 0.7512,
+      "ki_p75": 0.8955,
+      "ki_max": 1.214
+    }
+  },
+  "calce_reference": {
+    "chemistry": "LiCoO2",
+    "profile": "CC",
+    "ki_mean": 0.0,
+    "note": "Constant current lab \u2014 KI=0 by definition",
+    "rmse": 3.73,
+    "r2": 0.9839
+  }
+}

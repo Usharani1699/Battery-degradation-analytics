@@ -1,0 +1,1030 @@
+
+--- PAGE 1 ---
+RESEARCH ARTICLE
+www.advancedscience.com
+Capacity Estimation and Knee Point Prediction Using
+Electrochemical Impedance Spectroscopy for Lithium Metal
+Battery Degradation via Machine Learning
+Qianli Si,* Shoichi Matsuda, Yasunobu Ando, Toshiyuki Momma,
+and Yoshitaka Tateyama*
+1.Introduction
+Lithium-metalbatteries(LMBs)areemergingasapromisingnext-generation
+energystorageduetotheirexceptionallyhighenergydensity.However, Lithium-ion batteries (LIBs) have become
+foundational in powering a wide range of
+accuratelypredictingtheirperformanceremainschallengingbecauseofthe
+moderntechnologies,fromconsumerelec-
+complexdegradationmechanisms.Inthisstudy,amachinelearning(ML)
+tronics to electric vehicles (EVs) and en-
+frameworkisproposedthatcombineselectrochemicalimpedance ergy storage systems.[1] As renewable en-
+spectroscopy(EIS)withtheXGBoostalgorithmtodeveloptwopredictive ergy adoption continues to grow, there is
+models:oneforestimatingcapacitydegradationandanotherfordetectingthe an increasing demand for batteries with
+improved performance metrics, including
+kneepoint(KP)—acriticalinflectionpointinthedegradationtrajectory.
+higherenergydensity,enhancedsafety,and
+SHapleyAdditiveexPlanations(SHAP)analysisisemployedtointerpret
+longercyclelife.However,conventionalLIB
+featureimportance,revealingthatlow-frequencyimaginaryimpedance
+technology often faces significant difficul-
+components—associatedwithdiffusion-limitedprocessessuchaslithium ties, such as capacity degradation and in-
+depletionandaccumulation—aremostinfluentialforcapacityestimation. creasedimpedance,particularlyunderhigh
+Conversely,high-frequencyfeaturesrelatedtochargetransferresistanceplay energy-density designs or extended oper-
+ational cycles.[2] In critical applications,
+adominantroleintheKPdetection.Toreducedatacomplexityandimprove
+such as EVs, batteries typically need re-
+modelefficiency,theinputbyselectingspecificfrequencypointsbasedon
+placement once their capacity drops be-
+SHAPvaluesisfurtheroptimized.Theoptimizedmodelsexhibitcomparable low 80%, making accurate predictions of
+orimprovedaccuracycomparedtothoseusingthewholeEISdataandhave battery state of health (SoH) and remain-
+reasonableperformanceonunseentestdata.Thefindingshighlightthat ing useful life (RUL) essential to prevent
+unexpected failures and optimize battery
+EIS-basedMLmodelscanaccuratelyforecastheaslthofLMBs,providing
+use.[3] The urgency for reliable, rapid bat-
+deeperinsightsintotheiragingprocessesandenhancingbattery
+tery health assessment is also driven by
+managementstrategies.
+theneedforeffectiverecyclingandreplace-
+mentpractices.Tosustainthistransforma-
+tiveenergyshift,thereisanurgentneedto
+Q.Si,T.Momma,Y.Tateyama S.Matsuda,Y.Tateyama
+DepartmentofNanoscienceandNanoengineering NIMS-SoftBankAdvancedTechnologiesDevelopmentCenter
+FacultyofScienceandEngineering NationalInstituteforMaterialsScience(NIMS)
+WasedaUniversity 1-1Namiki,Tsukuba,Ibaraki305-0044,Japan
+3-4-1Okubo,Shinjuku-ku169-8555,Japan
+Y.Ando,Y.Tateyama
+E-mail:SI.Qianli@nims.go.jp;tateyama@cls.iir.isct.ac.jp
+LaboratoryforChemistryandLifeScience
+Q.Si,S.Matsuda,Y.Tateyama InstituteofIntegratedResearch
+ResearchCenterforEnergyandEnvironmentalMaterials(GREEN) InstituteofScienceTokyo
+NationalInstituteforMaterialsScience(NIMS) 4259Nagatsuta-cho,Midori-ku,Yokohama226-8501,Japan
+1-1Namiki,Tsukuba,Ibaraki305-0044,Japan
+TheORCIDidentificationnumber(s)fortheauthor(s)ofthisarticle
+canbefoundunderhttps://doi.org/10.1002/advs.202502336
+©2025TheAuthor(s).AdvancedSciencepublishedbyWiley-VCH
+GmbH.ThisisanopenaccessarticleunderthetermsoftheCreative
+CommonsAttributionLicense,whichpermitsuse,distributionand
+reproductioninanymedium,providedtheoriginalworkisproperlycited.
+DOI:10.1002/advs.202502336
+Adv.Sci.2025,12,2502336 2502336(1of11) ©2025TheAuthor(s).AdvancedSciencepublishedbyWiley-VCHGmbH
+--- PAGE 2 ---
+www.advancedsciencenews.com www.advancedscience.com
+developadvancedbatterychemistriesandefficienthealthestima- cal point in the degradation trajectory where accelerated aging
+tiontechnologies. begins.
+OnepromisingalternativetoLIBsisthelithiummetalbattery Todate,mostexistingapproacheshavebeenlimitedtostable,
+(LMB),which,withitslithiummetalanode,offersasignificantly commercialLIBs,[20–22]leavingasignificantgapintheliterature
+highertheoreticalspecificcapacity(3860mAhg−1 comparedto regardingtheapplicationofEISfortheperformanceprediction
+372mAhg−1 forgraphiteinLIBs)andalowerelectrodepoten- ofLMBs.Furthermore,whilesomestudieshavefocusedonpre-
+tial(−3.04Vvsstandardhydrogenelectrode).[4]Thepracticaluse dictingthedegradationtrajectoryortheremainingcapacityfor
+ofLMBs,however,ishinderedbythelimitedchemicalandme- LIBsusingEIS,[16–18,23]noworkhasyetbeenconductedtopredict
+chanicalstabilityoflithiummetal.Additionally,mostliquidelec- theKP.Tofillthisgap,inthisstudy,weintegrateEISdata,the
+trolytesundergodecompositiononthelithiumsurface,resulting Extreme Gradient Boosting (XGBoost) machine learning (ML)
+inanunstablesolidelectrolyteinterphase(SEI)andthepersis- algorithm,[24]andSHAP(SHapleyAdditiveexPlanations)[25,26]to
+tentconsumptionoflithiumandelectrolyte.Theseissuescom- predictthedischargecapacityandtheKPofLMBs.TheMLmod-
+promise battery safety and reduce cycle life. These instabilities elsarebuiltusingdatafrom16LMBs,with8batteriesusedfor
+areinfluencedby awide rangeoffactors, includingcellchem- trainingandsevenoutoftheothereightfortesting(excluding
+istry,celldesignparameters,andoperatingconditions.Thecom- oneduetoitsunusualdegradationbehavior).Bycarefullyselect-
+plexityofthesefactorsmakesitchallengingtoefficientlyexplore ing specific EIS features, such as the low-frequency range and
+andoptimizebatteryperformance.[5] theimaginarycomponentsforthecapacityestimation,andhigh-
+Traditionalbatteryagingstudieswerebasedonmodelingmi- frequencycomponentsalongsidetherealimpedancepartforthe
+croscopic degradation processes, such as the growth of SEI,[6] KPprediction,wedemonstratethattailoredfeatureselectioncan
+lithiumplating,[7] andthelossofactivematerial.[8] Whilethese significantlyenhancemodelaccuracy,particularlywhenapplied
+models provide valuable physical insights, it is impractical to tothechallengingandoftenunstablebehaviorofLMBs.Byde-
+characterizeandsimulateeverydegradationmechanismdueto velopingefficientandinterpretablemodels,weaimtoimprove
+theircomplexity.Toovercomethislimitation,recentstudieshave theaccuracyofpredictions,providingvaluableinsightsintobat-
+shiftedtowarddata-drivenapproaches.Previousresearchhasof- teryagingprocessesandadvancingthedevelopmentofpredictive
+ten focused on features extracted from cycle data,[9,10] yet data- tools for more effective battery management and performance
+drivenmethodsfacechallengesinselectingphysicallymeaning- optimization.
+fulinputsanddevelopingrobuststatisticalmodels.Data-driven
+studiesonaginginLMBsremainlimited,however,ourprevious 2.ExperimentalSection
+studywasabletopredictthecyclelifeofLMBsusingfeaturesde-
+rivedfromthecycletestdata.[11]Additionally,Liuetal.introduced 2.1.LMBFabricationandDataExtraction
+asequentialexplainablelearningframework(SELF)tofacilitate
+interpretableanalysisofacceleratedagingpatternsinLMBs.Us- In our project, total 16 single-layer stacked pouch-type
+ingdatafromjustthefirst10cycles,SELFachievedatesterror LMB cells (8 as training dataset, 8 as testing dataset) were
+of15.2%inpredictingthekneepoint(KP)ofthecapacitydegra- assembled, consisting of a positive electrode made of
+dationtrajectory.[12] LiNi Mn Co O (40 mm × 30 mm) with mass loading
+0.8 0.1 0.1 2
+Incontrasttoconventionalcurrent/voltagedata,electrochemi- of 30 mg cm−2, a separator (46 mm × 36 mm), and a nega-
+calimpedancespectroscopy(EIS)providesrichinsightsintoma- tive electrode comprising a 50 μm thick layer of lithium on a
+terialproperties,interfacialphenomena,andelectrochemicalre- 10 μm thick copper (Cu) current collector (42 mm × 32 mm).
+actions by measuring the current response to a voltage pertur- The details of cell components were described in our previous
+bation across a wide range of frequencies (including real part, reports.[25,26] Allcellswereassembledinadryroomwithadew
+imaginarypart).[13,14]EISeffectivelycaptureschangesinthecath- point below −50 °C, and electrolyte injection took place in an
+ode,anode,electrolyte,solidelectrolytelayer,andothercompo- Ar-filledgloveboxwithadewpointbelow−85°C.
+nentsofLIBsthroughouttheagingprocess.[15]Researchcombin- The fabricated cells were subjected to repeated
+ingEISanddata-drivenmethodshasbeendoneinthepastfew charge/discharge cycle tests with different 8 kinds of condi-
+years.Forinstance,Zhangetal.employedanextensivedatasetof tions. For each condition, two cells were evaluated. The data
+impedancespectrawithinaGaussianprocessregressionmodel for one cell was used as a training machine learning model,
+toforecastbatterycapacityandestimateitslifespan.[16]Similarly, while the other was used to test the model. The details of the
+T.K.Pradyumnaetal.estimatedthecapacityofLIBscombining cyclingtestconditionaresummarizedinTableS1(Supporting
+convolutionalneuralnetworksandEIS.[17]Inaddition,basedon Information). The charge/discharge cycle test of the cells was
+the dataset of Zhang et al., Xia et al. estimated the SoH using conducted with a constant current within a voltage range of
+partialEISfeatures.[18] 2–4.2 V, which basically underwent 100–200 cycles, and the
+However, the existing research primarily focuses on well- capacity data were recorded continuously. The EIS test was
+established, commercially available LIBs, where the capac- conducted at 8 states which include 1) charge capacity 0 mAh
+ity degradation follows relatively stable trends. In contrast, (fully discharged state), 2) charge capacity 24 mAh, 3) charge
+LMBs exhibit much more complex and nonlinear degrada- capacity48mAh,4)chargeat4.2V(fullchargevoltage),5)dis-
+tion behaviors due to the instability associated with the use chargecapacity0mAh(fullychargedstate),6)dischargecapacity
+of lithium metal as the anode. As such, LMBs face signifi- 24mAh,7)dischargecapacity48mAh,and8)dischargeat2V
+cant challenges, including dendrite growth and rapid capacity (the cut-off voltage of discharge). In each state, the frequency
+loss,[19] particularly as the battery approaches the KP, a criti- rangeswereselectedbetween0.009HZand10KHZwithatotal
+Adv.Sci.2025,12,2502336 2502336(2of11) ©2025TheAuthor(s).AdvancedSciencepublishedbyWiley-VCHGmbH
+21983844,
+2025,
+27,
+Downloaded
+from
+https://advanced.onlinelibrary.wiley.com/doi/10.1002/advs.202502336
+by
+NICE,
+National
+Institute
+for
+Health
+and
+Care
+Excellence,
+Wiley
+Online
+Library
+on
+[23/06/2026].
+See
+the
+Terms
+and
+Conditions
+(https://onlinelibrary.wiley.com/terms-and-conditions)
+on
+Wiley
+Online
+Library
+for
+rules
+of
+use;
+OA
+articles
+are
+governed
+by
+the
+applicable
+Creative
+Commons
+License
+--- PAGE 3 ---
+www.advancedsciencenews.com www.advancedscience.com
+Figure1. ImpedancespectraforBatteryNo.13andBatteryNo.15.Thecolorbarindicatesdifferentcycles.
+of36frequencypointswhicharespecifiedinTableS2(Support- algorithmidentifiestheKPasthepointofmaximumcurvaturein
+ingInformation).ThecorrespondingEISdataatthefrequency thecapacitydegradationcurve,ensuringanobjectiveandrepro-
+pointsareusedasfeaturesinthisproject.Detailedinformation duciblereference.Duringtesting,themodelpredictsKPsfortest
+about these features can be found in the supplementary Excel batteriesbasedsolelyontheirEISdata.TheactualKPsfortest-
+file.However,duringsomeofthestates,theEISdataofsomeof ingbatteriesareindependentlydeterminedusingtheKneedal-
+the batteries were incomplete with respect to the cycles except gorithm,servingexclusivelyasavalidationbenchmark.Thisap-
+forstates:chargecapacity0mAh,chargeat4.2V,anddischarge proachensuresthatpredictionsarebasedonlearnedimpedance-
+capacity0mAh.Hence,thesethreestatesareselectedforfurther degradationrelationships,whilepredictedKPprovidesanunbi-
+research.Here,wedisplayedtheimpedancespectraforbatteries asedevaluationofmodelaccuracy.
+No.13and15atthefullydischargedstateinFigure1,theother Todevelopbothmodels,XGBoostregressorwasemployed,a
+batteries’impedancespectraareshowninFigureS1(Supporting widelyrecognizedmachinelearningalgorithmknownforitsef-
+Information).EISspectrawereplottedatregularintervalsfrom ficiency,scalability,andpredictiveaccuracy.XGBoostconstructs
+cycles5,10,15,20,…,uptothefinalcycle,thex-axisrepresents an ensemble of decision trees sequentially, where each succes-
+therealpart,versusthenegativeimaginarypartiny-axis.Each sivetreecorrectstheresidualerrorsofitspredecessors,optimiz-
+batteryshowsdistinctchangesinimpedancespectraastheyage. ingthemodelbyminimizingaspecifiedlossfunction.Thealgo-
+The raw experimental EIS data are then utilized as features in rithmincorporatesseveraladvancedtechniques,includingreg-
+thecurrentwork. ularization,treepruning,andparallelization,toenhanceperfor-
+manceandmitigateoverfitting.Duetoitsspeed,robustness,and
+abilitytohandlelarge,complexdatasets,XGBoostisextensively
+2.2.MachineLearningProcess usedinbothresearchandindustrialapplications.Moreover,XG-
+Boostprovidesvaluableinsightsintofeatureimportance,allow-
+Totally, two ML models were constructed in this work, EIS- ingfortheidentificationofkeyEISfeaturesthatcontributemost
+Capacity model and EIS-KP model. The EIS-Capacity model is significantlytothemodel’spredictions.Toensureoptimalper-
+a ML framework designed to estimate LMB capacity using the formance, a grid search with 5-fold cross-validation was con-
+EISdata.ThetrainingdatasetcomprisesEISsamplesaggregated ductedforhyperparametertuning.Adetailedexplanationofthe
+from all training batteries, structured as a matrix with dimen- XGBoostalgorithmandparameteroptimizationareprovidedin
+sions1050×72.Here,eachrowrepresentsasinglebatterycycle, Notes S1 and S2 (Supporting Information) respectively in the
+andthe72inputfeaturescorrespondtotheimpedancespectra Supportinginformation.
+components: the first 36 columns are the real parts, while the Toevaluatetheperformanceofthemachinelearningmodels,
+imaginarypartsarelistedintheremaining36columns.Thetar- thefollowingthreeperformanceindiceswereimplemented.
+getvaluesarethemeasuredcapacitiesofthetrainingbatteries, 1.Meanabsoluteerror(MAE)
+establishingadirectmappingbetweenimpedancecharacteristics
+andcapacitydegradation.Formodelevaluation,themeasuredca-
+pacitiesofthetestbatteryserveasgroundtruth,whicharecom- ∑n
+paredwiththemodel’spredictedcapacitiestoassessgeneraliza- MAE= n 1 | |y i −ŷ i | | (1)
+tionperformance.Thisframeworkensuresthatthemodellearns i=1
+therelationshipbetweenimpedancefeaturesandcapacityevolu-
+tionacrosscycles,enablingrobuststate-of-healthestimation.
+The EIS-KP model aims to predict the KP, a critical transi- 2.Rootmeansquare(RMSE)
+tionincapacitydegradationrate,usingtheEISdata.Thetraining
+datasetconsistsof572EISsamples(572×72matrix),whereeach
+√
+samplecorrespondstoacycleprecedingtheKPdetectioninthe √ √ ∑n ( ) trainingbatteries.Thetargetvaluesaretheremainingcyclenum- RMSE= √ n 1 y i −ŷ i 2 (2)
+bersuntiltheKPoccurs,derivedfromtheKneedalgorithm.This i=1
+Adv.Sci.2025,12,2502336 2502336(3of11) ©2025TheAuthor(s).AdvancedSciencepublishedbyWiley-VCHGmbH
+21983844,
+2025,
+27,
+Downloaded
+from
+https://advanced.onlinelibrary.wiley.com/doi/10.1002/advs.202502336
+by
+NICE,
+National
+Institute
+for
+Health
+and
+Care
+Excellence,
+Wiley
+Online
+Library
+on
+[23/06/2026].
+See
+the
+Terms
+and
+Conditions
+(https://onlinelibrary.wiley.com/terms-and-conditions)
+on
+Wiley
+Online
+Library
+for rules
+of
+use;
+OA
+articles
+are
+governed
+by
+the applicable
+Creative
+Commons
+License
+--- PAGE 4 ---
+www.advancedsciencenews.com www.advancedscience.com
+3.Coefficientofdetermination(R2) featuresbasedontheiraverageimpact,SHAPoffersamoregran-
+∑ ( ) ularanddetailedexplanationofhoweachfeatureinfluencesindi-
+n y −̂y 2 vidualpredictions.ThiscapabilitymakesSHAPparticularlyvalu-
+R2=1− ∑ i=1( i i ) (3) ableforunderstandingcomplex,nonlinearrelationshipsinML
+n y −ȳ 2
+i=1 i models,asitnotonlyidentifiesimportantfeaturesbutalsoex-
+plainstheircontributiontospecificpredictions.
+here,nrepresentsthenumberofsamples,y i andŷ i represents Inthiswork,SFIanalysiswasappliedtoboththecapacityes-
+theactualvaluesandthepredictedvalues.TheMAEmeasures
+timationmodelandtheKPpredictionmodeltoevaluatetherela-
+howclosethepredictionsaretotheactualoutcomes.Incontrast,
+tivecontributionofeachEISfeature.Specifically,SFIscoreswere
+theRMSEcapturesthespreadoferrorsandismoresensitiveto
+computedtoidentifythemostinfluentialEISfeaturesaffecting
+largerdiscrepanciescomparedtoMAE.Smallervaluesforboth
+capacity degradation and KP prediction. Unlike traditional fea-
+MAEandRMSEindicatebettermodelperformance,whilehigher
+ture importance methods, which only rank features based on
+valuessuggestpoorerpredictions.Thecoefficientofdetermina-
+theiraverageimpact,SFIoffersamoredetailedandinterpretable
+tionR2 metric,expressedasapercentage,ideallyreaches100%
+explanationofeachfeature’sinfluenceonindividualpredictions.
+or 1, indicating a strong correlation between the observed and
+Thismethodallowsustovisualizethedistributionoffeatureim-
+predictedvalues. portanceacrossdifferentbatterycycles,providingdeeperinsights
+intowhichfeaturesplaythemostsignificantroleinpredicting
+batterybehavior.
+2.3.XGBoostFeatureImportance(XFI)Analysis Figure2illustratestheschematicworkflowsofthesetwomod-
+els.Initially,thewholeEISdatasetwasintegratedwiththeXG-
+XFIanalysisisapowerfulmethodforidentifyingthekeyfeatures Boost ML algorithm to predict capacity and KP. Subsequently,
+in a dataset, which have the greatest influence on the model’s SHAP analysis was employed to identify and extract key fea-
+predictions. By understanding which features are most impor- turescontributingtomodelperformance.Usingtheseselected
+tant,researcherscanenhancemodelperformance,reducecom- features,simplifiedmachinelearningmodelswereconstructed,
+plexity,andgainvaluableinsightsintotheunderlyingvariables ensuringinterpretabilitywhilemaintainingpredictiveaccuracy.
+drivingthepredictions.XGBoostprovidesseveralmethodstocal- The workflows highlight the systematic approach taken to ad-
+culatefeatureimportancescores,eachofferingauniqueperspec- dressthechallengesofLMBdegradationprediction.
+tiveonfeaturecontributions.Onesuchmethodistheweightap-
+proach,whichevaluateshowofteneachfeatureisusedtosplit
+nodes across all decision trees in the model. Features that are
+3.ResultsandDiscussion
+utilizedmorefrequentlyduringthesplittingprocessareconsid-
+eredmoreimportant,astheyplayamoresignificantroleinthe 3.1.LMBCapacityEstimationbyEIS
+model’s decision-making. This method highlights the features
+thatthemodelreliesonmostheavilyduringtraining. Inthispart,weconductedthecapacityestimationoftheLMBs
+Inthisproject,wevisualizetheXGBoostFeatureImportance usingEISfromdifferentstates.Asweillustratedbefore,acharge
+(XFI)scoresusingaheatmap.Thesescoresareintrinsictothe capacity0mAh,achargeat4.2V,andadischargecapacity0mAh
+XGBoostmodelandreflecttherelativecontributionofeachfea- statesarechosentoestimatethecapacityseparately.TheEISof
+ture to the model’s predictions. The heatmap is generated by batteriesNo.1,3,5,7,9,11,13,and15indifferentstateswere
+computing saliency values, which are derived by averaging the selectedtotrainthemodelandtherestofthe8batteriesNo.2,
+XFI scores across all test samples. This provides a measure of 4, 6, 8, 10, 12, 14, and 16 were used to test the model respec-
+the average importance of each feature, enabling a robust and tively.Thecriterionforclassificationofthetrainingsetfromthe
+interpretableidentificationofthemostinfluentialfeatures.The testsetisthatthechargeanddischargecurrentdensitiesofthe
+heatmap is structured such that the x-axis represents the cycle batteriesinbothsetsareidenticalrespectively(forexample,bat-
+numberofthebattery,they-axisrepresentsthefeatures,andthe tery1andbattery2havethesamedischargeandchargedensities
+color intensity corresponds to the importance of each feature. whichisalsoshowninthesupportinginformation).InFigure3,
+Thisvisualizationnotonlyfacilitatestheinterpretationoftherel- itdisplaysthepredictionresultsforbatteryNo.16usingthethree
+ativesignificanceoffeaturesacrossdifferenttestsamplesbutalso differentstates.
+revealspatternsinfeaturecontributions.Byanalyzingthesepat- ThefiguresindicatethatpredictionsbasedonEISdatafrom
+terns,wegaindeeperinsightsintotherelationshipsbetweenfea- theCha_0mAhstateoutperformthosefromtheothertwostates,
+turesandthetargetvariable,enhancingourunderstandingofthe exhibiting the highest R2 and the lowest MAE and RMSE val-
+factorsdrivingthemodel’spredictions. ues.Parityplotsforthepredictionsoftheremainingsevenbatter-
+iesusingCha_0mAhstateareprovidedinFigureS2(Support-
+ingInformation).Table1summarizestheR2valuesfordifferent
+2.4.SHAPFeatureImportance(SFI)Analysis batteries in various states. Notably, the R2 values for cell 2 are
+outsidetheexpectedrangeof0–1,appearingasnegativevalues,
+SHAPisagame-theory-basedapproachthatprovidesaunified whichreflectverypoorpredictiveperformance.Uponanalysis,
+andinterpretablemeasureoffeatureimportancebyquantifying weobservedthat,despitebattery1andbattery2sharingthesame
+thecontributionofeachfeaturetothemodel’spredictions.Un- charge and discharge current densities, their capacity degrada-
+liketraditionalfeatureimportancemethods,whichtypicallyrank tiontrajectoriesdiffersignificantly,resultinginpoorprediction
+Adv.Sci.2025,12,2502336 2502336(4of11) ©2025TheAuthor(s).AdvancedSciencepublishedbyWiley-VCHGmbH
+21983844,
+2025,
+27,
+Downloaded
+from
+https://advanced.onlinelibrary.wiley.com/doi/10.1002/advs.202502336
+by
+NICE,
+National
+Institute
+for
+Health
+and
+Care
+Excellence,
+Wiley
+Online
+Library
+on
+[23/06/2026].
+See
+the Terms
+and
+Conditions
+(https://onlinelibrary.wiley.com/terms-and-conditions)
+on
+Wiley
+Online
+Library
+for
+rules
+of
+use;
+OA
+articles
+are
+governed
+by
+the
+applicable
+Creative
+Commons
+License
+--- PAGE 5 ---
+www.advancedsciencenews.com www.advancedscience.com
+Figure2. Schematicflowofa)EIS-Capacitymodelandb)EIS-KPmodel.
+accuracyforcell2.Therefore,thecapacityestimationofBattery2 Evaluating this map provides a direct visualization of how the
+inthisworkisexcluded,wefocusontheremainingsevencells. mostinformativefrequencypointsareassociatedwithcapacity
+TheR2valuesfortheremainingsevenbatteriesarepresentedin estimation. Four of the top five most important features (XFI-
+Table1.Overall,theCha_0mAhstateprovidesthebestestima- top5-features)areconcentratedatlow-frequencypoints(specifi-
+tion performance. Therefore, the following research will focus callythe63rd,64th,51st,and52nd),whilethe28thfeaturestands
+specificallyonthisstate. out as being located at a relatively high-frequency point (refer
+ThecapacityestimationmodelisdevelopedusingtheXGBoost tothesupplementaryExcelfilefordetailednumbering),which
+MLalgorithm,oneofthekeystrengthsisitsabilitytoevaluatefea- may provide unexpected special correlation. Then we utilized
+ture importance, making it especially valuable for applications XFI-top5-featuresastheinputfeaturestoestimatethecapacity
+where understanding the contribution of each input feature to ofthetestingbatteries.TheestimationresultsofbatteryNo.16
+themodel’spredictionsiscritical.UsingtheXFIanalysisintro- areshownintheFigure4b,fortheotherbatteries,theestima-
+duced in Section 2.3, we assess the relative importance of EIS tionresultsareshowninFigureS3(SupportingInformation).
+features. This approach enhances interpretability by highlight- Through the analysis of Figure 4b, we observe that the esti-
+ingthefeaturesthatcontributemostsignificantlytocapacityes- mationaccuracyusingtheXFI-top5-featuresshowsaslightde-
+timation.Figure4ashowstheXFIheatmapforBatteryNo.16. crease compared to the full EIS dataset. The observed reduc-
+Figure3. Estimated(orange)andMeasured(purple)capacityasafunctionofcyclenumberforbatteryNo.16inthreedifferentstates.
+Adv.Sci.2025,12,2502336 2502336(5of11) ©2025TheAuthor(s).AdvancedSciencepublishedbyWiley-VCHGmbH
+21983844,
+2025,
+27,
+Downloaded
+from
+https://advanced.onlinelibrary.wiley.com/doi/10.1002/advs.202502336
+by
+NICE,
+National
+Institute
+for
+Health
+and
+Care
+Excellence,
+Wiley
+Online
+Library
+on
+[23/06/2026].
+See
+the
+Terms
+and
+Conditions
+(https://onlinelibrary.wiley.com/terms-and-conditions)
+on
+Wiley
+Online
+Library
+for
+rules
+of
+use;
+OA
+articles
+are
+governed
+by
+the
+applicable
+Creative
+Commons
+License
+--- PAGE 6 ---
+www.advancedsciencenews.com www.advancedscience.com
+Table1.SummaryoftheR2ofthetestingbatteriesunder3differentstates. Hence,findingasample-specificexplanationofhoweachfeature
+influencesthemodel’spredictionforindividualtestsamplesis
+Cell R2:Cha_0mAh R2:Cha_4.2V R2:Dis_0mAh important.
+2 −106 −110 −117 Inthisstudy,theSHAPmethodwasemployedtoevaluateand
+rankthecontributionsof72impedancefeaturestocapacityesti-
+4 0.971 0.974 0.976
+mationforvarioustestbatteries.Figure5aillustratesthecontri-
+6 0.912 0.958 0.973
+butionofeachimpedancefeaturetothefirst-cyclecapacityesti-
+8 0.799 0.772 0.751 mation.Theestimatedcapacityvalue,f(x)=1.162,isdisplayedin
+10 0.936 0.994 0.992 thetop-rightcorner,whilethegraynumbersontheleftindicate
+12 0.900 0.784 0.835 theSHAPvaluesofthefeatures,rankedfromhighesttolowest.
+14 0.971 0.920 0.965 Notably,thetopfiverankedfeaturesaccountforasignificantly
+16 0.969 0.884 0.392 largercontributioncomparedtothecumulativecontributionsof
+Average 0.923 0.898 0.841 theremaining67features.
+Figure 5b presents the mean absolute SHAP values of SFI-
+selected top five ranked features (SFI-top5-features) for Battery
+No. 16 across all cycles of capacity estimation. Based on this
+tion in R2 when utilizing only the top features reflects a well- analysis, the impedance features 63, 64, 62, 52, and 36 are
+knowntrade-offbetweenmodelcomplexityandgeneralizability. identified as the most influential for Battery No. 16. For other
+Whilethemodeltrainedwiththecompletefeaturesetachieves test batteries, SFI-top5-features differ, as shown in Table S3
+a higher R2, suggesting superior performance on the current (Supporting Information). This variability reflects the battery-
+dataset, it may also be more prone to overfitting due to its de- specificnatureoffeatureimportanceasdeterminedbySFI.The
+pendenceonalargernumberoffeatures.Incontrast,themodel identified SFI-top5-features for each battery were subsequently
+usingtheXFI-top5-featuresexhibitsamodestreductioninper- used as inputs to the ML model for re-evaluation of capacity
+formancebutmaydemonstratebettergeneralizationbyconcen- estimation.
+tratingonthemostimpactfulfeatures.Interestingly,thepredic- Figure5ccomparesthecapacityestimationresultsforBattery
+tive accuracy improved when using the reduced feature set for No. 16 using the SFI-top5-features versus using the whole EIS
+certain test batteries, such as Battery No. 4 and Battery No. 6. features.TheresultsindicatethatforBatteryNo.16,capacityes-
+ThisunderscoresthecomplexityandvariabilityofXFIanalysis timation using whole EIS features outperformed the SFI-top5-
+acrossdifferentsamples,suggestingthattheoptimalfeatureset features.TheparityplotsofotherbatteriesareshowninFigure
+canvarydependingonthespecificcharacteristicsofthetesting S4(SupportingInformation).Asummaryofthecapacityestima-
+batteries. tionforalltestbatteries,includingcomparisonsbetweentheSFI-
+Furthermore,forallothertestbatteries,theXFI-top5-features top5-features,XFI-top5-features,andwholeEISfeaturesispro-
+were consistent with those of Battery No. 16. This consistency videdinTable2.
+highlights a limitation of the XFI analysis, which provides a FromtheresultsinTable2,itcanbeobservedthatthecapacity
+globalrankingoffeatureimportancebutlackstheabilitytoof- estimation for Battery No. 6 and Battery No. 8 shows improve-
+fer detailed, sample-specific insights into how individual fea- mentwhenusingSFI-top5-featurescomparedtoboththewhole
+turesinfluencepredictions.Despitetheselimitations,ourfind- EISfeaturesandXFI-top5-features.ForBatteryNo.10,No.12,
+ingsdemonstratethatcapacityestimationmaybeachievedusing andNo.14,theestimationresultswithSFI-top5-featuresesare
+asubsetofcarefullyselectedfrequencypointsfromtheEISdata. slightlyimprovedorcomparablebutremainlessaccuratethan
+Thisinsightsuggeststhatfocusingonspecificfrequencyregions, those obtained using the whole EIS features. Overall, the SFI-
+ratherthantheentireEISspectrum,couldbeaneffectivestrategy top5-features demonstrate superior performance compared to
+forimprovingpredictionefficiencywhilemaintainingaccuracy. theXFI-top5-features.Furtheranalysisrevealsthatalthoughthe
+Figure4. a).IntheXFIheatmapofBatteryNo.16,thex-axisindicatesthecyclenumbersofthebattery,they-axisrepresentstheimpedancedataat36
+frequencypointsrangingfrom0.0093HZto10KHZ(bottomtotop).b).Comparisonoftheestimationresultsofbattery16usingthewholeEISdata
+andthetopfivemostimportantEISfeatures.
+Adv.Sci.2025,12,2502336 2502336(6of11) ©2025TheAuthor(s).AdvancedSciencepublishedbyWiley-VCHGmbH
+21983844,
+2025,
+27,
+Downloaded
+from
+https://advanced.onlinelibrary.wiley.com/doi/10.1002/advs.202502336
+by
+NICE,
+National
+Institute
+for
+Health
+and
+Care
+Excellence,
+Wiley
+Online
+Library
+on
+[23/06/2026].
+See
+the
+Terms
+and
+Conditions
+(https://onlinelibrary.wiley.com/terms-and-conditions)
+on
+Wiley
+Online
+Library
+for
+rules
+of
+use;
+OA
+articles
+are
+governed
+by
+the
+applicable
+Creative
+Commons
+License
+--- PAGE 7 ---
+www.advancedsciencenews.com www.advancedscience.com
+Figure5. a).Waterfallplotillustratingthecontributionofeachimpedancefeature,rankedbySHAPvalue,tothefirst-cyclecapacityestimationofbattery
+No.16.b).Rankingofimpedancefeaturesbasedontheirimportanceacrossthebattery’sentirelifecyclebytheorderofSHAPvalues.c).Comparison
+oftheestimationresultsforbattery16usingthewholeEISfeaturesversusSFI-top5-featuresidentifiedbySHAPvalues.
+SFI-top5-featuresdifferacrossthetestbatteries,theyareconsis- Table2.SummaryoftheR2ofthetestingbatteriesusingwholeEISfea-
+tentlylocatedwithinthelow-frequencyregionoftheimpedance tures,XFI-top5-features,andSFI-top5-features.
+spectrum. Additionally, all these features are derived from the
+imaginary component of the impedance data. An exception is Cell R2:WholeEIS R2:XFI-top5-features R2:SFI-top5-features
+BatteryNo.10,whereoneoftheSFI-top5-features(the28thfea- 4 0.971 0.978 0.960
+ture) is extracted from the real component of the impedance
+6 0.912 0.921 0.942
+data.
+8 0.799 0.695 0.743
+Finally, to simplify the model while simultaneously enhanc-
+10 0.936 0.896 0.926
+ingitsgeneralizability,weaggregatetheSFI-top5-featuresiden-
+12 0.900 0.902 0.869
+tifiedforeachtestbattery.BysummingtheSHAPvaluesofthe
+14 0.971 0.924 0.962
+SFI-top5-featuresacrossalltestingbatteries,weidentifythetop
+5 features with the highest “overall” SHAP values (O-SFI-top5- 16 0.969 0.932 0.960
+features),representingthosewiththegreatestimpactacrossthe Average 0.914 0.893 0.908
+entiredataset,whichisdetailedintheTableS4(SupportingInfor-
+mation).TheO-SFI-top5-featuresare63,64,52,51,and53sub-
+sequently,whichareallextractedfromthelow-frequencyregion
+andimaginarypartoftheEISdata,thecorrespondingfrequency
+pointsare0.2352,0.1583,18.08,8.121,and12.18Hzrespectively. 10)thatareparticularlyrelevantforcapturingtheirregularpat-
+TheseO-SFI-top5-featuresareutilizedtobuildtheLMBcapac- tern,therebyenhancingpredictiveaccuracy.Feature28,inpar-
+ityestimationmodel.Figure6,displaystheestimationresultsof ticular,likelyplaysacrucialroleinrepresentingthefluctuations
+using the O-SFI-top5-features of three testing batteries, for the observedinBatteryNo.10′sdegradationtrajectory.Inaddition,in
+other4batteries,theresultsareshowninFigureS5(Supporting thepreviousresearch,[27]thehighchargecurrentdensity,andlow
+Information). dischargecurrentdensitywillmakethebatterydegradeseverely
+Through the analysis, it was observed that the EIS-Capacity asprovedbyexperiment.
+model employing the O-SFI-top5-features generally yielded su- Similarly,forBatteryNo.14andBatteryNo.16,features51and
+periororcomparableperformancecomparedtothemodelutiliz- 53arenotamongtheirrespectiveSFI-top5-features,whichmay
+ingtheSFI-top5-features.However,slightdecreasesinpredictive explainthereducedpredictionperformancewhenusingtheO-
+accuracywereobservedforBatteryNo.10,No.14,andNo.16 SFI-top5-features.Despitethis,theoverallperformanceremains
+Forthesethreebatteries,thediscrepancycanbeattributedto reasonable.Theprimaryobjectiveofthisstudyistoreducethe
+severalfactors.InthecaseofBatteryNo.10,whichwassubjected numberofinputfeatureswhilemaintainingreliablepredictive
+to a high charging rate of 3.0 mA cm−2 and a low discharging accuracy.Theresultsindicatethat,althoughtherearesomeex-
+rate of 0.6 mA cm−2, this charge/discharge protocol has been ceptions,theO-SFI-top5featuresstillprovidesatisfactoryperfor-
+demonstrated to accelerate battery degradation significantly in manceacrossmostcases,demonstratingthefeasibilityoffeature
+previousresearch.AsillustratedinFigureS4b,itsmeasuredca- reductionwithoutsignificantlycompromisingpredictivecapabil-
+pacitydegradationtrajectoryexhibitssignificantfluctuationsbe- ity.
+tweencycles50and100—ananomalynotobservedinthedegra- Thisfindingsupportsthehypothesisthatfocusingonspecific
+dationpatternsofothertestbatteries.ThissuggeststhatBattery segmentsoftheEISdata,particularlythelow-frequencyregion
+No.10followsadistinctdegradationbehavior.Additionally,since and the imaginary component, is sufficient to achieve high ca-
+theO-SFI-top5-featureswereselectedbasedontheoverallbattery pacityestimationaccuracy.Thisapproachnotonlysimplifiesthe
+population, they may not fully capture the unique degradation model by reducing the number of input features but also en-
+characteristics of individual batteries. Conversely, the SFI-top5 hancesitsgeneralizability,providingamoreefficientandinter-
+featuresincludespecificvariables(e.g.,Feature28forBatteryNo. pretableframeworkforcapacityestimationinLMBs.
+Adv.Sci.2025,12,2502336 2502336(7of11) ©2025TheAuthor(s).AdvancedSciencepublishedbyWiley-VCHGmbH
+21983844,
+2025,
+27,
+Downloaded
+from
+https://advanced.onlinelibrary.wiley.com/doi/10.1002/advs.202502336
+by
+NICE,
+National
+Institute
+for
+Health
+and
+Care
+Excellence,
+Wiley
+Online
+Library
+on
+[23/06/2026].
+See
+the
+Terms
+and
+Conditions
+(https://onlinelibrary.wiley.com/terms-and-conditions)
+on
+Wiley
+Online
+Library
+for
+rules
+of
+use;
+OA
+articles
+are
+governed
+by
+the
+applicable
+Creative
+Commons
+License
+--- PAGE 8 ---
+www.advancedsciencenews.com www.advancedscience.com
+Figure6. ComparisonoftheestimationresultsusingSFI-top5-featuresandO-SFI-top5-featuresonthreedifferentBatteriesa)BatteryNo.4,b)Battery
+No.8,andc)BatteryNo.12.
+3.2.LMBKneePointEstimationbyEIS strikingabalancebetweenpreservinglocalvariationsandgener-
+atingageneraltrend.Thesmoothedcapacitydatawasthenuti-
+LMBsexaminedinthisstudydemonstratedistinctnonlinearca- lizedforfurtheranalysisandvisualization,effectivelyreducing
+pacity degradation, presenting unique challenges for accurate noiseandhighlightingtheunderlyingdegradationpatterns.
+lifetimepredictionandeffectivebatterymanagement,unlikethe Figure 7a illustrates the smoothed measured capacity degra-
+commercializedlithium-ioncounterparts.Thisnonlineardegra- dationtrajectoriesandtheircorrespondingKPsforthetraining
+dationischaracterizedbyaninitialphaseofgradualcapacityde- batteries.Figure7bpresentsthepredictionresultsofbatteryNo.
+cline, followed by a critical transition into a region of rapid ca- 14obtainedsolelyfromtheEISdata,excludingcapacityvariation
+pacityloss.Thetransitionpoint,commonlyreferredtoasKP,is considerations.Here,thex-axisrepresentstheactualKP,plotted
+crucial as it marks the onset of accelerated aging and reduced inreversetoreflectacountdownfromthetraditionalperspective,
+performance. While notable advancements have been made in withthey-axisfollowingthesamereversedorientation.Thedata
+predictingtheKPforlithium-ionbatteries,thistaskisparticu- pointsinthisfigureindicatetheremainingcyclesuntiltheKPoc-
+larlycomplexforLMBsduetotheirlessmaturestateofresearch curs.However,weprimarilyfocusonthepredictionresultforthe
+andmoreintricatedegradationbehaviors. firstcycle,asthisrepresentsthemathematicallyprecisepointat
+Inthisstudy,wedevelopedaMLmodeltopredicttheKPfor whichtheKPoccursinthedegradationtrajectory,whichishigh-
+LMBsusing theEISdata, theKPprediction modelfollows the lightedinred.Figure7cillustratesthecomparisonbetweenthe
+sameframeworkasthecapacityestimationmodel,utilizingEIS actualandpredictedKPforalltestingbatteries.Themeanabso-
+datarecordedatthechargecapacity0mAh.Giventhesubstan- luteerror(MAE)is12.75%,demonstratingimprovedaccuracyto
+tial fluctuations observed in the degradation curves of our bat- the prior work by Liu et al.,[12] which predicted LMB KP using
+teries,weemployedtheLocallyWeightedScatterplotSmoothing dischargevoltagecurves.
+(LOWESS)algorithmtoenhancetheclarityofthecapacitydegra- Here,weutilizedSFIanalysistoanalyzetheimpactoffeature
+dationtrendswhichhasbeenusedinthepreviouswork.[28]This selectiononmodelperformanceforKPprediction.SFIanalysis
+smoothingtechniquewasappliedtonormalizethemeasuredca- revealedthat,acrossdifferenttestingbatteries,SFI-top5-features
+pacitydataandestimatedcapacityacrossthecyclerange,usinga remainedconsistent,specificallyfeatures1,0,4,37,and56.This
+smoothingparametersetto0.2.Thisparameterdeterminesthe contrastswiththecapacityestimationmodel,wherethetopfea-
+proportionofdatapointsincludedineachlocalizedregression, tures varied among batteries. Hence, we utilized the SFI-top5
+Figure7. a)SmoothedmeasuredcapacitydegradationtrajectoriesandcorrespondingKP(blackdots)forthetrainingbatteries.b)Actualversuspre-
+dictedremainingcyclestoKPforBatteryNo.14.c)ActualversuspredictedKPsforalltestingbatteries.
+Adv.Sci.2025,12,2502336 2502336(8of11) ©2025TheAuthor(s).AdvancedSciencepublishedbyWiley-VCHGmbH
+21983844,
+2025,
+27,
+Downloaded
+from
+https://advanced.onlinelibrary.wiley.com/doi/10.1002/advs.202502336
+by
+NICE,
+National
+Institute
+for
+Health
+and
+Care
+Excellence,
+Wiley
+Online
+Library
+on
+[23/06/2026].
+See
+the
+Terms
+and
+Conditions
+(https://onlinelibrary.wiley.com/terms-and-conditions)
+on
+Wiley
+Online
+Library
+for
+rules
+of
+use;
+OA
+articles
+are
+governed
+by
+the
+applicable
+Creative
+Commons
+License
+--- PAGE 9 ---
+www.advancedsciencenews.com www.advancedscience.com
+degradationisgradualandsimilartothepatternsinthetraining
+data.Theyexhibitarelativelysteadydeclineincapacitywithout
+abruptdropsorrecoveries,resemblingthedegradationtrajecto-
+riesthatthemodelhaslearned.Incontrast,BatteriesAandD
+show irregular degradation with sharp fluctuations—Battery A
+betweencycles90–125andBatteryDbetween50and80.These
+anomaliesareabsentfromthetrainingdataset,whichmakesit
+difficulttoaccuratelycapturesuchunpredictablebehaviors,re-
+sulting in lower prediction accuracy. The unusual degradation
+patternsarelikelyinfluencedbydifferentdischarge/chargerate
+(C-rate)conditions,whichdifferconsiderablyfromthoseofthe
+training batteries. Interestingly, Battery No. 10 also has strong
+fluctuationsbutispredictedmoreaccuratelybecausethetrain-
+ingdataincludesBatteryNo.9,whichhasasimilarpattern.This
+highlights the value of including a wide variety of degradation
+behaviorsinthetrainingdata.
+Figure8. Comparisonofpredictionresultsusingdifferentinputfeature The EIS-KP model shows varied prediction accuracy across
+sets.ThebluedotsrepresenttheresultsobtainedusingthewholeEIS
+differenttestbatteries,dependingontheirdegradationpatterns
+featureset,whilethereddotsindicatetheoutcomesbasedontheSFI-
+and similarity to the training data. For Batteries A and B, the
+top5-features.
+modelpredictsKPsreasonablywell,withsmallerrors(e.g.,Bat-
+teryA:predicted79versusactual84;BatteryB:predicted86ver-
+featuresfrom10kHz,6.74kHz,2.063kHz,3.728Hztorecon-
+susactual95),resultinginanaverageMAEof7.71%.Although
+structthemodel.Thecomparisonresults,illustratedinFigure8,
+Battery A’s degradation pattern differs from those in the train-
+show that the MAE for the model using the SFI-top5-features
+ing dataset, its fluctuations are relatively regular, enabling the
+is 12.43%, which is slightly lower than that of the model uti-
+LOWESS smoothing method to retain critical inflection points
+lizingtheentireEISdatasetandpriorwork.Giventheinherent
+andallowingthemodeltocaptureitsactualKPwithreasonable
+complexityoflithium-metalbatterydegradation,ourfindingsin-
+accuracy.Incontrast,BatteryD’sKPisoverpredicted(predicted:
+dicate that concentrating on specific EIS data regions, particu-
+80 versus actual: 50), likely due to artifacts introduced by the
+larlyhigh-frequencycomponents(exceptfeature56),ispossible
+LOWESSsmoothingmethod.UnlikeBatteryA’sregularfluctua-
+toachievearelativelyhighlevelofaccuracyinKPprediction.
+tions,BatteryD’sdegradationtrajectoryexhibitssevereandirreg-
+Here,wenoticeforthesetwoMLmodels,thecontrastingfea-
+ularfluctuations.Whilesmoothingmitigatesnoiseindegrada-
+tureselectionsforKPpredictionandcapacityestimationcanbe
+tiontrajectories,aggressiveapplicationtohighlyfluctuatingdata
+attributedtothedistinctdegradationprocessesinfluencingeach
+canobscurecriticalinflectionpoints,particularlyinbatterieswith
+task. KPprediction is primarily driven by high-frequency com-
+rapidearlydegradationfollowedbystabilization.BatteryC’sKP
+ponentsoftheimpedance(Feature0,1,4,and37),whichcap-
+isseverelyunderestimated(predicted:81versusactual:146),pri-
+turerapid,early-stagedegradationmechanismsassociatedwith
+marily because the training dataset lacks examples of batteries
+theonsetofacceleratedcapacityloss.Incontrast,capacityesti-
+withKPsexceeding100cycles.Machinelearningmodelsinher-
+mationreliesmoreonlow-frequencycomponentsandtheimag-
+ently struggle to extrapolate beyond the scope of their training
+inarypart,whichreflectslong-termdegradationtrendsandover-
+data,particularlyfornonlineardegradationbehaviors,leadingto
+allbatteryhealth.Thesedifferenceshighlighttheimportanceof
+systematicunderestimationinsuchcases.
+selectingappropriatefeaturesbasedonthedegradationphasebe-
+Thesefindingshighlightthemodel’ssensitivitytodegradation
+ingstudied,withhigh-frequencyfeaturesbeingmorerelevantfor
+patternsandtheimportanceofcomprehensivetrainingdatacov-
+predictingKPandlow-frequencyfeaturesforestimatingcapac-
+erage.Toenhancerobustness,futureresearchshouldprioritize
+ity.ByfocusingonthemostrelevantEISsegmentsforeachtask,
+expandingthediversityofthetrainingdataset,incorporatingbat-
+both models achieve high accuracy while improving efficiency
+teriesexhibitingawiderspectrumofdegradationbehaviors,cy-
+andgeneralizability. cleliferanges,andawiderrangeofC-rateconditions,refining
+smoothingtechniquestobettercapturekeydegradationfeatures,
+3.3.MachineLearningModelGeneralizabilityValidation andintegratingphysics-informedconstraintstoimproveextrapo-
+lationcapability.Additionally,fromadataqualityperspective,the
+AfterwebuildtheMLmodelusingthepartialEISfeatures,we presenceofbatterieswithsevereandirregularfluctuations,such
+needtovalidatetheirgeneralizability.Here,weimplementedour asBatteryAandBatteryD,isundesirableforbothmodeltrain-
+EIS-Capacity and EIS-KP models on 4 unseen batteries. These ingandevaluation,asthesecasesintroduceinconsistenciesthat
+unseenbatterieshavedifferentcyclingtestconditionscompared hinderthemodel’sabilitytolearnmeaningfuldegradationpat-
+tothepreviouslyusedbatteriesinourMLmodels.Thecycling terns.WhileBatteryA’sfluctuationsarerelativelyregularanddo
+testconditionareshowninTableS1.InFigure9,itdisplaysthe notsignificantlyimpactpredictionaccuracy,BatteryD’sabrupt
+predictionresultsoftheunseenbatteriesusingtheEIS-Capacity variations create substantial challenges in KP estimation. Such
+model. batteries with extreme fluctuations should ideally be excluded
+The EIS-Capacity model demonstrates strong predictive per- from both the training dataset and unseen test data to ensure
+formance for Batteries B and C, mainly because their capacity amorereliableandgeneralizablemodel.Futurestudiesshould
+Adv.Sci.2025,12,2502336 2502336(9of11) ©2025TheAuthor(s).AdvancedSciencepublishedbyWiley-VCHGmbH
+21983844,
+2025,
+27,
+Downloaded
+from
+https://advanced.onlinelibrary.wiley.com/doi/10.1002/advs.202502336
+by
+NICE,
+National
+Institute
+for
+Health
+and
+Care
+Excellence,
+Wiley
+Online
+Library
+on
+[23/06/2026].
+See
+the
+Terms
+and
+Conditions
+(https://onlinelibrary.wiley.com/terms-and-conditions)
+on
+Wiley
+Online
+Library
+for
+rules
+of
+use;
+OA
+articles
+are
+governed
+by
+the
+applicable
+Creative
+Commons
+License
+--- PAGE 10 ---
+www.advancedsciencenews.com www.advancedscience.com
+Figure9. ComparisonoftheestimationresultsusingO-SFI-top5-featuresandMeasuredcapacityonfourunseenBatteriesa)BatteryA,b)BatteryB,c)
+BatteryC,andd)BatteryD.
+establishstrictcriteriaforidentifyingandfilteringouttheseout- Incontrast,thepredictionofKP—acrucialtransitionwhere
+liers, focusing on training the model with batteries exhibiting capacitydegradationaccelerates—reliespredominantlyonhigh-
+physicallymeaningfuldegradationbehaviorsandincorporating frequency features and the real component of the impedance.
+diversecathodematerialsinLMBtoenhancethegeneralizabil- These features indicate the system’s resistance and electronic
+ity and robustness of the findings. This approach would allow conductivitychanges,whichareoftenlinkedtotheearlystages
+themodeltogeneralizeeffectivelywhilemaintainingrobustness of SEI instability, pore-clogging, and the onset of lithium plat-
+acrossreal-worldapplications. ing.TheobservedshiftinkeyfeaturesforKPpredictionempha-
+sizesthedistinctionbetweentheearlydetectionofrapiddegra-
+dationmechanismsandthecomprehensiveassessmentoflong-
+4.Conclusion termcapacityloss.Ourfindingsdemonstratethathigh-frequency
+impedance features are particularly effective in capturing the
+Inconclusion,thisstudypresentsacomprehensiveinvestigation subtlestructuralandkineticchangesprecedingKP,providinga
+of the degradation behaviors of LMBs through ML models im- valuabletoolforproactivebatterymanagement.
+plementingEISdata.ByaddressingcapacityestimationandKP A key finding of this study is the ability to minimize the re-
+prediction,weprovidenewinsightsintotheelectrochemicaland quiredfrequencyrangeoftheimpedancespectraforLMBcapac-
+physicalprocessesgoverningLMBdegradation. ity and KP estimation, thereby significantly reducing measure-
+For capacity estimation, the results demonstrate that low- menttime.Unlikeconventionalapproachesthatrelyonextract-
+frequencyimpedancefeatures,particularlythoseassociatedwith ingfeaturesfromtheentireimpedancespectrum,ourmethodfo-
+theimaginarycomponent,arecriticalforcapturingthelong-term cusesondirectlyselectingthemostrelevantfrequencyrangefor
+degradationbehaviorofLMBs.Thedominanceoflow-frequency measurement.Asaresult,whiletraditionaltechniquesrequire
+featureshighlightstheirsensitivitytointerfacialresistanceand capturing the full impedance spectrum, our approach stream-
+charge transfer processes, which are directly influenced by the linestheprocessbyconcentratingonlyontheessentialfrequency
+lithium depletion/dendrite growth and electrolyte decomposi- components.Thisenablestheidentificationofthemostinforma-
+tion.Theseprocessescollectivelydictatethegradualcapacityde- tiveimpedancefrequencypointsforbatteryhealthassessment,
+cline observed during cycling. By identifying and focusing on enhancingboththeefficiencyandaccuracyofpredictions.Our
+thesespecificimpedanceregions,ourmodelsimplifiesthefea- methodofferssignificantpotentialforoptimizingtheuseofEIS
+turesetwhilemaintaininghighaccuracy,underscoringtheim- inreal-worldLMBhealthmonitoring.
+portanceofthelow-frequencyregimeinreflectingthebattery’s Inconclusion,thisstudyenhancestheunderstandingofLMB
+healthstate. degradationbyestablishingconnectionsbetweencriticalEISfea-
+Adv.Sci.2025,12,2502336 2502336(10of11) ©2025TheAuthor(s).AdvancedSciencepublishedbyWiley-VCHGmbH
+21983844,
+2025,
+27,
+Downloaded
+from
+https://advanced.onlinelibrary.wiley.com/doi/10.1002/advs.202502336
+by
+NICE,
+National
+Institute
+for
+Health
+and
+Care
+Excellence,
+Wiley
+Online
+Library
+on
+[23/06/2026].
+See
+the
+Terms
+and
+Conditions
+(https://onlinelibrary.wiley.com/terms-and-conditions)
+on
+Wiley
+Online
+Library
+for
+rules
+of
+use;
+OA
+articles
+are
+governed
+by
+the
+applicable
+Creative
+Commons
+License
+--- PAGE 11 ---
+www.advancedsciencenews.com www.advancedscience.com
+tures and specific physical and chemical degradation mecha- [3] M.Elmahallawy,T.Elfouly,A.Alouani,A.M.Massoud,IEEEAccess
+nisms.Whilethereisroomforfurtherimprovementinmodelro- 2022,10,119040.
+bustness,thesefindingscontributetotheimprovementsinmea- [4] J.Liu,Z.Bao,Y.Cui,E.J.Dufek,J.B.Goodenough,P.Khalifah,Q.Li,
+surementefficiencyandpredictionaccuracy,pavingthewayfor B.Y.Liaw,P.Liu,A.Manthiram,Y.S.Meng,V.R.Subramanian,M.F.
+Toney,V.V.Viswanathan,M.S.Whittingham,J.Xiao,W.Xu,J.Yang,
+practicalapplicationsinadvancedLMBprognosticsandmanage-
+X.Q.Yang,J.G.Zhang,Nat.Energy2019,4,180.
+ment
+[5] D. Lv, Y. Shao, T. Lozano, W. D. Bennett, G. L. Graff, B. Polzin,
+J. Zhang, M. H. Engelhard, N. T. Saenz, W. A. Henderson, P.
+Bhattacharya,J.Liu,J.Xiao,Adv.EnergyMater.2015,5,1400993.
+SupportingInformation [6] J.Christensen,J.Newman,J.Electrochem.Soc.2003,150,A1416.
+[7] X.G.Yang,Y.Leng,G.Zhang,S.Ge,C.Y.Wang,J.PowerSources2017,
+SupportingInformationisavailablefromtheWileyOnlineLibraryorfrom 360,28.
+theauthor. [8] J.Christensen,J.Newman,J.Electrochem.Soc.2005,152,A818.
+[9] K.A.Severson,P.M.Attia,N.Jin,N.Perkins,B.Jiang,Z.Yang,M.
+H.Chen,M.Aykol,P.K.Herring,D.Fraggedakis,M.Z.Bazant,S.J.
+Acknowledgements Harris,W.C.Chueh,R.D.Braatz,Nat.Energy2019,4,383.
+[10] J.Zhu,Y.Wang,Y.Huang,R.BhushanGopaluni,Y.Cao,M.Heere,
+ThisworkwasinpartsupportedbytheSoftBank-NIMSAdvancedTech- M.J.Mühlbauer,L.Mereacre,H.Dai,X.Liu,A.Senyshyn,X.Wei,M.
+nologiesDevelopmentCenterasajointresearchbetweenNIMSandSoft- Knapp,H.Ehrenberg,Nat.Commun.2022,13,2261.
+BankCorp.TheauthorsthankShuntaroMiyakawa,andTakayaSaitofor [11] Q.Si,S.Matsuda,Y.Yamaji,T.Momma,Y.Tateyama,Adv.Sci.2024,
+theirvaluablediscussions.ThisworkwasalsopartiallysupportedbyMEXT 11,2402608.
+as“ProgramforPromotingResearchontheSupercomputerFugaku”grant [12] X.Liu,B.B.Zou,Y.N.Wang,X.Chen,J.Q.Huang,X.Q.Zhang,Q.
+numbersJPMXP1020230325andJPMXP1020230327,DataCreationand Zhang,H.J.Peng,J.Am.Chem.Soc.2024,146,33012.
+Utilization Type Material Research and Development Project grant JP-
+[13] N. Meddings, M. Heinrich, F. Overney, J. S. Lee, V. Ruiz, E.
+MXP1122712807.Thecalculationswereperformedonthesupercomput-
+Napolitano,S.Seitz,G.Hinds,R.Raccichini,M.Gaberšˇcek,J.Park,
+ersatNIMS(NumericalMaterialsSimulator).
+J.PowerSources2020,480,228742.
+[14] N.A.Cañas,K.Hirose,B.Pascucci,N.Wagner,K.A.Friedrich,R.
+Hiesgen,Electrochim.Acta2013,97,42.
+ConflictofInterest [15] K.McCarthy,H.Gullapalli,K.M.Ryan,T.Kennedy,J.Electrochem.
+Soc.2021,168,080517.
+Theauthorsdeclarenoconflictofinterest. [16] Y.Zhang,Q.Tang,Y.Zhang,J.Wang,U.Stimming,A.A.Lee,Nat.
+Commun.2020,11,1706.
+[17] T.K.Pradyumna,K.Cho,M.Kim,W.Choi,J.PowerElectron.2022,22,
+DataAvailabilityStatement 850.
+[18] B.Xia,Z.Qin,H.Fu,J.PowerSources2024,603,234413.
+Thedatathatsupportthefindingsofthisstudyareavailablefromthecor- [19] J.Wang,B.Ge,H.Li,M.Yang,J.Wang,D.Liu,C.Fernandez,X.Chen,
+respondingauthoruponreasonablerequest. Q.Peng,Chem.Eng.J.2021,420,129739.
+[20] J.Lee,J.H.Lee,Appl.Energy2024,356,122399.
+[21] W.Li,H.Zhang,B.vanVlijmen,P.Dechent,D.U.Sauer,EnergyStor-
+ageMater.2022,53,453.
+Keywords
+[22] S.Greenbank,D.Howey,IEEETransIndustrInform2022,18,2965.
+degradation, electrochemical impedance spectroscopy, knee points, [23] S.Kim,Y.Y.Choi,J.I.l.Choi,Appl.Energy2022,308,118317.
+lithium-metalbatteries,machinelearningmodels [24] T.Chen,C.Guestrin,InProceedingsofthe22ndACMSIGKDDInt.
+Conf.onKnowledgeDiscoveryandDataMining,ACMDigitalLibrary,
+NewYork2016,785.
+Received:February7,2025
+Revised:April4,2025 [25] S.M.Lundberg,S.I.Lee,InAdvancesinNeuralInformationProcessing
+Publishedonline:May5,2025 Systems,Elsevier,Amsterdam2017.
+[26] L.S.Shapley,Notesonthen-PersonGameII:TheValueofann-
+PersonGame1951,RM-670.
+[27] A. Dutta, E. Mizuki, S. Matsuda, Batter. Supercaps 2023, 6,
+e202300309.
+[1] J. B. Goodenough, K. S. Park, J. Am. Chem. Soc. 2013, 135,
+[28] J.Qu,Y.Wang,R.Zheng,M.Li,D.Zhang,Anoveljointestimation
+1167. frameworkforbatterystateofhealthandremainingusefullifebased
+[2] R.Schmuch,R.Wagner,G.Hörpel,T.Placke,M.Winter,Nat.Energy
+onsparseandlimiteddata,https://doi.org/10.2139/ssrn.4778973. 2018,3,267.
+Adv.Sci.2025,12,2502336 2502336(11of11) ©2025TheAuthor(s).AdvancedSciencepublishedbyWiley-VCHGmbH
+21983844,
+2025,
+27,
+Downloaded
+from
+https://advanced.onlinelibrary.wiley.com/doi/10.1002/advs.202502336
+by
+NICE,
+National
+Institute
+for Health
+and
+Care
+Excellence,
+Wiley
+Online
+Library
+on [23/06/2026].
+See
+the
+Terms
+and
+Conditions
+(https://onlinelibrary.wiley.com/terms-and-conditions)
+on
+Wiley
+Online
+Library
+for
+rules
+of
+use;
+OA
+articles
+are
+governed
+by
+the
+applicable
+Creative
+Commons
+License
