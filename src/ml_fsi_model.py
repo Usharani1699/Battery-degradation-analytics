@@ -173,6 +173,14 @@ def run(csv_path: Path):
     )
     xgb_reg.fit(X_reg, y_reg)
 
+    # Save model for cross-dataset validation (Severson, BLAST, etc.)
+    import pickle, os
+    mod_dir = ROOT / "models"
+    mod_dir.mkdir(exist_ok=True)
+    with open(mod_dir / "xgb_model.pkl", "wb") as _f:
+        pickle.dump(xgb_reg, _f)
+    print(f"Model saved: models/xgb_model.pkl")
+
     rf_imp = dict(zip(FEATURES, rf_clf.feature_importances_.round(4)))
     xgb_imp = dict(zip(FEATURES, xgb_reg.feature_importances_.round(4)))
     print("\n=== FEATURE IMPORTANCE ===")
