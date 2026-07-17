@@ -1,0 +1,97 @@
+{
+  "oxford": {
+    "name": "Oxford NMC BMP Drive-Cycle",
+    "n_cycles": 72,
+    "n_cells": 6,
+    "n_calib_per_cell": 5,
+    "uncalibrated": {
+      "rmse": 4.748,
+      "mae": 2.859,
+      "r2": -0.5654,
+      "clf_accuracy": 90.28
+    },
+    "calibrated": {
+      "rmse": 3.851,
+      "mae": 2.148,
+      "r2": -0.0299,
+      "clf_accuracy": 90.28,
+      "mean_offset_pct": -0.944,
+      "std_offset_pct": 0.74
+    },
+    "asymmetric_tnorm": {
+      "rmse_uncalib": 4.727,
+      "r2_uncalib": -0.552,
+      "rmse_calib": 3.82,
+      "r2_calib": -0.0135
+    }
+  },
+  "nasa": {
+    "name": "NASA LiCoO2 CC Multi-Temperature",
+    "n_cycles": 2010,
+    "n_cells": 26,
+    "n_calib_per_cell": 5,
+    "uncalibrated": {
+      "rmse": 15.295,
+      "mae": 10.038,
+      "r2": -0.4418,
+      "clf_accuracy": 53.13
+    },
+    "calibrated": {
+      "rmse": 13.554,
+      "mae": 8.459,
+      "r2": -0.1322,
+      "clf_accuracy": 64.08,
+      "mean_offset_pct": 0.639,
+      "std_offset_pct": 6.919
+    },
+    "asymmetric_tnorm": {
+      "rmse_uncalib": 16.031,
+      "r2_uncalib": -0.5838,
+      "rmse_calib": 13.716,
+      "r2_calib": -0.1594
+    }
+  },
+  "blast": {
+    "name": "NREL BLAST Simulated Fleet",
+    "n_cycles": 1932,
+    "n_cells": 48,
+    "n_calib_per_cell": 5,
+    "uncalibrated": {
+      "rmse": 20.439,
+      "mae": 18.991,
+      "r2": -5.9431,
+      "clf_accuracy": 12.58
+    },
+    "calibrated": {
+      "rmse": 17.941,
+      "mae": 16.376,
+      "r2": -4.3493,
+      "clf_accuracy": 13.46,
+      "mean_offset_pct": -7.874,
+      "std_offset_pct": 5.505
+    },
+    "asymmetric_tnorm": {
+      "rmse_uncalib": 20.439,
+      "r2_uncalib": -5.9431,
+      "rmse_calib": 17.941,
+      "r2_calib": -4.3493
+    }
+  },
+  "calce_reference": {
+    "name": "CALCE (in-distribution, 5-fold CV)",
+    "uncalibrated": {
+      "rmse": 3.73,
+      "mae": 2.14,
+      "r2": 0.9839,
+      "clf_accuracy": 98.48
+    },
+    "calibrated": {
+      "rmse": 3.73,
+      "mae": 2.14,
+      "r2": 0.9839,
+      "clf_accuracy": 98.48
+    }
+  },
+  "n_early_cycles_used": 5,
+  "method": "Per-cell intercept calibration: offset = mean(y_true_first_N - y_pred_first_N). No model parameters changed. Simulates initial BMS capacity measurement."
+}

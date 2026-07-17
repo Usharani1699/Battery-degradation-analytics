@@ -1,0 +1,76 @@
+{
+  "method": "Analytical 95% CI: RMSE via SE=RMSE/sqrt(2n); rho via Fisher z-transform",
+  "CALCE_RMSE": {
+    "point": 3.73,
+    "n": 9031,
+    "ci_lo": 3.676,
+    "ci_hi": 3.784,
+    "ci": "3.730 [3.676, 3.784]"
+  },
+  "Oxford_RMSE": {
+    "point": 4.748,
+    "n": 72,
+    "ci_lo": 3.972,
+    "ci_hi": 5.524,
+    "ci": "4.748 [3.972, 5.524]"
+  },
+  "NASA_RMSE": {
+    "point": 15.295,
+    "n": 2010,
+    "ci_lo": 14.822,
+    "ci_hi": 15.768,
+    "ci": "15.295 [14.822, 15.768]"
+  },
+  "BLAST_RMSE": {
+    "point": 20.439,
+    "n": 1932,
+    "ci_lo": 19.795,
+    "ci_hi": 21.083,
+    "ci": "20.439 [19.795, 21.083]"
+  },
+  "Oxford_cal_RMSE": {
+    "point": 3.851,
+    "n": 72,
+    "ci_lo": 3.222,
+    "ci_hi": 4.48,
+    "ci": "3.851 [3.222, 4.48]"
+  },
+  "NASA_cal_RMSE": {
+    "point": 13.554,
+    "n": 2010,
+    "ci_lo": 13.135,
+    "ci_hi": 13.973,
+    "ci": "13.554 [13.135, 13.973]"
+  },
+  "BLAST_cal_RMSE": {
+    "point": 17.941,
+    "n": 1932,
+    "ci_lo": 17.375,
+    "ci_hi": 18.507,
+    "ci": "17.941 [17.375, 18.507]"
+  },
+  "Severson_FSI_rho": {
+    "point": 0.822,
+    "n": 49,
+    "ci_lo": "0.703",
+    "ci_hi": "0.896"
+  },
+  "Severson_FSI_rho_protocol": {
+    "point": 0.807,
+    "n": 23,
+    "ci_lo": "0.592",
+    "ci_hi": "0.915"
+  },
+  "Severson_KI_rho": {
+    "point": 0.744,
+    "n": 23,
+    "ci_lo": "0.479",
+    "ci_hi": "0.885"
+  },
+  "PyBaMM_rho": {
+    "point": -1.0,
+    "n": 48,
+    "ci_lo": "near-deterministic",
+    "ci_hi": "near-deterministic"
+  }
+}
