@@ -1,11 +1,17 @@
 {
-  "method": "Analytical 95% CI: RMSE via SE=RMSE/sqrt(2n); rho via Fisher z-transform",
+  "method": "CALCE: 1000-iteration bootstrap (percentile method, 5-fold CV per iteration). Oxford/NASA/BLAST: Analytical 95% CI via SE=RMSE/sqrt(2n). Severson rho: Fisher z-transform.",
   "CALCE_RMSE": {
-    "point": 3.73,
+    "point": 3.169,
     "n": 9031,
-    "ci_lo": 3.676,
-    "ci_hi": 3.784,
-    "ci": "3.730 [3.676, 3.784]"
+    "n_bootstrap": 1000,
+    "ci_lo": 2.793,
+    "ci_hi": 3.563,
+    "ci": "3.169 [2.793, 3.563]",
+    "mae": 0.896,
+    "mae_ci": "0.896 [0.818, 0.971]",
+    "r2": 0.9883,
+    "r2_ci": "0.9883 [0.9854, 0.9910]",
+    "source": "bootstrap_ci.py — 1000 iterations completed 2026-07-17"
   },
   "Oxford_RMSE": {
     "point": 4.748,

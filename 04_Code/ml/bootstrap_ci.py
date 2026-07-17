@@ -121,7 +121,7 @@ print(f"  R²:   {calce_ci['r2']['mean']:.4f} "
 
 
 # ── Bootstrap Spearman ρ CI — Severson ordinal test ───────────────────────
-print("\nBootstrapping Severson Spearman ρ confidence interval...")
+print("\nBootstrapping Severson Spearman rho confidence interval...")
 sev_path = DATA_DIR / "Severson_FSI_Features.csv"
 rho_boot = []
 
