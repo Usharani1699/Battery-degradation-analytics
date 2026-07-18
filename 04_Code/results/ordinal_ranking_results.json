@@ -1,0 +1,42 @@
+{
+  "oxford": {
+    "name": "Oxford NMC BMP Drive-Cycle",
+    "n_cells": 4,
+    "FSI_rho": -0.8,
+    "FSI_pval": 0.2,
+    "FSI_ci": [
+      -0.996,
+      0.697
+    ],
+    "KI_rho": 0.8,
+    "KI_pval": 0.2,
+    "direction_correct": true,
+    "interpretation": "FSI direction correct; CI wide due to small sample size"
+  },
+  "nasa": {
+    "name": "NASA LiCoO2 CC Multi-Temperature",
+    "n_cells": 18,
+    "FSI_rho": 0.5686,
+    "FSI_pval": 0.0138,
+    "FSI_ci": [
+      0.139,
+      0.818
+    ],
+    "KI_rho": 0.0753,
+    "KI_pval": 0.7664,
+    "direction_correct": false,
+    "interpretation": "FSI correctly orders cells by degradation severity (moderate-strong ordinal agreement)"
+  },
+  "blast": {},
+  "severson_reference": {
+    "name": "Severson LFP (cycle_life ground truth)",
+    "n_cells": 49,
+    "FSI_rho": -0.8223,
+    "FSI_pval": 0.0,
+    "FSI_ci": [
+      -0.896,
+      -0.704
+    ],
+    "direction_correct": true
+  }
+}

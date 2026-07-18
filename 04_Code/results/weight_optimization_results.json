@@ -1,0 +1,39 @@
+{
+  "dataset": "Severson_FSI_Features.csv",
+  "n_cells": 49,
+  "components": [
+    "KI",
+    "DoD_%",
+    "T_stress_norm",
+    "C_peak_norm"
+  ],
+  "principled_weights": {
+    "KI": 0.3,
+    "DoD": 0.25,
+    "T_stress_norm": 0.25,
+    "C_peak_norm": 0.2,
+    "spearman_rho": -0.8223,
+    "p_value": 0.0
+  },
+  "optimised_weights": {
+    "KI": 0.001,
+    "DoD": 0.4,
+    "T_stress_norm": 0.29,
+    "C_peak_norm": 0.309,
+    "spearman_rho": -0.8358,
+    "p_value": 0.0
+  },
+  "ki_only": {
+    "spearman_rho": -0.7545
+  },
+  "equal_weights": {
+    "spearman_rho": -0.8215
+  },
+  "verdict": "VALIDATED: Principled weights achieve within 0.02 of optimised; no significant improvement from data-driven tuning.",
+  "rho_improvement": 0.0135,
+  "protocol_level": {
+    "n_protocols": 23,
+    "principled_rho": -0.832,
+    "optimised_rho": -0.834
+  }
+}

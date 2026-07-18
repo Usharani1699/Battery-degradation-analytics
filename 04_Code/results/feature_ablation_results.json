@@ -1,0 +1,111 @@
+{
+  "A \u2014 FSI only": {
+    "features": [
+      "FSI"
+    ],
+    "n_features": 1,
+    "calce_cv": {
+      "rmse": 8.954,
+      "rmse_std": 0.249,
+      "mae": 4.766,
+      "r2": 0.907
+    },
+    "severson_rho": {
+      "rho": -0.8223,
+      "p": 0.0
+    }
+  },
+  "B \u2014 Sub-components only": {
+    "features": [
+      "KI",
+      "DoD_%",
+      "T_stress_norm",
+      "C_peak_norm",
+      "DCSS",
+      "RBF",
+      "CVI"
+    ],
+    "n_features": 6,
+    "calce_cv": {
+      "rmse": 0.189,
+      "rmse_std": 0.008,
+      "mae": 0.107,
+      "r2": 1.0
+    },
+    "severson_rho": {
+      "rho": -0.8215,
+      "p": 0.0
+    }
+  },
+  "C \u2014 All (current)": {
+    "features": [
+      "FSI",
+      "T_avg_C",
+      "T_stress_norm",
+      "KI",
+      "DCSS",
+      "RBF",
+      "CVI"
+    ],
+    "n_features": 7,
+    "calce_cv": {
+      "rmse": 3.753,
+      "rmse_std": 0.419,
+      "mae": 1.027,
+      "r2": 0.9835
+    },
+    "severson_rho": {
+      "rho": -0.8231,
+      "p": 0.0
+    }
+  },
+  "D \u2014 KI only": {
+    "features": [
+      "KI"
+    ],
+    "n_features": 1,
+    "calce_cv": {
+      "rmse": 29.403,
+      "rmse_std": 0.301,
+      "mae": 26.611,
+      "r2": -0.0017
+    },
+    "severson_rho": {
+      "rho": -0.7545,
+      "p": 0.0
+    }
+  },
+  "E \u2014 DoD only": {
+    "features": [
+      "DoD_%"
+    ],
+    "n_features": 1,
+    "calce_cv": {
+      "rmse": 0.183,
+      "rmse_std": 0.004,
+      "mae": 0.106,
+      "r2": 1.0
+    },
+    "severson_rho": {
+      "rho": NaN,
+      "p": NaN
+    }
+  },
+  "F \u2014 FSI + T_avg_C": {
+    "features": [
+      "FSI",
+      "T_avg_C"
+    ],
+    "n_features": 2,
+    "calce_cv": {
+      "rmse": 3.972,
+      "rmse_std": 0.41,
+      "mae": 1.106,
+      "r2": 0.9815
+    },
+    "severson_rho": {
+      "rho": -0.8223,
+      "p": 0.0
+    }
+  }
+}
