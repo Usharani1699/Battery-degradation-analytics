@@ -1,0 +1,22 @@
+{
+  "note": "Corrected version: training restricted to NASA+CALCE (LCO) only; Oxford (NMC) fully held out; in-distribution reference uses battery-GROUPED GroupKFold (no cell leakage). Supersedes the 'R2 = -4.35' figure in main(prism).pdf Appendix A.3 / Discussion 5.5, which was not reproducible from any script in this repository.",
+  "training_dataset": "NASA + CALCE (LCO only)",
+  "calce_in_distribution_grouped": {
+    "name": "CALCE only, battery-GROUPED 2-fold CV (GroupKFold by cell ID, 2 cells)",
+    "n_cycles": 5743,
+    "n_cells": 2,
+    "chemistry": "LiCoO2",
+    "profile": "CC",
+    "rmse": 11.422,
+    "mae": 10.222,
+    "r2": 0.7678
+  },
+  "oxford_true_holdout": {
+    "name": "Oxford NMC \u2014 TRUE held-out cross-chemistry transfer (model trained ONLY on NASA+CALCE, Oxford never seen)",
+    "n_cycles": 519,
+    "n_cells": 8,
+    "rmse": 32.702,
+    "mae": 32.021,
+    "r2": -23.034
+  }
+}

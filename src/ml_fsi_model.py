@@ -121,17 +121,25 @@ def run(csv_path: Path):
         f1m = f1_score(y_clf, y_pred, average="macro")
         f1w = f1_score(y_clf, y_pred, average="weighted")
         cm = confusion_matrix(y_clf, y_pred)
-        cr = classification_report(y_clf, y_pred, target_names=LABEL_ORDER, output_dict=True)
+        # BUGFIX: LabelEncoder.fit() always sorts classes ALPHABETICALLY
+        # regardless of the order LABEL_ORDER lists them in, so numeric
+        # class 0/1/2 do NOT correspond to LABEL_ORDER[0]/[1]/[2]. Passing
+        # target_names=LABEL_ORDER here silently mislabelled every per-class
+        # precision/recall/F1 (Healthy<->Degraded<->End_of_Life swapped).
+        # Use le.classes_ (the encoder's real, alphabetically-sorted order)
+        # instead so labels match the actual numeric classes.
+        cr = classification_report(y_clf, y_pred, target_names=list(le.classes_), output_dict=True)
         clf_results[name] = {
             "accuracy": round(acc * 100, 2),
             "f1_macro": round(f1m, 4),
             "f1_weighted": round(f1w, 4),
             "confusion_matrix": cm.tolist(),
+            "confusion_matrix_label_order": list(le.classes_),
             "per_class": {
                 c: {"precision": round(cr[c]["precision"], 3),
                     "recall": round(cr[c]["recall"], 3),
                     "f1": round(cr[c]["f1-score"], 3)}
-                for c in LABEL_ORDER
+                for c in le.classes_
             },
         }
         print(f"  {name:20s}: Acc={acc*100:.2f}%  F1-macro={f1m:.4f}")
